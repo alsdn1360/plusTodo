@@ -10,6 +10,6 @@ const Color darkWhite = Color(0xFFF3F4F6);
 const Color white = Color(0xFFFAFAFA);
 
 /// Etc
-const Color red = Color(0xFFD90416);
-const Color primary = Color(0xFF3071F2);
-const Color green = Color(0xFF34A853);
+const Color red = Color(0xFFD32F2F);
+const Color blue = Color(0xFF1976D2);
+const Color orange = Color(0xFFFB8C00);

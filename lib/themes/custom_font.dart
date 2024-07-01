@@ -14,8 +14,8 @@ class CustomTextStyle {
   /// header1 28px, 1.21, 400, Itim
   static TextStyle header1 = const TextStyle(
     fontFamily: 'Itim',
-    fontSize: 28,
-    height: 1.21,
+    fontSize: 30,
+    height: 1.20,
     color: black,
     fontWeight: FontWeight.w400,
   );
