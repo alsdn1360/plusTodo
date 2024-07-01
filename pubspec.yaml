@@ -22,3 +22,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/pretendard/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/pretendard/Pretendard-SemiBold.otf
+          weight: 600
+    - family: Itim
+      fonts:
+        - asset: assets/fonts/itim/Itim-Regular.ttf
+          weight: 400
