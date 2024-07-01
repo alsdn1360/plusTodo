@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:plus_todo/pages/main/main_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plus_todo/pages/main_page.dart';
 import 'package:plus_todo/themes/custom_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
