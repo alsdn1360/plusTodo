@@ -1,16 +1,29 @@
-# plus_todo
+## plus-Todo - 아이젠아워 매트릭스를 이용한 투두 리스트 모바일 애플리케이션 서비스
 
-아이젠아워 매트릭스를 이용한 투두 리스트
+## Description
 
-## Getting Started
+`plus-Todo`는 아이젠아워 매트릭스를 이용하여 사용자가 작성한 투두 리스트에 대해 한 눈에 쉽게 파악할 수 있다.
+아이젠아워 매트릭스란 중요도와 긴급도를 기반으로 하는 매트릭스로, 사용자가 작성한 투두 리스트를 중요도와 긴급도를 기반으로 사분면에 표시하여 먼저 해야할 일을 쉽게 알 수 있도록 도와주는 모바일 애플리케이션이다.
 
-This project is a starting point for a Flutter application.
+## Development enviroment
 
-A few resources to get you started if this is your first Flutter project:
+`Flutter-SDK` : 3.19.4
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+`Dart` : 3.2.2
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Git rule
+
+### **Tag type**
+
+- `Init` : 프로젝트 생성
+- `Feat` : 새로운 기능 추가
+- `Mod` : 코드 수정
+- `Docs` : 문서 수정
+- `Design` : 디자인 수정
+- `Minor` : 사소한 코드 수정
+- `Refactor` : 코드 리팩토링
+
+### **Commit**
+
+- `태그: 커밋 내용` 의 규칙으로 작성
+- 커밋 제목은 영어로 간단하게 작성, 내용은 한글로 작성
