@@ -204,8 +204,10 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
 
   void _addTodo(WidgetRef ref) {
     if (_titleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          duration: const Duration(seconds: 2),
           content: Center(
             child: Text(
               '할 일을 입력해 주세요.',

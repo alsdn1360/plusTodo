@@ -119,8 +119,10 @@ class TodoUncompletedCard extends ConsumerWidget {
                         const Duration(milliseconds: 100),
                         () {
                           ref.read(todoListProvider.notifier).completeTodo(originalIndex, ref);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              duration: const Duration(seconds: 1),
                               content: Center(
                                 child: Text(
                                   '할 일을 완료했어요.',

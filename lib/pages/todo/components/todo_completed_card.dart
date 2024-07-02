@@ -38,8 +38,10 @@ class TodoCompletedCard extends ConsumerWidget {
                     const Duration(milliseconds: 100),
                     () {
                       ref.read(completedTodoListProvider.notifier).clearCompletedTodo();
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
+                          duration: const Duration(seconds: 1),
                           content: Center(
                             child: Text(
                               '완료된 일을 모두 삭제했어요.',
@@ -79,8 +81,10 @@ class TodoCompletedCard extends ConsumerWidget {
                         const Duration(milliseconds: 100),
                         () {
                           ref.read(completedTodoListProvider.notifier).undoCompletedTodo(index, ref);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              duration: const Duration(seconds: 1),
                               content: Center(
                                 child: Text(
                                   '완료된 일을 다시 되돌렸어요.',

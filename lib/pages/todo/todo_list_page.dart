@@ -29,6 +29,7 @@ class TodoListPage extends ConsumerWidget {
                   subtitle: '긴급하고 중요한 일',
                   color: red,
                   isDoCard: true,
+                  // 긴급도 우선 정렬 or 중요도 우선 정렬 선택 가능
                   filteredIndex: ref.watch(filteredIndexProvider),
                   filteredTodoData: (TodoData doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
