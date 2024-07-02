@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/provider/todo/provider_complete_todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final todoListProvider = StateNotifierProvider<TodoListNotifier, List<TodoData>>((ref) {
@@ -42,10 +43,12 @@ class TodoListNotifier extends StateNotifier<List<TodoData>> {
     }
   }
 
-  Future<void> removeTodo() async {
+  Future<void> completeTodo(int index, WidgetRef ref) async {
+    var completedTodo = state[index];
     try {
-      state = state.where((element) => !element.isDone).toList();
+      state = List.from(state)..removeAt(index);
       await _saveTodo();
+      ref.read(completedTodoListProvider.notifier).addCompletedTodo(completedTodo);
     } catch (e) {
       print('Failed to remove todo: $e');
     }

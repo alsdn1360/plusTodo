@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/provider_todo.dart';
+import 'package:plus_todo/provider/todo/provider_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -103,6 +103,27 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              if (_urgency >= 5 && _importance >= 5)
+                                Text(
+                                  'Do',
+                                  style: CustomTextStyle.title2.copyWith(color: red),
+                                )
+                              else if (_urgency >= 5 && _importance < 5)
+                                Text(
+                                  'Delegate',
+                                  style: CustomTextStyle.title2.copyWith(color: blue),
+                                )
+                              else if (_urgency < 5 && _importance >= 5)
+                                  Text(
+                                    'Schedule',
+                                    style: CustomTextStyle.title2.copyWith(color: orange),
+                                  )
+                                else
+                                  Text(
+                                    'Eliminate',
+                                    style: CustomTextStyle.title2,
+                                  ),
+                              const Gap(defaultGapL),
                               Text(
                                 '긴급도: ${_urgency.toInt()}',
                                 style: CustomTextStyle.body2,
