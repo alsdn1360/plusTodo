@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/pages/home/home_page.dart';
 import 'package:plus_todo/pages/todo/todo_create_page.dart';
 import 'package:plus_todo/pages/todo/todo_list_page.dart';
-import 'package:plus_todo/provider/provider_navigation.dart';
+import 'package:plus_todo/provider/navigatation/provider_navigation.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 
 class MainPage extends ConsumerWidget {

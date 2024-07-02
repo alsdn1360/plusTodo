@@ -77,7 +77,19 @@ class TodoCompletedCard extends ConsumerWidget {
                     onChanged: (bool? value) {
                       Future.delayed(
                         const Duration(milliseconds: 100),
-                        () => ref.read(completedTodoListProvider.notifier).undoCompletedTodo(index, ref),
+                        () {
+                          ref.read(completedTodoListProvider.notifier).undoCompletedTodo(index, ref);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Center(
+                                child: Text(
+                                  '완료된 일을 다시 되돌렸어요.',
+                                  style: CustomTextStyle.body3.copyWith(color: white),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

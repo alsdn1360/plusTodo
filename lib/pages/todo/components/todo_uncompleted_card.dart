@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/provider/filter/provider_filtered_index.dart';
 import 'package:plus_todo/provider/todo/provider_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -12,20 +13,46 @@ class TodoUncompletedCard extends ConsumerWidget {
   final String title;
   final String subtitle;
   final Color color;
-  final bool Function(TodoData) filter;
+  final bool isDoCard;
+  final int filteredIndex;
+  final bool Function(TodoData) filteredTodoData;
 
   const TodoUncompletedCard({
     super.key,
     required this.title,
     required this.subtitle,
     required this.color,
-    required this.filter,
+    this.isDoCard = false,
+    required this.filteredIndex,
+    required this.filteredTodoData,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoData = ref.watch(todoListProvider);
-    final filteredData = todoData.where(filter).toList();
+    final filteredData = todoData.where(filteredTodoData).toList();
+
+    if (filteredIndex == 1) {
+      filteredData.sort(
+        (a, b) {
+          int compareUrgency = b.urgency.compareTo(a.urgency);
+          if (compareUrgency != 0) {
+            return compareUrgency;
+          }
+          return b.importance.compareTo(a.importance);
+        },
+      );
+    } else if (filteredIndex == 2) {
+      filteredData.sort(
+        (a, b) {
+          int compareImportance = b.importance.compareTo(a.importance);
+          if (compareImportance != 0) {
+            return compareImportance;
+          }
+          return b.urgency.compareTo(a.urgency);
+        },
+      );
+    } else if (filteredIndex == 3) {}
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
@@ -37,14 +64,41 @@ class TodoUncompletedCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: CustomTextStyle.title2.copyWith(color: color),
-          ),
-          const Gap(defaultGapS / 4),
-          Text(
-            subtitle,
-            style: CustomTextStyle.caption2,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: CustomTextStyle.title2.copyWith(color: color),
+                  ),
+                  const Gap(defaultGapS / 4),
+                  Text(
+                    subtitle,
+                    style: CustomTextStyle.caption2,
+                  ),
+                ],
+              ),
+              if (filteredIndex == 1 && isDoCard)
+                InkWell(
+                  onTap: () => ref.read(filteredIndexProvider.notifier).state = (filteredIndex % 2) + 1,
+                  child: Text(
+                    '긴급도 우선 정렬',
+                    style: CustomTextStyle.caption2,
+                  ),
+                )
+              else if (filteredIndex == 2 && isDoCard)
+                InkWell(
+                  onTap: () => ref.read(filteredIndexProvider.notifier).state = (filteredIndex % 2) + 1,
+                  child: Text(
+                    '중요도 우선 정렬',
+                    style: CustomTextStyle.caption2,
+                  ),
+                ),
+            ],
           ),
           const CustomDivider(color: gray),
           ListView.separated(
