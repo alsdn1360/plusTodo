@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/provider/provider_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -44,9 +47,7 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
         title: const Text('새로운 할 일'),
       ),
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -158,14 +159,18 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                   ),
                 ),
                 Expanded(
-                  child: InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text('저장', style: CustomTextStyle.title3),
-                      ),
-                    ),
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      return InkWell(
+                        onTap: () => _addTodo(ref),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text('저장', style: CustomTextStyle.title3),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -174,5 +179,31 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
         ),
       ),
     );
+  }
+
+  void _addTodo(WidgetRef ref) {
+    if (_titleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Center(
+            child: Text(
+              '제목을 입력해주세요.',
+              style: CustomTextStyle.body3.copyWith(color: white),
+            ),
+          ),
+        ),
+      );
+      return;
+    } else {
+      final addTodo = TodoData(
+        title: _titleController.text,
+        content: _contentController.text,
+        urgency: _urgency,
+        importance: _importance,
+        isDone: false,
+      );
+      ref.read(todoListProvider.notifier).addTodo(addTodo);
+      Navigator.pop(context);
+    }
   }
 }

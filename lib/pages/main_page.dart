@@ -41,11 +41,14 @@ class MainPage extends ConsumerWidget {
                 ) {
                   var curve = CurvedAnimation(
                     parent: animation,
-                    curve: Curves.easeInOut,
-                    reverseCurve: Curves.easeInOut,
+                    curve: Curves.ease,
+                    reverseCurve: Curves.ease,
                   );
-                  return FadeTransition(
-                    opacity: curve,
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: Offset.zero,
+                    ).animate(curve),
                     child: const TodoCreatePage(),
                   );
                 },
