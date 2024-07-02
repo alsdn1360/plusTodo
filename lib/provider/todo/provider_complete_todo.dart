@@ -6,11 +6,23 @@ import 'package:plus_todo/provider/todo/provider_todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final completedTodoListProvider = StateNotifierProvider<CompletedTodoListNotifier, List<TodoData>>((ref) {
-  return CompletedTodoListNotifier();
+  return CompletedTodoListNotifier([]);
 });
 
 class CompletedTodoListNotifier extends StateNotifier<List<TodoData>> {
-  CompletedTodoListNotifier() : super([]);
+  CompletedTodoListNotifier(super.state) {
+    _loadCompletedTodoList();
+  }
+
+  Future<void> _loadCompletedTodoList() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final completedTodoList = prefs.getStringList('completedTodoList') ?? [];
+      state = completedTodoList.map((e) => TodoData.fromJson(json.decode(e))).toList();
+    } catch (e) {
+      print('Failed to load todos: $e');
+    }
+  }
 
   Future<void> _saveCompletedTodo() async {
     try {
@@ -33,7 +45,9 @@ class CompletedTodoListNotifier extends StateNotifier<List<TodoData>> {
 
   Future<void> undoCompletedTodo(int index, WidgetRef ref) async {
     var undoCompleteTodo = state[index];
+
     try {
+      await toggleDone(index);
       state = List.from(state)..removeAt(index);
       await _saveCompletedTodo();
       ref.read(todoListProvider.notifier).addTodo(undoCompleteTodo);
@@ -42,8 +56,28 @@ class CompletedTodoListNotifier extends StateNotifier<List<TodoData>> {
     }
   }
 
+  Future<void> clearCompletedTodo() async {
+    try {
+      state = [];
+      await _saveCompletedTodo();
+    } catch (e) {
+      print('Failed to remove completed todo: $e');
+    }
+  }
 
-  void removeCompletedTodo(int index) {
-    state = List.from(state)..removeAt(index);
+  Future<void> toggleDone(int index) async {
+    var updatedTodo = state[index];
+    updatedTodo.isDone = !updatedTodo.isDone;
+
+    try {
+      state = [
+        ...state.sublist(0, index),
+        updatedTodo,
+        ...state.sublist(index + 1),
+      ];
+      _saveCompletedTodo();
+    } catch (e) {
+      print('Failed to toggle done: $e');
+    }
   }
 }

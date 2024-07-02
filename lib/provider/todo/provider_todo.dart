@@ -45,7 +45,9 @@ class TodoListNotifier extends StateNotifier<List<TodoData>> {
 
   Future<void> completeTodo(int index, WidgetRef ref) async {
     var completedTodo = state[index];
+
     try {
+      await toggleDone(index);
       state = List.from(state)..removeAt(index);
       await _saveTodo();
       ref.read(completedTodoListProvider.notifier).addCompletedTodo(completedTodo);

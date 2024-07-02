@@ -75,7 +75,7 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomTextField(
-                                hintText: '제목',
+                                hintText: '할 일',
                                 textController: _titleController,
                                 focusNode: _focusNode,
                               ),
@@ -114,15 +114,15 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                                   style: CustomTextStyle.title2.copyWith(color: blue),
                                 )
                               else if (_urgency < 5 && _importance >= 5)
-                                  Text(
-                                    'Schedule',
-                                    style: CustomTextStyle.title2.copyWith(color: orange),
-                                  )
-                                else
-                                  Text(
-                                    'Eliminate',
-                                    style: CustomTextStyle.title2,
-                                  ),
+                                Text(
+                                  'Schedule',
+                                  style: CustomTextStyle.title2.copyWith(color: orange),
+                                )
+                              else
+                                Text(
+                                  'Eliminate',
+                                  style: CustomTextStyle.title2,
+                                ),
                               const Gap(defaultGapL),
                               Text(
                                 '긴급도: ${_urgency.toInt()}',
@@ -208,7 +208,7 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
         SnackBar(
           content: Center(
             child: Text(
-              '제목을 입력해주세요.',
+              '할 일을 입력해 주세요.',
               style: CustomTextStyle.body3.copyWith(color: white),
             ),
           ),
