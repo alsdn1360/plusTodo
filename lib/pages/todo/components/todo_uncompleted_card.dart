@@ -84,7 +84,7 @@ class TodoUncompletedCard extends ConsumerWidget {
               ),
               if (filteredIndex == 1 && isDoCard)
                 InkWell(
-                  onTap: () => ref.read(filteredIndexProvider.notifier).state = (filteredIndex % 2) + 1,
+                  onTap: () => ref.read(filteredIndexProvider.notifier).state = 2,
                   child: Text(
                     '긴급도 우선 정렬',
                     style: CustomTextStyle.caption2,
@@ -92,7 +92,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                 )
               else if (filteredIndex == 2 && isDoCard)
                 InkWell(
-                  onTap: () => ref.read(filteredIndexProvider.notifier).state = (filteredIndex % 2) + 1,
+                  onTap: () => ref.read(filteredIndexProvider.notifier).state = 1,
                   child: Text(
                     '중요도 우선 정렬',
                     style: CustomTextStyle.caption2,
@@ -145,7 +145,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                     activeColor: black,
                     checkColor: white,
                   ),
-                  const Gap(defaultGapS),
+                  const Gap(defaultGapM),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

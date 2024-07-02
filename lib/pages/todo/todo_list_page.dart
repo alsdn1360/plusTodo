@@ -19,7 +19,11 @@ class TodoListPage extends ConsumerWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM),
+          padding: const EdgeInsets.only(
+            left: defaultPaddingM,
+            right: defaultPaddingM,
+            bottom: defaultPaddingM,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,7 +67,6 @@ class TodoListPage extends ConsumerWidget {
                 ),
                 const Gap(defaultGapL),
                 const TodoCompletedCard(),
-                const Gap(defaultGapL),
               ],
             ),
           ),

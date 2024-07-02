@@ -107,7 +107,7 @@ class TodoCompletedCard extends ConsumerWidget {
                     activeColor: black,
                     checkColor: white,
                   ),
-                  const Gap(defaultGapS),
+                  const Gap(defaultGapM),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
