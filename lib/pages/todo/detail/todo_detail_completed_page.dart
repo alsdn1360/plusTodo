@@ -51,6 +51,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                             todoData.title,
                             style: CustomTextStyle.body1,
                             softWrap: true,
+                            textAlign: TextAlign.justify,
                           ),
                           if (todoData.content.isNotEmpty)
                             Column(
@@ -60,6 +61,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                                   todoData.content,
                                   style: CustomTextStyle.body2,
                                   softWrap: true,
+                                  textAlign: TextAlign.justify,
                                 ),
                               ],
                             )

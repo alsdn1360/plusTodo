@@ -198,7 +198,7 @@ class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
     );
   }
 
-  void _addTodo(WidgetRef ref) {
+  Future<void> _addTodo(WidgetRef ref) async {
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -212,7 +212,6 @@ class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
           ),
         ),
       );
-      return;
     } else {
       final addTodo = TodoData(
         title: _titleController.text,

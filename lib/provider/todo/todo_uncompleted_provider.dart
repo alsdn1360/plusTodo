@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
@@ -43,6 +42,19 @@ class TodoUncompletedNotifier extends StateNotifier<List<TodoData>> {
     }
   }
 
+  Future<void> updateUncompletedTodo(int index, TodoData todoData) async {
+    try {
+      state = [
+        ...state.sublist(0, index),
+        todoData,
+        ...state.sublist(index + 1),
+      ];
+      await _saveUncompletedTodo();
+    } catch (e) {
+      print('Failed to update todo: $e');
+    }
+  }
+
   Future<void> deleteUncompletedTodoAt(int index) async {
     try {
       state = List.from(state)..removeAt(index);
@@ -79,5 +91,9 @@ class TodoUncompletedNotifier extends StateNotifier<List<TodoData>> {
     } catch (e) {
       print('Failed to toggle done: $e');
     }
+  }
+
+  void refresh() {
+    _loadUncompletedTodoList();
   }
 }

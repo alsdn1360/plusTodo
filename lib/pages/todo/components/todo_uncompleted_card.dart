@@ -116,26 +116,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                 children: [
                   Checkbox(
                     value: uncompletedTodoList.isDone,
-                    onChanged: (bool? value) {
-                      Future.delayed(
-                        const Duration(milliseconds: 100),
-                        () {
-                          ref.read(todoUncompletedProvider.notifier).completeTodo(originalIndex, ref);
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: const Duration(seconds: 1),
-                              content: Center(
-                                child: Text(
-                                  '할 일을 완료했어요.',
-                                  style: CustomTextStyle.body3.copyWith(color: white),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onChanged: (bool? value) => _onCheck(ref, originalIndex, context),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: const VisualDensity(
                       horizontal: VisualDensity.minimumDensity,
@@ -150,17 +131,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                   const Gap(defaultGapM),
                   Expanded(
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => TodoDetailUncompletedPage(
-                              todoData: uncompletedTodoList,
-                              originalIndex: originalIndex,
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () => _pushDetailPage(context, uncompletedTodoList, originalIndex),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -187,6 +158,34 @@ class TodoUncompletedCard extends ConsumerWidget {
               style: CustomTextStyle.body3,
             ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _onCheck(WidgetRef ref, int originalIndex, BuildContext context) async {
+    ref.read(todoUncompletedProvider.notifier).completeTodo(originalIndex, ref);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Center(
+          child: Text(
+            '할 일을 완료했어요.',
+            style: CustomTextStyle.body3.copyWith(color: white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> _pushDetailPage(BuildContext context, TodoData uncompletedTodoList, int originalIndex) {
+    return Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => TodoDetailUncompletedPage(
+          todoData: uncompletedTodoList,
+          originalIndex: originalIndex,
+        ),
       ),
     );
   }

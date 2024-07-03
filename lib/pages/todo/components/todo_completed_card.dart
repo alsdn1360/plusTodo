@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
 import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -35,26 +36,7 @@ class TodoCompletedCard extends ConsumerWidget {
                 style: CustomTextStyle.title2,
               ),
               InkWell(
-                onTap: () {
-                  Future.delayed(
-                    const Duration(milliseconds: 100),
-                    () {
-                      ref.read(todoCompletedProvider.notifier).clearCompletedTodo();
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 1),
-                          content: Center(
-                            child: Text(
-                              '완료된 일을 모두 삭제했어요.',
-                              style: CustomTextStyle.body3.copyWith(color: white),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
+                onTap: () => _clearCompletedTodo(ref, context),
                 child: Text(
                   '모두 삭제',
                   style: completedTodoData.isEmpty
@@ -78,26 +60,7 @@ class TodoCompletedCard extends ConsumerWidget {
                 children: [
                   Checkbox(
                     value: completedTodoList.isDone,
-                    onChanged: (bool? value) {
-                      Future.delayed(
-                        const Duration(milliseconds: 100),
-                        () {
-                          ref.read(todoCompletedProvider.notifier).undoCompletedTodo(index, ref);
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: const Duration(seconds: 1),
-                              content: Center(
-                                child: Text(
-                                  '완료된 일을 다시 되돌렸어요.',
-                                  style: CustomTextStyle.body3.copyWith(color: white),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onChanged: (bool? value) => _onCheck(ref, index, context),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: const VisualDensity(
                       horizontal: VisualDensity.minimumDensity,
@@ -112,17 +75,7 @@ class TodoCompletedCard extends ConsumerWidget {
                   const Gap(defaultGapM),
                   Expanded(
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => TodoDetailCompletedPage(
-                              todoData: completedTodoList,
-                              index: index,
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () => _pushDetailPage(context, completedTodoList, index),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -133,9 +86,7 @@ class TodoCompletedCard extends ConsumerWidget {
                           ),
                           Text(
                             '긴급도: ${completedTodoList.urgency.toInt()}  중요도: ${completedTodoList.importance.toInt()}',
-                            style: CustomTextStyle.caption2.copyWith(
-                              decoration: TextDecoration.lineThrough,
-                            ),
+                            style: CustomTextStyle.caption2.copyWith(decoration: TextDecoration.lineThrough),
                           ),
                         ],
                       ),
@@ -151,6 +102,50 @@ class TodoCompletedCard extends ConsumerWidget {
               style: CustomTextStyle.body3,
             ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _clearCompletedTodo(WidgetRef ref, BuildContext context) async {
+    ref.read(todoCompletedProvider.notifier).clearCompletedTodo();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Center(
+          child: Text(
+            '완료된 일을 모두 삭제했어요.',
+            style: CustomTextStyle.body3.copyWith(color: white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onCheck(WidgetRef ref, int index, BuildContext context) async {
+    ref.read(todoCompletedProvider.notifier).undoCompletedTodo(index, ref);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Center(
+          child: Text(
+            '완료된 일을 다시 되돌렸어요.',
+            style: CustomTextStyle.body3.copyWith(color: white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future _pushDetailPage(BuildContext context, TodoData completedTodoList, int index) {
+    return Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => TodoDetailCompletedPage(
+          todoData: completedTodoList,
+          index: index,
+        ),
       ),
     );
   }

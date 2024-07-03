@@ -16,6 +16,7 @@ class CustomTextStyle {
     fontFamily: 'Itim',
     fontSize: 30,
     height: 1.20,
+    letterSpacing: 0,
     color: black,
     fontWeight: FontWeight.w400,
   );
@@ -24,6 +25,7 @@ class CustomTextStyle {
   static TextStyle header2 = baseTextStyle.copyWith(
     fontSize: 22,
     height: 1.27,
+    letterSpacing: 0,
     fontWeight: FontWeight.w700,
   );
 
@@ -32,6 +34,7 @@ class CustomTextStyle {
   static TextStyle title1 = baseTextStyle.copyWith(
     fontSize: 22,
     height: 1.22,
+    letterSpacing: 0,
     fontWeight: FontWeight.w600,
   );
 
@@ -39,6 +42,7 @@ class CustomTextStyle {
   static TextStyle title2 = baseTextStyle.copyWith(
     fontSize: 20,
     height: 1.25,
+    letterSpacing: 0,
     fontWeight: FontWeight.w600,
   );
 
@@ -54,6 +58,7 @@ class CustomTextStyle {
   static TextStyle body1 = baseTextStyle.copyWith(
     fontSize: 16,
     height: 1.25,
+    letterSpacing: 0,
     fontWeight: FontWeight.w600,
   );
 
@@ -61,12 +66,14 @@ class CustomTextStyle {
   static TextStyle body2 = baseTextStyle.copyWith(
     fontSize: 16,
     height: 1.25,
+    letterSpacing: 0,
   );
 
   /// body3 14px, 1.28, 400, Pretendard
   static TextStyle body3 = baseTextStyle.copyWith(
     fontSize: 14,
     height: 1.28,
+    letterSpacing: 0,
   );
 
   // Captions
@@ -75,6 +82,7 @@ class CustomTextStyle {
     fontFamily: 'Itim',
     fontSize: 12,
     height: 1.25,
+    letterSpacing: 0,
     fontWeight: FontWeight.w400,
   );
 

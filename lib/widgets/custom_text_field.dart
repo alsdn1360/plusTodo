@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final TextStyle textStyle;
   final TextEditingController textController;
   final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
-    required this.hintText,
+    this.hintText,
     required this.textStyle,
     required this.textController,
     this.focusNode,
@@ -20,13 +20,13 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       decoration: InputDecoration.collapsed(
         hintText: hintText,
-        hintStyle: const TextStyle(color: gray),
+        hintStyle: textStyle.copyWith(color: gray, letterSpacing: 0),
         border: InputBorder.none,
       ),
       style: textStyle,
-      textAlignVertical: TextAlignVertical.center,
       controller: textController,
       focusNode: focusNode,
+      textAlign: TextAlign.justify,
       maxLines: null,
       cursorWidth: 1,
     );
