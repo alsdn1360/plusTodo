@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
-import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
+import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -168,7 +168,7 @@ class TodoDetailUncompletedPage extends ConsumerWidget {
   }
 
   void _completeTodo(int index, BuildContext context, WidgetRef ref) {
-    ref.read(uncompletedTodoListProvider.notifier).completeTodo(originalIndex, ref);
+    ref.read(todoUncompletedProvider.notifier).completeTodo(originalIndex, ref);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -185,7 +185,7 @@ class TodoDetailUncompletedPage extends ConsumerWidget {
   }
 
   void _deleteUncompletedTodo(int index, BuildContext context, WidgetRef ref) {
-    ref.read(uncompletedTodoListProvider.notifier).deleteUncompletedTodoAt(index);
+    ref.read(todoUncompletedProvider.notifier).deleteUncompletedTodoAt(index);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
+import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -221,7 +221,7 @@ class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
         importance: _importance,
         isDone: false,
       );
-      ref.read(uncompletedTodoListProvider.notifier).addUncompletedTodo(addTodo);
+      ref.read(todoUncompletedProvider.notifier).addUncompletedTodo(addTodo);
       Navigator.pop(context);
     }
   }

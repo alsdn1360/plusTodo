@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
-import 'package:plus_todo/provider/todo/provider_complete_todo.dart';
+import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -14,7 +14,7 @@ class TodoCompletedCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final completedTodoData = ref.watch(completedTodoListProvider);
+    final completedTodoData = ref.watch(todoCompletedProvider);
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
@@ -39,7 +39,7 @@ class TodoCompletedCard extends ConsumerWidget {
                   Future.delayed(
                     const Duration(milliseconds: 100),
                     () {
-                      ref.read(completedTodoListProvider.notifier).clearCompletedTodo();
+                      ref.read(todoCompletedProvider.notifier).clearCompletedTodo();
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -82,7 +82,7 @@ class TodoCompletedCard extends ConsumerWidget {
                       Future.delayed(
                         const Duration(milliseconds: 100),
                         () {
-                          ref.read(completedTodoListProvider.notifier).undoCompletedTodo(index, ref);
+                          ref.read(todoCompletedProvider.notifier).undoCompletedTodo(index, ref);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

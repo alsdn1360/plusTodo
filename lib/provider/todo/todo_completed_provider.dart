@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
+import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final completedTodoListProvider = StateNotifierProvider<CompletedTodoListNotifier, List<TodoData>>((ref) {
-  return CompletedTodoListNotifier([]);
+final todoCompletedProvider = StateNotifierProvider<TodoCompletedNotifier, List<TodoData>>((ref) {
+  return TodoCompletedNotifier([]);
 });
 
-class CompletedTodoListNotifier extends StateNotifier<List<TodoData>> {
-  CompletedTodoListNotifier(super.state) {
+class TodoCompletedNotifier extends StateNotifier<List<TodoData>> {
+  TodoCompletedNotifier(super.state) {
     _loadCompletedTodoList();
   }
 
@@ -59,7 +59,7 @@ class CompletedTodoListNotifier extends StateNotifier<List<TodoData>> {
       await toggleDone(index);
       state = List.from(state)..removeAt(index);
       await _saveCompletedTodo();
-      ref.read(uncompletedTodoListProvider.notifier).addUncompletedTodo(undoCompleteTodo);
+      ref.read(todoUncompletedProvider.notifier).addUncompletedTodo(undoCompleteTodo);
     } catch (e) {
       print('Failed to remove todo: $e');
     }

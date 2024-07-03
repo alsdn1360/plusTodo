@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/pages/todo/components/todo_completed_card.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
-import 'package:plus_todo/provider/filter/provider_filtered_index.dart';
+import 'package:plus_todo/provider/filtered/filtered_index_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 

@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
-import 'package:plus_todo/provider/filter/provider_filtered_index.dart';
-import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
+import 'package:plus_todo/provider/filtered/filtered_index_provider.dart';
+import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -31,7 +31,7 @@ class TodoUncompletedCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoData = ref.watch(uncompletedTodoListProvider);
+    final todoData = ref.watch(todoUncompletedProvider);
     final filteredData = todoData.where(filteredTodoData).toList();
 
     if (filteredIndex == 1) {
@@ -120,7 +120,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                       Future.delayed(
                         const Duration(milliseconds: 100),
                         () {
-                          ref.read(uncompletedTodoListProvider.notifier).completeTodo(originalIndex, ref);
+                          ref.read(todoUncompletedProvider.notifier).completeTodo(originalIndex, ref);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
