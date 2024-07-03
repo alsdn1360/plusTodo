@@ -2,65 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
+import 'package:plus_todo/provider/todo/provider_complete_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
-import 'package:plus_todo/widgets/custom_text_field.dart';
 
-class TodoCreatePage extends StatefulWidget {
-  const TodoCreatePage({super.key});
+class TodoCompletedDetailPage extends ConsumerWidget {
+  final TodoData todoData;
+  final int index;
 
-  @override
-  State<TodoCreatePage> createState() => _TodoCreatePageState();
-}
-
-class _TodoCreatePageState extends State<TodoCreatePage> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _contentController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-
-  double _importance = 1;
-  double _urgency = 1;
+  const TodoCompletedDetailPage({
+    super.key,
+    required this.todoData,
+    required this.index,
+  });
 
   @override
-  void initState() {
-    super.initState();
-    _focusNode.requestFocus();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _titleController.dispose();
-    _contentController.dispose();
-    _focusNode.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('새로운 할 일'),
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: defaultPaddingM,
-              left: defaultPaddingM,
-              right: defaultPaddingM,
-            ),
-            child: Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            bottom: defaultPaddingM,
+            left: defaultPaddingM,
+            right: defaultPaddingM,
+          ),
+          child: Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(defaultPaddingS),
                       decoration: BoxDecoration(
@@ -70,23 +46,30 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomTextField(
-                            hintText: '할 일',
-                            textStyle: CustomTextStyle.body1,
-                            textController: _titleController,
-                            focusNode: _focusNode,
+                          Text(
+                            todoData.title,
+                            style: CustomTextStyle.body1,
+                            softWrap: true,
                           ),
-                          const Gap(defaultGapM),
-                          CustomTextField(
-                            hintText: '메모',
-                            textStyle: CustomTextStyle.body2,
-                            textController: _contentController,
-                          ),
+                          if (todoData.content.isNotEmpty)
+                            Column(
+                              children: [
+                                const Gap(defaultGapM),
+                                Text(
+                                  todoData.content,
+                                  style: CustomTextStyle.body2,
+                                  softWrap: true,
+                                ),
+                              ],
+                            )
                         ],
                       ),
                     ),
-                    const Gap(defaultGapL),
-                    Container(
+                  ),
+                  const Gap(defaultGapL),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(
                         top: defaultPaddingS,
@@ -101,17 +84,17 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (_urgency >= 5 && _importance >= 5)
+                          if (todoData.urgency >= 5 && todoData.importance >= 5)
                             Text(
                               'Do',
                               style: CustomTextStyle.title2.copyWith(color: red),
                             )
-                          else if (_urgency >= 5 && _importance < 5)
+                          else if (todoData.urgency >= 5 && todoData.importance < 5)
                             Text(
                               'Delegate',
                               style: CustomTextStyle.title2.copyWith(color: blue),
                             )
-                          else if (_urgency < 5 && _importance >= 5)
+                          else if (todoData.urgency < 5 && todoData.importance >= 5)
                             Text(
                               'Schedule',
                               style: CustomTextStyle.title2.copyWith(color: orange),
@@ -123,33 +106,29 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                             ),
                           const Gap(defaultGapL),
                           Text(
-                            '긴급도: ${_urgency.toInt()}',
+                            '긴급도: ${todoData.urgency.toInt()}',
                             style: CustomTextStyle.body2,
                           ),
                           const Gap(defaultGapS / 2),
                           CustomSlider(
-                            value: _urgency,
-                            onChanged: (double newValue) {
-                              setState(() => _urgency = newValue);
-                            },
+                            value: todoData.urgency,
+                            isEnabled: false,
                           ),
                           const Gap(defaultGapL),
                           Text(
-                            '중요도: ${_importance.toInt()}',
+                            '중요도: ${todoData.importance.toInt()}',
                             style: CustomTextStyle.body2,
                           ),
                           const Gap(defaultGapS / 2),
                           CustomSlider(
-                            value: _importance,
-                            onChanged: (double newValue) {
-                              setState(() => _importance = newValue);
-                            },
+                            value: todoData.importance,
+                            isEnabled: false,
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -166,11 +145,17 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => _undoCompletedTodo(index, context, ref),
                     child: SizedBox(
                       width: double.infinity,
                       child: Center(
-                        child: Text('취소', style: CustomTextStyle.title3),
+                        child: Column(
+                          children: [
+                            const Icon(Icons.refresh_outlined, color: black),
+                            const Gap(defaultGapS / 4),
+                            Text('되돌리기', style: CustomTextStyle.caption2),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -179,11 +164,17 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                   child: Consumer(
                     builder: (context, ref, child) {
                       return InkWell(
-                        onTap: () => _addTodo(ref),
+                        onTap: () => _deleteCompletedTodo(index, context, ref),
                         child: SizedBox(
                           width: double.infinity,
                           child: Center(
-                            child: Text('저장', style: CustomTextStyle.title3),
+                            child: Column(
+                              children: [
+                                const Icon(Icons.delete_outlined, color: black),
+                                const Gap(defaultGapS / 4),
+                                Text('삭제', style: CustomTextStyle.caption2),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -198,31 +189,37 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
     );
   }
 
-  void _addTodo(WidgetRef ref) {
-    if (_titleController.text.isEmpty) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 2),
-          content: Center(
-            child: Text(
-              '할 일을 입력해 주세요.',
-              style: CustomTextStyle.body3.copyWith(color: white),
-            ),
+  void _undoCompletedTodo(int index, BuildContext context, WidgetRef ref) {
+    ref.read(completedTodoListProvider.notifier).undoCompletedTodo(index, ref);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Center(
+          child: Text(
+            '완료된 일을 다시 되돌렸어요.',
+            style: CustomTextStyle.body3.copyWith(color: white),
           ),
         ),
-      );
-      return;
-    } else {
-      final addTodo = TodoData(
-        title: _titleController.text,
-        content: _contentController.text,
-        urgency: _urgency,
-        importance: _importance,
-        isDone: false,
-      );
-      ref.read(uncompletedTodoListProvider.notifier).addUncompletedTodo(addTodo);
-      Navigator.pop(context);
-    }
+      ),
+    );
+    Navigator.pop(context);
+  }
+
+  void _deleteCompletedTodo(int index, BuildContext context, WidgetRef ref) {
+    ref.read(completedTodoListProvider.notifier).deleteCompletedTodoAt(index);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 1),
+        content: Center(
+          child: Text(
+            '완료된 일을 삭제했어요.',
+            style: CustomTextStyle.body3.copyWith(color: white),
+          ),
+        ),
+      ),
+    );
+    Navigator.pop(context);
   }
 }

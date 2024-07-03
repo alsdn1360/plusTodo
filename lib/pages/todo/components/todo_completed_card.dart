@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/pages/todo/todo_completed_detail_page.dart';
 import 'package:plus_todo/provider/todo/provider_complete_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -109,21 +111,34 @@ class TodoCompletedCard extends ConsumerWidget {
                   ),
                   const Gap(defaultGapM),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          completedTodoList.title,
-                          style: CustomTextStyle.body2.copyWith(decoration: TextDecoration.lineThrough),
-                          softWrap: true,
-                        ),
-                        Text(
-                          '긴급도: ${completedTodoList.urgency.toInt()}  중요도: ${completedTodoList.importance.toInt()}',
-                          style: CustomTextStyle.caption2.copyWith(
-                            decoration: TextDecoration.lineThrough,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => TodoCompletedDetailPage(
+                              todoData: completedTodoList,
+                              index: index,
+                            ),
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            completedTodoList.title,
+                            style: CustomTextStyle.body2.copyWith(decoration: TextDecoration.lineThrough),
+                            softWrap: true,
+                          ),
+                          Text(
+                            '긴급도: ${completedTodoList.urgency.toInt()}  중요도: ${completedTodoList.importance.toInt()}',
+                            style: CustomTextStyle.caption2.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

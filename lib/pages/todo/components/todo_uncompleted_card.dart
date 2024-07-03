@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/pages/todo/todo_uncompleted_detail_page.dart';
 import 'package:plus_todo/provider/filter/provider_filtered_index.dart';
-import 'package:plus_todo/provider/todo/provider_todo.dart';
+import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -29,7 +31,7 @@ class TodoUncompletedCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoData = ref.watch(todoListProvider);
+    final todoData = ref.watch(uncompletedTodoListProvider);
     final filteredData = todoData.where(filteredTodoData).toList();
 
     if (filteredIndex == 1) {
@@ -107,18 +109,18 @@ class TodoUncompletedCard extends ConsumerWidget {
             separatorBuilder: (context, index) => const Gap(defaultGapS),
             itemCount: filteredData.length,
             itemBuilder: (context, index) {
-              final todoList = filteredData[index];
-              final originalIndex = todoData.indexOf(todoList);
+              final uncompletedTodoList = filteredData[index];
+              final originalIndex = todoData.indexOf(uncompletedTodoList);
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Checkbox(
-                    value: todoList.isDone,
+                    value: uncompletedTodoList.isDone,
                     onChanged: (bool? value) {
                       Future.delayed(
                         const Duration(milliseconds: 100),
                         () {
-                          ref.read(todoListProvider.notifier).completeTodo(originalIndex, ref);
+                          ref.read(uncompletedTodoListProvider.notifier).completeTodo(originalIndex, ref);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -147,19 +149,32 @@ class TodoUncompletedCard extends ConsumerWidget {
                   ),
                   const Gap(defaultGapM),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          todoList.title,
-                          style: CustomTextStyle.body2,
-                          softWrap: true,
-                        ),
-                        Text(
-                          '긴급도: ${todoList.urgency.toInt()}  중요도: ${todoList.importance.toInt()}',
-                          style: CustomTextStyle.caption2,
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => TodoUncompletedDetailPage(
+                              todoData: uncompletedTodoList,
+                              originalIndex: originalIndex,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            uncompletedTodoList.title,
+                            style: CustomTextStyle.body2,
+                            softWrap: true,
+                          ),
+                          Text(
+                            '긴급도: ${uncompletedTodoList.urgency.toInt()}  중요도: ${uncompletedTodoList.importance.toInt()}',
+                            style: CustomTextStyle.caption2,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

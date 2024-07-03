@@ -3,31 +3,37 @@ import 'package:plus_todo/themes/custom_color.dart';
 
 class CustomSlider extends StatelessWidget {
   final double value;
-  final ValueChanged<double> onChanged;
+  final bool isEnabled;
+  final ValueChanged<double>? onChanged;
 
   const CustomSlider({
     super.key,
     required this.value,
-    required this.onChanged,
+    this.isEnabled = true,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return SliderTheme(
-      data: const SliderThemeData(
-        trackShape: CustomSliderTrackShape(),
-        thumbShape: CustomSliderThumbShape(),
-        overlayShape: CustomSliderOverlayShape(),
+      data: SliderThemeData(
+        trackShape: const CustomSliderTrackShape(),
+        thumbShape: const CustomSliderThumbShape(),
+        overlayShape: const CustomSliderOverlayShape(),
+        activeTrackColor: black,
+        inactiveTrackColor: black.withOpacity(0.1),
+        disabledActiveTrackColor: black,
+        disabledInactiveTrackColor: black.withOpacity(0.1),
+        thumbColor: black,
+        disabledThumbColor: black,
+        overlayColor: black.withOpacity(0.1),
       ),
       child: Slider(
         value: value,
-        onChanged: onChanged,
+        onChanged: isEnabled ? onChanged : null,
         min: 1,
         max: 10,
         divisions: 9,
-        thumbColor: black,
-        activeColor: black,
-        inactiveColor: lightGray,
       ),
     );
   }
@@ -44,9 +50,9 @@ class CustomSliderTrackShape extends RoundedRectSliderTrackShape {
     bool isEnabled = false,
     bool isDiscrete = false,
   }) {
-    const trackHeight = 8.0;
+    const trackHeight = 6.0;
     final trackLeft = offset.dx;
-    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
     final trackWidth = parentBox.size.width;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }

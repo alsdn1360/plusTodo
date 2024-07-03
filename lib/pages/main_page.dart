@@ -41,8 +41,8 @@ class MainPage extends ConsumerWidget {
                 ) {
                   var curve = CurvedAnimation(
                     parent: animation,
-                    curve: Curves.ease,
-                    reverseCurve: Curves.ease,
+                    curve: Curves.easeOutQuad,
+                    reverseCurve: Curves.easeOutQuad,
                   );
                   return SlideTransition(
                     position: Tween<Offset>(
@@ -64,7 +64,7 @@ class MainPage extends ConsumerWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_box_outlined),
+            icon: Icon(Icons.add_box_rounded),
             label: 'Add Todo',
           ),
           BottomNavigationBarItem(

@@ -5,16 +5,16 @@ import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/provider/todo/provider_complete_todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final todoListProvider = StateNotifierProvider<TodoListNotifier, List<TodoData>>((ref) {
-  return TodoListNotifier([]);
+final uncompletedTodoListProvider = StateNotifierProvider<UncompletedTodoListNotifier, List<TodoData>>((ref) {
+  return UncompletedTodoListNotifier([]);
 });
 
-class TodoListNotifier extends StateNotifier<List<TodoData>> {
-  TodoListNotifier(super.state) {
-    _loadTodoList();
+class UncompletedTodoListNotifier extends StateNotifier<List<TodoData>> {
+  UncompletedTodoListNotifier(super.state) {
+    _loadUncompletedTodoList();
   }
 
-  Future<void> _loadTodoList() async {
+  Future<void> _loadUncompletedTodoList() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final todoList = prefs.getStringList('todoList') ?? [];
@@ -24,7 +24,7 @@ class TodoListNotifier extends StateNotifier<List<TodoData>> {
     }
   }
 
-  Future<void> _saveTodo() async {
+  Future<void> _saveUncompletedTodo() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final todoList = state.map((e) => json.encode(e.toJson())).toList();
@@ -34,12 +34,21 @@ class TodoListNotifier extends StateNotifier<List<TodoData>> {
     }
   }
 
-  Future<void> addTodo(TodoData todoData) async {
+  Future<void> addUncompletedTodo(TodoData todoData) async {
     try {
       state = [...state, todoData];
-      await _saveTodo();
+      await _saveUncompletedTodo();
     } catch (e) {
       print('Failed to add todo: $e');
+    }
+  }
+
+  Future<void> deleteUncompletedTodoAt(int index) async {
+    try {
+      state = List.from(state)..removeAt(index);
+      await _saveUncompletedTodo();
+    } catch (e) {
+      print('Failed to remove todo: $e');
     }
   }
 
@@ -49,7 +58,7 @@ class TodoListNotifier extends StateNotifier<List<TodoData>> {
     try {
       await toggleDone(index);
       state = List.from(state)..removeAt(index);
-      await _saveTodo();
+      await _saveUncompletedTodo();
       ref.read(completedTodoListProvider.notifier).addCompletedTodo(completedTodo);
     } catch (e) {
       print('Failed to remove todo: $e');
@@ -66,7 +75,7 @@ class TodoListNotifier extends StateNotifier<List<TodoData>> {
         updatedTodo,
         ...state.sublist(index + 1),
       ];
-      _saveTodo();
+      _saveUncompletedTodo();
     } catch (e) {
       print('Failed to toggle done: $e');
     }
