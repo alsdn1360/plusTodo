@@ -8,8 +8,8 @@ import 'package:plus_todo/provider/filter/provider_filtered_index.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 
-class TodoListPage extends ConsumerWidget {
-  const TodoListPage({super.key});
+class TodoPage extends ConsumerWidget {
+  const TodoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

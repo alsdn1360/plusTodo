@@ -9,14 +9,14 @@ import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
 
-class TodoCreatePage extends StatefulWidget {
-  const TodoCreatePage({super.key});
+class TodoInteractionCreatePage extends StatefulWidget {
+  const TodoInteractionCreatePage({super.key});
 
   @override
-  State<TodoCreatePage> createState() => _TodoCreatePageState();
+  State<TodoInteractionCreatePage> createState() => _TodoInteractionCreatePageState();
 }
 
-class _TodoCreatePageState extends State<TodoCreatePage> {
+class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -121,7 +121,7 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                               'Eliminate',
                               style: CustomTextStyle.title2,
                             ),
-                          const Gap(defaultGapL),
+                          const Gap(defaultGapM),
                           Text(
                             '긴급도: ${_urgency.toInt()}',
                             style: CustomTextStyle.body2,
@@ -133,7 +133,7 @@ class _TodoCreatePageState extends State<TodoCreatePage> {
                               setState(() => _urgency = newValue);
                             },
                           ),
-                          const Gap(defaultGapL),
+                          const Gap(defaultGapM),
                           Text(
                             '중요도: ${_importance.toInt()}',
                             style: CustomTextStyle.body2,

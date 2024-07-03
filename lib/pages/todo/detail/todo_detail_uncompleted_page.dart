@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/todo/provider_complete_todo.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
+import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 
-class TodoCompletedDetailPage extends ConsumerWidget {
+class TodoDetailUncompletedPage extends ConsumerWidget {
   final TodoData todoData;
-  final int index;
+  final int originalIndex;
 
-  const TodoCompletedDetailPage({
+  const TodoDetailUncompletedPage({
     super.key,
     required this.todoData,
-    required this.index,
+    required this.originalIndex,
   });
 
   @override
@@ -104,7 +105,7 @@ class TodoCompletedDetailPage extends ConsumerWidget {
                               'Eliminate',
                               style: CustomTextStyle.title2,
                             ),
-                          const Gap(defaultGapL),
+                          const Gap(defaultGapM),
                           Text(
                             '긴급도: ${todoData.urgency.toInt()}',
                             style: CustomTextStyle.body2,
@@ -114,7 +115,7 @@ class TodoCompletedDetailPage extends ConsumerWidget {
                             value: todoData.urgency,
                             isEnabled: false,
                           ),
-                          const Gap(defaultGapL),
+                          const Gap(defaultGapM),
                           Text(
                             '중요도: ${todoData.importance.toInt()}',
                             style: CustomTextStyle.body2,
@@ -143,43 +144,20 @@ class TodoCompletedDetailPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () => _undoCompletedTodo(index, context, ref),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: Column(
-                          children: [
-                            const Icon(Icons.refresh_outlined, color: black),
-                            const Gap(defaultGapS / 4),
-                            Text('되돌리기', style: CustomTextStyle.caption2),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                TodoDetailBottomButton(
+                  onTap: () => _completeTodo(originalIndex, context, ref),
+                  icon: Icons.check_outlined,
+                  content: '할 일 완료',
                 ),
-                Expanded(
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return InkWell(
-                        onTap: () => _deleteCompletedTodo(index, context, ref),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Center(
-                            child: Column(
-                              children: [
-                                const Icon(Icons.delete_outlined, color: black),
-                                const Gap(defaultGapS / 4),
-                                Text('삭제', style: CustomTextStyle.caption2),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                TodoDetailBottomButton(
+                  onTap: () {},
+                  icon: Icons.edit_outlined,
+                  content: '편집',
+                ),
+                TodoDetailBottomButton(
+                  onTap: () => _deleteUncompletedTodo(originalIndex, context, ref),
+                  icon: Icons.delete_outlined,
+                  content: '삭제',
                 ),
               ],
             ),
@@ -189,15 +167,15 @@ class TodoCompletedDetailPage extends ConsumerWidget {
     );
   }
 
-  void _undoCompletedTodo(int index, BuildContext context, WidgetRef ref) {
-    ref.read(completedTodoListProvider.notifier).undoCompletedTodo(index, ref);
+  void _completeTodo(int index, BuildContext context, WidgetRef ref) {
+    ref.read(uncompletedTodoListProvider.notifier).completeTodo(originalIndex, ref);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 1),
         content: Center(
           child: Text(
-            '완료된 일을 다시 되돌렸어요.',
+            '할 일을 완료했어요.',
             style: CustomTextStyle.body3.copyWith(color: white),
           ),
         ),
@@ -206,15 +184,15 @@ class TodoCompletedDetailPage extends ConsumerWidget {
     Navigator.pop(context);
   }
 
-  void _deleteCompletedTodo(int index, BuildContext context, WidgetRef ref) {
-    ref.read(completedTodoListProvider.notifier).deleteCompletedTodoAt(index);
+  void _deleteUncompletedTodo(int index, BuildContext context, WidgetRef ref) {
+    ref.read(uncompletedTodoListProvider.notifier).deleteUncompletedTodoAt(index);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 1),
         content: Center(
           child: Text(
-            '완료된 일을 삭제했어요.',
+            '할 일을 삭제했어요.',
             style: CustomTextStyle.body3.copyWith(color: white),
           ),
         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/pages/home/home_page.dart';
-import 'package:plus_todo/pages/todo/todo_create_page.dart';
-import 'package:plus_todo/pages/todo/todo_list_page.dart';
+import 'package:plus_todo/pages/todo/interaction/todo_interaction_create_page.dart';
+import 'package:plus_todo/pages/todo/todo_page.dart';
 import 'package:plus_todo/provider/navigatation/provider_navigation.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 
@@ -18,7 +18,7 @@ class MainPage extends ConsumerWidget {
         children: [
           const HomePage(),
           Container(),
-          const TodoListPage(),
+          const TodoPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -49,7 +49,7 @@ class MainPage extends ConsumerWidget {
                       begin: const Offset(0, 1),
                       end: Offset.zero,
                     ).animate(curve),
-                    child: const TodoCreatePage(),
+                    child: const TodoInteractionCreatePage(),
                   );
                 },
               ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/pages/todo/todo_uncompleted_detail_page.dart';
+import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
 import 'package:plus_todo/provider/filter/provider_filtered_index.dart';
 import 'package:plus_todo/provider/todo/provider_uncompleted_todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -154,7 +154,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => TodoUncompletedDetailPage(
+                            builder: (context) => TodoDetailUncompletedPage(
                               todoData: uncompletedTodoList,
                               originalIndex: originalIndex,
                             ),
