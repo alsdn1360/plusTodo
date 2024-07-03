@@ -7,6 +7,7 @@ import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
+import 'package:plus_todo/widgets/custom_dialog.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 
 class TodoDetailCompletedPage extends ConsumerWidget {
@@ -152,7 +153,13 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                   content: '되돌리기',
                 ),
                 TodoDetailBottomButton(
-                  onTap: () => _deleteCompletedTodo(index, context, ref),
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      title: '완료된 일을 삭제할까요?',
+                      onTap: () => _deleteCompletedTodo(index, context, ref),
+                    ),
+                  ),
                   icon: Icons.delete_outlined,
                   content: '삭제',
                 ),

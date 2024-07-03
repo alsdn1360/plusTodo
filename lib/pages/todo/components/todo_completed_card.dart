@@ -8,6 +8,7 @@ import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
+import 'package:plus_todo/widgets/custom_dialog.dart';
 import 'package:plus_todo/widgets/custom_divider.dart';
 
 class TodoCompletedCard extends ConsumerWidget {
@@ -35,23 +36,34 @@ class TodoCompletedCard extends ConsumerWidget {
                 '완료된 할 일',
                 style: CustomTextStyle.title2,
               ),
-              InkWell(
-                onTap: () => _clearCompletedTodo(ref, context),
-                child: Text(
+              if (completedTodoData.isEmpty)
+                Text(
                   '모두 삭제',
-                  style: completedTodoData.isEmpty
-                      ? CustomTextStyle.caption2.copyWith(color: gray)
-                      : CustomTextStyle.caption2,
+                  style: CustomTextStyle.caption2.copyWith(color: gray),
+                )
+              else
+                InkWell(
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      title: '완료된 일을 모두 삭제할까요?',
+                      onTap: () => _clearCompletedTodo(ref, context),
+                    ),
+                  ),
+                  child: Text(
+                    '모두 삭제',
+                    style: CustomTextStyle.caption2,
+                  ),
                 ),
-              ),
             ],
           ),
-          const Gap(defaultGapS / 4),
+          const Gap(defaultGapS),
           const CustomDivider(color: gray),
+          const Gap(defaultGapS),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (context, index) => const Gap(defaultGapS),
+            separatorBuilder: (context, index) => const Gap(defaultGapS / 2),
             itemCount: completedTodoData.length,
             itemBuilder: (context, index) {
               final completedTodoList = completedTodoData[index];
@@ -88,6 +100,13 @@ class TodoCompletedCard extends ConsumerWidget {
                             '긴급도: ${completedTodoList.urgency.toInt()}  중요도: ${completedTodoList.importance.toInt()}',
                             style: CustomTextStyle.caption2.copyWith(decoration: TextDecoration.lineThrough),
                           ),
+                          if (index != completedTodoData.length - 1)
+                            const Column(
+                              children: [
+                                Gap(defaultGapM / 2),
+                                CustomDivider(color: lightGray),
+                              ],
+                            ),
                         ],
                       ),
                     ),

@@ -8,6 +8,7 @@ import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
+import 'package:plus_todo/widgets/custom_dialog.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 
 class TodoDetailUncompletedPage extends ConsumerStatefulWidget {
@@ -169,7 +170,13 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                   content: '편집',
                 ),
                 TodoDetailBottomButton(
-                  onTap: () => _deleteUncompletedTodo(widget.originalIndex, context, ref),
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      title: '할 일을 삭제할까요?',
+                      onTap: () => _deleteUncompletedTodo(widget.originalIndex, context, ref),
+                    ),
+                  ),
                   icon: Icons.delete_outlined,
                   content: '삭제',
                 ),
