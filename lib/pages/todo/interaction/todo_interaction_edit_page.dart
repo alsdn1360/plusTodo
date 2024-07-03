@@ -53,105 +53,99 @@ class _TodoInteractionEditPageState extends State<TodoInteractionEditPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: defaultPaddingM,
-              left: defaultPaddingM,
-              right: defaultPaddingM,
-            ),
-            child: Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(defaultPaddingS),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: darkWhite,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomTextField(
-                            textStyle: CustomTextStyle.body1,
-                            textController: _titleController,
-                            focusNode: _focusNode,
-                          ),
-                          const Gap(defaultGapM),
-                          CustomTextField(
-                            hintText: widget.todoData.content.isEmpty ? '내용' : null,
-                            textStyle: CustomTextStyle.body2,
-                            textController: _contentController,
-                          ),
-                        ],
-                      ),
+            padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: darkWhite,
                     ),
-                    const Gap(defaultGapL),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                        top: defaultPaddingS,
-                        bottom: defaultPaddingM / 4,
-                        left: defaultPaddingS,
-                        right: defaultPaddingS,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: darkWhite,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.todoData.urgency >= 5 && widget.todoData.importance >= 5)
-                            Text(
-                              'Do',
-                              style: CustomTextStyle.title2.copyWith(color: red),
-                            )
-                          else if (widget.todoData.urgency >= 5 && widget.todoData.importance < 5)
-                            Text(
-                              'Delegate',
-                              style: CustomTextStyle.title2.copyWith(color: blue),
-                            )
-                          else if (widget.todoData.urgency < 5 && widget.todoData.importance >= 5)
-                            Text(
-                              'Schedule',
-                              style: CustomTextStyle.title2.copyWith(color: orange),
-                            )
-                          else
-                            Text(
-                              'Eliminate',
-                              style: CustomTextStyle.title2,
-                            ),
-                          const Gap(defaultGapM),
-                          Text(
-                            '긴급도: ${widget.todoData.urgency.toInt()}',
-                            style: CustomTextStyle.body2,
-                          ),
-                          const Gap(defaultGapS / 2),
-                          CustomSlider(
-                            value: widget.todoData.urgency,
-                            onChanged: (double newValue) {
-                              setState(() => widget.todoData.urgency = newValue);
-                            },
-                          ),
-                          const Gap(defaultGapM),
-                          Text(
-                            '중요도: ${widget.todoData.importance.toInt()}',
-                            style: CustomTextStyle.body2,
-                          ),
-                          const Gap(defaultGapS / 2),
-                          CustomSlider(
-                            value: widget.todoData.importance,
-                            onChanged: (double newValue) {
-                              setState(() => widget.todoData.importance = newValue);
-                            },
-                          ),
-                        ],
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextField(
+                          textStyle: CustomTextStyle.body1,
+                          textController: _titleController,
+                          focusNode: _focusNode,
+                        ),
+                        const Gap(defaultGapM),
+                        CustomTextField(
+                          hintText: widget.todoData.content.isEmpty ? '내용' : null,
+                          textStyle: CustomTextStyle.body2,
+                          textController: _contentController,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const Gap(defaultGapL),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                      top: defaultPaddingS,
+                      bottom: defaultPaddingM / 4,
+                      left: defaultPaddingS,
+                      right: defaultPaddingS,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: darkWhite,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.todoData.urgency >= 5 && widget.todoData.importance >= 5)
+                          Text(
+                            'Do',
+                            style: CustomTextStyle.title2.copyWith(color: red),
+                          )
+                        else if (widget.todoData.urgency >= 5 && widget.todoData.importance < 5)
+                          Text(
+                            'Delegate',
+                            style: CustomTextStyle.title2.copyWith(color: blue),
+                          )
+                        else if (widget.todoData.urgency < 5 && widget.todoData.importance >= 5)
+                          Text(
+                            'Schedule',
+                            style: CustomTextStyle.title2.copyWith(color: orange),
+                          )
+                        else
+                          Text(
+                            'Eliminate',
+                            style: CustomTextStyle.title2,
+                          ),
+                        const Gap(defaultGapM),
+                        Text(
+                          '긴급도: ${widget.todoData.urgency.toInt()}',
+                          style: CustomTextStyle.body2,
+                        ),
+                        const Gap(defaultGapS / 2),
+                        CustomSlider(
+                          value: widget.todoData.urgency,
+                          onChanged: (double newValue) {
+                            setState(() => widget.todoData.urgency = newValue);
+                          },
+                        ),
+                        const Gap(defaultGapM),
+                        Text(
+                          '중요도: ${widget.todoData.importance.toInt()}',
+                          style: CustomTextStyle.body2,
+                        ),
+                        const Gap(defaultGapS / 2),
+                        CustomSlider(
+                          value: widget.todoData.importance,
+                          onChanged: (double newValue) {
+                            setState(() => widget.todoData.importance = newValue);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -225,5 +219,4 @@ class _TodoInteractionEditPageState extends State<TodoInteractionEditPage> {
       print('Failed to update todo: $e');
     }
   }
-
 }

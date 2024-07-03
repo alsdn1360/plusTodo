@@ -31,109 +31,107 @@ class TodoDetailCompletedPage extends ConsumerWidget {
             left: defaultPaddingM,
             right: defaultPaddingM,
           ),
-          child: Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(defaultPaddingS),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: darkWhite,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            todoData.title,
-                            style: CustomTextStyle.body1,
-                            softWrap: true,
-                            textAlign: TextAlign.justify,
-                          ),
-                          if (todoData.content.isNotEmpty)
-                            Column(
-                              children: [
-                                const Gap(defaultGapM),
-                                Text(
-                                  todoData.content,
-                                  style: CustomTextStyle.body2,
-                                  softWrap: true,
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ],
-                            )
-                        ],
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: darkWhite,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          todoData.title,
+                          style: CustomTextStyle.body1,
+                          softWrap: true,
+                          textAlign: TextAlign.justify,
+                        ),
+                        if (todoData.content.isNotEmpty)
+                          Column(
+                            children: [
+                              const Gap(defaultGapM),
+                              Text(
+                                todoData.content,
+                                style: CustomTextStyle.body2,
+                                softWrap: true,
+                                textAlign: TextAlign.justify,
+                              ),
+                            ],
+                          )
+                      ],
                     ),
                   ),
-                  const Gap(defaultGapL),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(
-                        top: defaultPaddingS,
-                        bottom: defaultPaddingM / 4,
-                        left: defaultPaddingS,
-                        right: defaultPaddingS,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: darkWhite,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (todoData.urgency >= 5 && todoData.importance >= 5)
-                            Text(
-                              'Do',
-                              style: CustomTextStyle.title2.copyWith(color: red),
-                            )
-                          else if (todoData.urgency >= 5 && todoData.importance < 5)
-                            Text(
-                              'Delegate',
-                              style: CustomTextStyle.title2.copyWith(color: blue),
-                            )
-                          else if (todoData.urgency < 5 && todoData.importance >= 5)
-                            Text(
-                              'Schedule',
-                              style: CustomTextStyle.title2.copyWith(color: orange),
-                            )
-                          else
-                            Text(
-                              'Eliminate',
-                              style: CustomTextStyle.title2,
-                            ),
-                          const Gap(defaultGapM),
+                ),
+                const Gap(defaultGapL),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                      top: defaultPaddingS,
+                      bottom: defaultPaddingM / 4,
+                      left: defaultPaddingS,
+                      right: defaultPaddingS,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: darkWhite,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (todoData.urgency >= 5 && todoData.importance >= 5)
                           Text(
-                            '긴급도: ${todoData.urgency.toInt()}',
-                            style: CustomTextStyle.body2,
-                          ),
-                          const Gap(defaultGapS / 2),
-                          CustomSlider(
-                            value: todoData.urgency,
-                            isEnabled: false,
-                          ),
-                          const Gap(defaultGapM),
+                            'Do',
+                            style: CustomTextStyle.title2.copyWith(color: red),
+                          )
+                        else if (todoData.urgency >= 5 && todoData.importance < 5)
                           Text(
-                            '중요도: ${todoData.importance.toInt()}',
-                            style: CustomTextStyle.body2,
+                            'Delegate',
+                            style: CustomTextStyle.title2.copyWith(color: blue),
+                          )
+                        else if (todoData.urgency < 5 && todoData.importance >= 5)
+                          Text(
+                            'Schedule',
+                            style: CustomTextStyle.title2.copyWith(color: orange),
+                          )
+                        else
+                          Text(
+                            'Eliminate',
+                            style: CustomTextStyle.title2,
                           ),
-                          const Gap(defaultGapS / 2),
-                          CustomSlider(
-                            value: todoData.importance,
-                            isEnabled: false,
-                          ),
-                        ],
-                      ),
+                        const Gap(defaultGapM),
+                        Text(
+                          '긴급도: ${todoData.urgency.toInt()}',
+                          style: CustomTextStyle.body2,
+                        ),
+                        const Gap(defaultGapS / 2),
+                        CustomSlider(
+                          value: todoData.urgency,
+                          isEnabled: false,
+                        ),
+                        const Gap(defaultGapM),
+                        Text(
+                          '중요도: ${todoData.importance.toInt()}',
+                          style: CustomTextStyle.body2,
+                        ),
+                        const Gap(defaultGapS / 2),
+                        CustomSlider(
+                          value: todoData.importance,
+                          isEnabled: false,
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

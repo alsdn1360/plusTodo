@@ -20,7 +20,13 @@ class CustomDialog extends StatelessWidget {
       elevation: 0,
       backgroundColor: white,
       alignment: Alignment.bottomCenter,
-      insetPadding: const EdgeInsets.symmetric(horizontal: defaultPaddingM),
+      insetAnimationCurve: Curves.easeOutQuad,
+      insetAnimationDuration: const Duration(milliseconds: 200),
+      insetPadding: const EdgeInsets.only(
+        left: defaultPaddingM,
+        right: defaultPaddingM,
+        bottom: defaultPaddingM,
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
       ),
