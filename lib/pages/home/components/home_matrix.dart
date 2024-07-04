@@ -50,6 +50,20 @@ class HomeMatrixPainter extends CustomPainter {
     canvas.drawLine(Offset(size.width / 2, 0), Offset(size.width / 2, size.height), paint);
     canvas.drawLine(Offset(0, size.height / 2), Offset(size.width, size.height / 2), paint);
 
+    final thinPaint = Paint()
+      ..color = gray
+      ..strokeWidth = 0.5;
+
+    for (int i = 1; i < 10; i++) {
+      final x = (i / 10) * size.width;
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height), thinPaint);
+    }
+
+    for (int i = 1; i < 10; i++) {
+      final y = (i / 10) * size.height;
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), thinPaint);
+    }
+
     _drawArrow(canvas, Offset(size.width / 2, size.height), Offset(size.width / 2, 0), paint, isVertical: true);
     _drawArrow(canvas, Offset(0, size.height / 2), Offset(size.width, size.height / 2), paint, isVertical: false);
 
@@ -71,7 +85,6 @@ class HomeMatrixPainter extends CustomPainter {
       canvas.drawCircle(Offset(x, y), 5, Paint()..color = todoPointColor);
     }
 
-    // 텍스트 그리기
     final textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
