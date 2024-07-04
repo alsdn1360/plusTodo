@@ -29,7 +29,7 @@ class HomeSummary extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '남은 할 일',
+            '남은 할 일 수',
             style: CustomTextStyle.title2,
           ),
           const Gap(defaultGapS),
@@ -43,7 +43,7 @@ class HomeSummary extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Do', style: CustomTextStyle.body1.copyWith(color: red)),
-                  const Gap(defaultGapS / 4),
+                  const Gap(defaultGapS / 2),
                   Text('${doData.length}', style: CustomTextStyle.body2),
                 ],
               ),
@@ -52,7 +52,7 @@ class HomeSummary extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Delegate', style: CustomTextStyle.body1.copyWith(color: blue)),
-                  const Gap(defaultGapS / 4),
+                  const Gap(defaultGapS / 2),
                   Text('${delegateData.length}', style: CustomTextStyle.body2),
                 ],
               ),
@@ -61,7 +61,7 @@ class HomeSummary extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Schedule', style: CustomTextStyle.body1.copyWith(color: orange)),
-                  const Gap(defaultGapS / 4),
+                  const Gap(defaultGapS / 2),
                   Text('${scheduleData.length}', style: CustomTextStyle.body2),
                 ],
               ),
@@ -70,7 +70,7 @@ class HomeSummary extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Eliminate', style: CustomTextStyle.body1.copyWith(color: green)),
-                  const Gap(defaultGapS / 4),
+                  const Gap(defaultGapS / 2),
                   Text('${eliminateData.length}', style: CustomTextStyle.body2),
                 ],
               ),

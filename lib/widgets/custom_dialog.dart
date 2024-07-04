@@ -17,8 +17,9 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      elevation: 0,
+      elevation: 4,
       backgroundColor: white,
+      surfaceTintColor: white,
       alignment: Alignment.bottomCenter,
       insetAnimationCurve: Curves.easeOutQuad,
       insetAnimationDuration: const Duration(milliseconds: 200),

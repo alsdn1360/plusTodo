@@ -44,7 +44,7 @@ class HomePage extends ConsumerWidget {
               children: [
                 HomeMatrix(todoData: todoData),
                 const Gap(defaultGapL),
-                HomeSummary(),
+                const HomeSummary(),
               ],
             ),
           ),

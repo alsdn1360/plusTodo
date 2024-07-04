@@ -4,9 +4,11 @@ import 'package:gap/gap.dart';
 import 'package:plus_todo/data/todo_data.dart';
 import 'package:plus_todo/pages/todo/components/todo_completed_card.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
+import 'package:plus_todo/provider/filtered/filterd_show_provider.dart';
 import 'package:plus_todo/provider/filtered/filtered_index_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
+import 'package:plus_todo/themes/custom_font.dart';
 
 class TodoPage extends ConsumerWidget {
   const TodoPage({super.key});
@@ -16,6 +18,34 @@ class TodoPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('할 일 목록'),
+        actions: [
+          PopupMenuButton(
+            elevation: 4,
+            color: white,
+            surfaceTintColor: white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+            ),
+            padding: const EdgeInsets.all(defaultPaddingS),
+            itemBuilder: (context) => <PopupMenuEntry>[
+              PopupMenuItem(
+                value: true,
+                child: Text(
+                  '완료된 할 일 목록 보기',
+                  style: CustomTextStyle.body3,
+                ),
+              ),
+              PopupMenuItem(
+                value: false,
+                child: Text(
+                  '완료된 할 일 목록 숨기기',
+                  style: CustomTextStyle.body3,
+                ),
+              ),
+            ],
+            onSelected: (value) => ref.read(filteredShowProvider.notifier).state = value,
+          )
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -59,12 +89,15 @@ class TodoPage extends ConsumerWidget {
                   color: green,
                   // 정렬 없음
                   filteredIndex: 3,
-                  filteredTodoData: (TodoData eliminateData) =>
-                      eliminateData.urgency < 5 && eliminateData.importance < 5,
+                  filteredTodoData: (TodoData eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
                 ),
-                const Gap(defaultGapL),
-                const TodoCompletedCard(),
-                const Gap(defaultGapXL),
+                if (ref.watch(filteredShowProvider))
+                  const Column(
+                    children: [
+                      Gap(defaultGapL),
+                      TodoCompletedCard(),
+                    ],
+                  ),
               ],
             ),
           ),
