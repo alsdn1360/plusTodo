@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
-import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
+import 'package:plus_todo/providers/todo/todo_completed_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -157,7 +157,7 @@ class TodoCompletedCard extends ConsumerWidget {
     );
   }
 
-  Future _pushDetailPage(BuildContext context, TodoData completedTodoList, int index) {
+  Future _pushDetailPage(BuildContext context, Todo completedTodoList, int index) {
     return Navigator.push(
       context,
       CupertinoPageRoute(

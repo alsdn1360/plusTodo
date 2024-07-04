@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
-import 'package:plus_todo/provider/todo/todo_completed_provider.dart';
+import 'package:plus_todo/providers/todo/todo_completed_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -11,7 +11,7 @@ import 'package:plus_todo/widgets/custom_dialog.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 
 class TodoDetailCompletedPage extends ConsumerWidget {
-  final TodoData todoData;
+  final Todo todoData;
   final int index;
 
   const TodoDetailCompletedPage({

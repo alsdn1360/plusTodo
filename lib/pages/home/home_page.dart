@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/pages/home/components/home_matrix.dart';
 import 'package:plus_todo/pages/home/components/home_summary.dart';
-import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 

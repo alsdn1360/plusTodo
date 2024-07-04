@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
 import 'package:plus_todo/pages/todo/interaction/todo_interaction_edit_page.dart';
-import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -12,7 +12,7 @@ import 'package:plus_todo/widgets/custom_dialog.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 
 class TodoDetailUncompletedPage extends ConsumerStatefulWidget {
-  final TodoData todoData;
+  final Todo todoData;
   final int originalIndex;
 
   const TodoDetailUncompletedPage({
@@ -26,7 +26,7 @@ class TodoDetailUncompletedPage extends ConsumerStatefulWidget {
 }
 
 class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncompletedPage> {
-  late TodoData _todoData;
+  late Todo _todoData;
 
   @override
   void initState() {
@@ -205,7 +205,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
     Navigator.pop(context);
   }
 
-  Future<void> _pushEditPage(BuildContext context, TodoData uncompletedTodoList, int originalIndex) async {
+  Future<void> _pushEditPage(BuildContext context, Todo uncompletedTodoList, int originalIndex) async {
     final updatedTodo = await Navigator.push(
       context,
       PageRouteBuilder(
