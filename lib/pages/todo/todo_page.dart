@@ -43,7 +43,7 @@ class TodoPage extends ConsumerWidget {
                 ),
               ),
             ],
-            onSelected: (value) => ref.read(filteredShowProvider.notifier).state = value,
+            onSelected: (value) => ref.read(filteredShowProvider.notifier).toggleFilteredShow(value),
           )
         ],
       ),

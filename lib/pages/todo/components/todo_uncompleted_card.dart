@@ -10,6 +10,7 @@ import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_divider.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class TodoUncompletedCard extends ConsumerWidget {
   final String title;
@@ -36,7 +37,7 @@ class TodoUncompletedCard extends ConsumerWidget {
 
     if (filteredIndex == 1) {
       filteredData.sort(
-        (a, b) {
+            (a, b) {
           int compareUrgency = b.urgency.compareTo(a.urgency);
           if (compareUrgency != 0) {
             return compareUrgency;
@@ -46,7 +47,7 @@ class TodoUncompletedCard extends ConsumerWidget {
       );
     } else if (filteredIndex == 2) {
       filteredData.sort(
-        (a, b) {
+            (a, b) {
           int compareImportance = b.importance.compareTo(a.importance);
           if (compareImportance != 0) {
             return compareImportance;
@@ -54,7 +55,7 @@ class TodoUncompletedCard extends ConsumerWidget {
           return b.urgency.compareTo(a.urgency);
         },
       );
-    } else if (filteredIndex == 3) {}
+    }
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
@@ -86,7 +87,7 @@ class TodoUncompletedCard extends ConsumerWidget {
               ),
               if (filteredIndex == 1 && isDoCard)
                 InkWell(
-                  onTap: () => ref.read(filteredIndexProvider.notifier).state = 2,
+                  onTap: () => ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(2),
                   child: Text(
                     '긴급도 우선 정렬',
                     style: CustomTextStyle.caption2,
@@ -94,7 +95,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                 )
               else if (filteredIndex == 2 && isDoCard)
                 InkWell(
-                  onTap: () => ref.read(filteredIndexProvider.notifier).state = 1,
+                  onTap: () => ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(1),
                   child: Text(
                     '중요도 우선 정렬',
                     style: CustomTextStyle.caption2,
