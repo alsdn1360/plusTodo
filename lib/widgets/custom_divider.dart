@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:plus_todo/themes/custom_color.dart';
 
 class CustomDivider extends StatelessWidget {
-  final Color color;
-
-  const CustomDivider({
-    super.key,
-    required this.color,
-  });
+  const CustomDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 0.5,
-      color: color,
+      color: gray,
     );
   }
 }

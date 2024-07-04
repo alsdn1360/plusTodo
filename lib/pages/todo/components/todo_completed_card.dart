@@ -58,7 +58,7 @@ class TodoCompletedCard extends ConsumerWidget {
             ],
           ),
           const Gap(defaultGapS),
-          const CustomDivider(color: gray),
+          const CustomDivider(),
           const Gap(defaultGapS),
           ListView.separated(
             shrinkWrap: true,
@@ -104,7 +104,7 @@ class TodoCompletedCard extends ConsumerWidget {
                             const Column(
                               children: [
                                 Gap(defaultGapM / 2),
-                                CustomDivider(color: lightGray),
+                                CustomDivider(),
                               ],
                             ),
                         ],

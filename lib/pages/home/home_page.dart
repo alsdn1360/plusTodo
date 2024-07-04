@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plus_todo/pages/home/components/home_matrix.dart';
+import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/themes/custom_color.dart';
+import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 
-
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoData = ref.watch(todoUncompletedProvider);
 
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: RichText(
@@ -29,6 +30,20 @@ class _HomePageState extends State<HomePage> {
                 style: CustomTextStyle.header1,
               ),
             ],
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM),
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                HomeMatrix(todoData: todoData),
+              ],
+            ),
           ),
         ),
       ),

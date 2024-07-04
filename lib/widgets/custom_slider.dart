@@ -32,8 +32,8 @@ class CustomSlider extends StatelessWidget {
         value: value,
         onChanged: isEnabled ? onChanged : null,
         min: 1,
-        max: 10,
-        divisions: 9,
+        max: 9,
+        divisions: 8,
       ),
     );
   }
