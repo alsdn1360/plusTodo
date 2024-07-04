@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 
 class HomeMatrix extends StatelessWidget {
-  final List<TodoData> todoData;
+  final List<Todo> todoData;
 
   const HomeMatrix({
     super.key,
@@ -37,7 +37,7 @@ class HomeMatrix extends StatelessWidget {
 }
 
 class HomeMatrixPainter extends CustomPainter {
-  final List<TodoData> todoData;
+  final List<Todo> todoData;
 
   HomeMatrixPainter({required this.todoData});
 
@@ -51,7 +51,7 @@ class HomeMatrixPainter extends CustomPainter {
     canvas.drawLine(Offset(0, size.height / 2), Offset(size.width, size.height / 2), paint);
 
     final thinPaint = Paint()
-      ..color = gray
+      ..color = lightGray
       ..strokeWidth = 0.5;
 
     for (int i = 1; i < 10; i++) {

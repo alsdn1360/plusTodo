@@ -1,11 +1,11 @@
-class TodoData {
+class Todo {
   String title;
   String content;
   double urgency;
   double importance;
   bool isDone;
 
-  TodoData({
+  Todo({
     required this.title,
     required this.content,
     required this.urgency,
@@ -21,7 +21,7 @@ class TodoData {
         'isDone': isDone,
       };
 
-  factory TodoData.fromJson(Map<String, dynamic> json) => TodoData(
+  factory Todo.fromJson(Map<String, dynamic> json) => Todo(
         title: json['title'],
         content: json['content'],
         urgency: json['urgency'],

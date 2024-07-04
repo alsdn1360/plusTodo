@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
-import 'package:plus_todo/provider/filtered/filtered_index_provider.dart';
-import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/providers/filtered/filtered_index_provider.dart';
+import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -17,7 +17,7 @@ class TodoUncompletedCard extends ConsumerWidget {
   final Color color;
   final bool isDoCard;
   final int filteredIndex;
-  final bool Function(TodoData) filteredTodoData;
+  final bool Function(Todo) filteredTodoData;
 
   const TodoUncompletedCard({
     super.key,
@@ -187,7 +187,7 @@ class TodoUncompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<dynamic> _pushDetailPage(BuildContext context, TodoData uncompletedTodoList, int originalIndex) {
+  Future<dynamic> _pushDetailPage(BuildContext context, Todo uncompletedTodoList, int originalIndex) {
     return Navigator.push(
       context,
       CupertinoPageRoute(

@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final todoCompletedProvider = StateNotifierProvider<TodoCompletedNotifier, List<TodoData>>((ref) {
+final todoCompletedProvider = StateNotifierProvider<TodoCompletedNotifier, List<Todo>>((ref) {
   return TodoCompletedNotifier([]);
 });
 
-class TodoCompletedNotifier extends StateNotifier<List<TodoData>> {
+class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
   TodoCompletedNotifier(super.state) {
     _loadCompletedTodoList();
   }
@@ -18,7 +18,7 @@ class TodoCompletedNotifier extends StateNotifier<List<TodoData>> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final completedTodoList = prefs.getStringList('completedTodoList') ?? [];
-      state = completedTodoList.map((e) => TodoData.fromJson(json.decode(e))).toList();
+      state = completedTodoList.map((e) => Todo.fromJson(json.decode(e))).toList();
     } catch (e) {
       print('Failed to load todos: $e');
     }
@@ -34,7 +34,7 @@ class TodoCompletedNotifier extends StateNotifier<List<TodoData>> {
     }
   }
 
-  Future<void> addCompletedTodo(TodoData todo) async {
+  Future<void> addCompletedTodo(Todo todo) async {
     try {
       state = [...state, todo];
       await _saveCompletedTodo();

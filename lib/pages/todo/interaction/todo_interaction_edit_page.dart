@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/data/todo_data.dart';
-import 'package:plus_todo/provider/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -10,7 +10,7 @@ import 'package:plus_todo/widgets/custom_slider.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
 
 class TodoInteractionEditPage extends StatefulWidget {
-  final TodoData todoData;
+  final Todo todoData;
   final int originalIndex;
 
   const TodoInteractionEditPage({

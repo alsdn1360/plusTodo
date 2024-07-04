@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/data/todo_data.dart';
+import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_completed_card.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
-import 'package:plus_todo/provider/filtered/filterd_show_provider.dart';
-import 'package:plus_todo/provider/filtered/filtered_index_provider.dart';
+import 'package:plus_todo/providers/filtered/filterd_show_provider.dart';
+import 'package:plus_todo/providers/filtered/filtered_index_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -51,7 +51,6 @@ class TodoPage extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM),
           child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -62,7 +61,7 @@ class TodoPage extends ConsumerWidget {
                   isDoCard: true,
                   // 긴급도 우선 정렬 or 중요도 우선 정렬 선택 가능
                   filteredIndex: ref.watch(filteredIndexProvider),
-                  filteredTodoData: (TodoData doData) => doData.urgency >= 5 && doData.importance >= 5,
+                  filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
                 const Gap(defaultGapL),
                 TodoUncompletedCard(
@@ -71,7 +70,7 @@ class TodoPage extends ConsumerWidget {
                   color: blue,
                   // 긴급도 우선 정렬
                   filteredIndex: 1,
-                  filteredTodoData: (TodoData delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+                  filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
                 ),
                 const Gap(defaultGapL),
                 TodoUncompletedCard(
@@ -80,7 +79,7 @@ class TodoPage extends ConsumerWidget {
                   color: orange,
                   // 중요도 우선 정렬
                   filteredIndex: 2,
-                  filteredTodoData: (TodoData scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+                  filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
                 ),
                 const Gap(defaultGapL),
                 TodoUncompletedCard(
@@ -89,7 +88,7 @@ class TodoPage extends ConsumerWidget {
                   color: green,
                   // 정렬 없음
                   filteredIndex: 3,
-                  filteredTodoData: (TodoData eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
+                  filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
                 ),
                 if (ref.watch(filteredShowProvider))
                   const Column(
@@ -97,7 +96,7 @@ class TodoPage extends ConsumerWidget {
                       Gap(defaultGapL),
                       TodoCompletedCard(),
                     ],
-                  ),
+                  )
               ],
             ),
           ),
