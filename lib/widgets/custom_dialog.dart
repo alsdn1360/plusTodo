@@ -17,7 +17,7 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      elevation: 4,
+      elevation: 1,
       backgroundColor: white,
       surfaceTintColor: white,
       alignment: Alignment.bottomCenter,

@@ -6,7 +6,7 @@ import 'package:plus_todo/themes/custom_font.dart';
 class CustomAppbarTheme {
   static AppBarTheme customAppBarThemeData() {
     return AppBarTheme(
-      backgroundColor: white,
+      backgroundColor: background,
       titleTextStyle: CustomTextStyle.header2,
       titleSpacing: defaultPaddingM,
       elevation: 0,

@@ -25,7 +25,7 @@ class MainPage extends ConsumerWidget {
         currentIndex: selectedIndex,
         elevation: 0,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: white,
+        backgroundColor: background,
         selectedItemColor: black,
         unselectedItemColor: gray,
         showSelectedLabels: false,

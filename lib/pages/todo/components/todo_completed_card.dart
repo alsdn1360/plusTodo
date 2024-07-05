@@ -22,7 +22,7 @@ class TodoCompletedCard extends ConsumerWidget {
       padding: const EdgeInsets.all(defaultPaddingS),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: darkWhite,
+        color: white,
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
       ),
       child: Column(

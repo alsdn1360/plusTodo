@@ -15,7 +15,7 @@ class CustomTheme {
       textSelectionTheme: CustomTextSelectionTheme.customTextSelectionThemeData(),
 
       /// 컬러 설정
-      scaffoldBackgroundColor: white,
+      scaffoldBackgroundColor: background,
       primaryColor: black,
       splashColor: transparent,
       highlightColor: transparent,

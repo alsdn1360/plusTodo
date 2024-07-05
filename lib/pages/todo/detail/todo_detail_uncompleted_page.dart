@@ -56,7 +56,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                     padding: const EdgeInsets.all(defaultPaddingS),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: darkWhite,
+                      color: white,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +96,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: darkWhite,
+                      color: white,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

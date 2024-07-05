@@ -63,7 +63,7 @@ class _TodoInteractionEditPageState extends State<TodoInteractionEditPage> {
                     padding: const EdgeInsets.all(defaultPaddingS),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: darkWhite,
+                      color: white,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +93,7 @@ class _TodoInteractionEditPageState extends State<TodoInteractionEditPage> {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: darkWhite,
+                      color: white,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

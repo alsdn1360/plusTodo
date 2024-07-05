@@ -19,7 +19,7 @@ class HomeMatrix extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(defaultPaddingS),
         decoration: BoxDecoration(
-          color: darkWhite,
+          color: white,
           borderRadius: BorderRadius.circular(defaultBorderRadiusM),
         ),
         child: CustomPaint(

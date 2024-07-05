@@ -42,7 +42,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                     padding: const EdgeInsets.all(defaultPaddingS),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: darkWhite,
+                      color: white,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: darkWhite,
+                      color: white,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

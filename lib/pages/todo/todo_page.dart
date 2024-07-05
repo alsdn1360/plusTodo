@@ -20,7 +20,7 @@ class TodoPage extends ConsumerWidget {
         title: const Text('할 일 목록'),
         actions: [
           PopupMenuButton(
-            elevation: 4,
+            elevation: 1,
             color: white,
             surfaceTintColor: white,
             shape: RoundedRectangleBorder(
