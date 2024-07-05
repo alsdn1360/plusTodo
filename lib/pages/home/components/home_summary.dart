@@ -42,7 +42,11 @@ class HomeSummary extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Do', style: CustomTextStyle.body1.copyWith(color: red)),
+                  Text(
+                    'Do',
+                    style: CustomTextStyle.body1.copyWith(color: red),
+                    softWrap: true,
+                  ),
                   const Gap(defaultGapS / 2),
                   Text('${doData.length}', style: CustomTextStyle.body2),
                 ],
@@ -56,6 +60,7 @@ class HomeSummary extends ConsumerWidget {
                     style: CustomTextStyle.body1.copyWith(
                       color: (ref.watch(filteredIndexProvider) == 1) ? blue : orange,
                     ),
+                    softWrap: true,
                   ),
                   const Gap(defaultGapS / 2),
                   Text(
@@ -73,6 +78,7 @@ class HomeSummary extends ConsumerWidget {
                     style: CustomTextStyle.body1.copyWith(
                       color: (ref.watch(filteredIndexProvider) == 2) ? blue : orange,
                     ),
+                    softWrap: true,
                   ),
                   const Gap(defaultGapS / 2),
                   Text(
@@ -84,7 +90,11 @@ class HomeSummary extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Eliminate', style: CustomTextStyle.body1.copyWith(color: green)),
+                  Text(
+                    'Eliminate',
+                    style: CustomTextStyle.body1.copyWith(color: green),
+                    softWrap: true,
+                  ),
                   const Gap(defaultGapS / 2),
                   Text('${eliminateData.length}', style: CustomTextStyle.body2),
                 ],

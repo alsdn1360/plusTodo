@@ -35,12 +35,12 @@ class TodoCompletedCard extends ConsumerWidget {
                 '완료된 할 일',
                 style: CustomTextStyle.title2,
               ),
-              const Gap(defaultGapS),
-              Text(
-                '${completedTodoData.length}',
-                style: CustomTextStyle.caption2,
-              ),
               const Spacer(),
+              Text(
+                '${completedTodoData.length}개,',
+                style: (completedTodoData.isEmpty) ? CustomTextStyle.caption2.copyWith(color: gray) : CustomTextStyle.caption2,
+              ),
+              const Gap(defaultGapS),
               InkWell(
                 onTap: () => (completedTodoData.isEmpty)
                     ? null

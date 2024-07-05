@@ -67,6 +67,16 @@ class HomeMatrixPainter extends CustomPainter {
     _drawArrow(canvas, Offset(size.width / 2, size.height), Offset(size.width / 2, 0), paint, isVertical: true);
     _drawArrow(canvas, Offset(0, size.height / 2), Offset(size.width, size.height / 2), paint, isVertical: false);
 
+    Map<String, int> pointCount = {};
+    for (var todo in todoData) {
+      final x = (todo.urgency / 10) * size.width;
+      final y = size.height - (todo.importance / 10) * size.height;
+
+      // 중복된 점 처리
+      final pointKey = '$x,$y';
+      pointCount[pointKey] = (pointCount[pointKey] ?? 0) + 1;
+    }
+
     for (var todo in todoData) {
       final x = (todo.urgency / 10) * size.width;
       final y = size.height - (todo.importance / 10) * size.height;
@@ -83,25 +93,38 @@ class HomeMatrixPainter extends CustomPainter {
       }
 
       canvas.drawCircle(Offset(x, y), 5, Paint()..color = todoPointColor);
+
+      final textDuplicationPointPainter = TextPainter(
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+      );
+
+      final pointKey = '$x,$y';
+      if (pointCount[pointKey] != null && pointCount[pointKey]! > 1) {
+        textDuplicationPointPainter.text = TextSpan(text: '${pointCount[pointKey]}', style: CustomTextStyle.caption1);
+        textDuplicationPointPainter.layout(minWidth: 0, maxWidth: size.width);
+        textDuplicationPointPainter.paint(canvas, Offset(x - 3, y - 20));
+        pointCount.remove(pointKey);
+      }
     }
 
-    final textPainter = TextPainter(
+    final textIntroducePainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
 
-    textPainter.text = TextSpan(text: 'Importance', style: CustomTextStyle.caption1);
-    textPainter.layout(minWidth: 0, maxWidth: size.width);
-    textPainter.paint(
+    textIntroducePainter.text = TextSpan(text: 'Importance', style: CustomTextStyle.caption1);
+    textIntroducePainter.layout(minWidth: 0, maxWidth: size.width);
+    textIntroducePainter.paint(
       canvas,
-      Offset((size.width / 2) - (textPainter.width + 8), 0),
+      Offset((size.width / 2) - (textIntroducePainter.width + 8), 0),
     );
 
-    textPainter.text = TextSpan(text: 'Urgency', style: CustomTextStyle.caption1);
-    textPainter.layout(minWidth: 0, maxWidth: size.width);
-    textPainter.paint(
+    textIntroducePainter.text = TextSpan(text: 'Urgency', style: CustomTextStyle.caption1);
+    textIntroducePainter.layout(minWidth: 0, maxWidth: size.width);
+    textIntroducePainter.paint(
       canvas,
-      Offset(size.width - (textPainter.width + 4), size.height / 2),
+      Offset(size.width - (textIntroducePainter.width + 4), size.height / 2),
     );
   }
 
