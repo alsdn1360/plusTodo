@@ -23,10 +23,12 @@ class TodoPage extends ConsumerWidget {
             elevation: 1,
             color: white,
             surfaceTintColor: white,
+            icon: const Icon(Icons.more_vert_rounded, color: black),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(defaultBorderRadiusM),
             ),
             padding: const EdgeInsets.all(defaultPaddingS),
+            onSelected: (value) => ref.read(filteredShowProvider.notifier).toggleFilteredShow(value),
             itemBuilder: (context) => <PopupMenuEntry>[
               PopupMenuItem(
                 value: true,
@@ -43,7 +45,6 @@ class TodoPage extends ConsumerWidget {
                 ),
               ),
             ],
-            onSelected: (value) => ref.read(filteredShowProvider.notifier).toggleFilteredShow(value),
           )
         ],
       ),
@@ -54,40 +55,85 @@ class TodoPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                InkWell(
+                  onTap: () => (ref.watch(filteredIndexProvider) == 1)
+                      ? ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(2)
+                      : ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(1),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        (ref.watch(filteredIndexProvider) == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
+                        style: CustomTextStyle.caption2,
+                      ),
+                      const Gap(defaultGapS),
+                      const Icon(Icons.swap_vert_rounded, color: black, size: 16),
+                    ],
+                  ),
+                ),
+                const Gap(defaultGapL),
                 TodoUncompletedCard(
                   title: 'Do',
                   subtitle: '긴급하고 중요한 일',
                   color: red,
-                  isDoCard: true,
-                  // 긴급도 우선 정렬 or 중요도 우선 정렬 선택 가능
+                  isDoOrEliminateCard: true,
                   filteredIndex: ref.watch(filteredIndexProvider),
                   filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
                 const Gap(defaultGapL),
-                TodoUncompletedCard(
-                  title: 'Delegate',
-                  subtitle: '긴급하지만 중요하진 않은 일',
-                  color: blue,
-                  // 긴급도 우선 정렬
-                  filteredIndex: 1,
-                  filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
-                ),
-                const Gap(defaultGapL),
-                TodoUncompletedCard(
-                  title: 'Schedule',
-                  subtitle: '긴급하진 않지만 중요한 일',
-                  color: orange,
-                  // 중요도 우선 정렬
-                  filteredIndex: 2,
-                  filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
-                ),
+                // 긴급도 우서 정렬일 때
+                if (ref.watch(filteredIndexProvider) == 1)
+                  Column(
+                    children: [
+                      TodoUncompletedCard(
+                        title: 'Delegate',
+                        subtitle: '긴급하지만 중요하진 않은 일',
+                        color: blue,
+                        // 긴급도 우선 정렬
+                        filteredIndex: 1,
+                        filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+                      ),
+                      const Gap(defaultGapL),
+                      TodoUncompletedCard(
+                        title: 'Schedule',
+                        subtitle: '긴급하진 않지만 중요한 일',
+                        color: orange,
+                        // 중요도 우선 정렬
+                        filteredIndex: 2,
+                        filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+                      ),
+                    ],
+                  )
+                // 중요도 우선 정렬일 때
+                else if (ref.watch(filteredIndexProvider) == 2)
+                  Column(
+                    children: [
+                      TodoUncompletedCard(
+                        title: 'Schedule',
+                        subtitle: '긴급하진 않지만 중요한 일',
+                        color: orange,
+                        // 중요도 우선 정렬
+                        filteredIndex: 2,
+                        filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+                      ),
+                      const Gap(defaultGapL),
+                      TodoUncompletedCard(
+                        title: 'Delegate',
+                        subtitle: '긴급하지만 중요하진 않은 일',
+                        color: blue,
+                        // 긴급도 우선 정렬
+                        filteredIndex: 1,
+                        filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+                      ),
+                    ],
+                  ),
                 const Gap(defaultGapL),
                 TodoUncompletedCard(
                   title: 'Eliminate',
                   subtitle: '긴급하지도 중요하지도 않은 일',
                   color: green,
-                  // 정렬 없음
-                  filteredIndex: 3,
+                  isDoOrEliminateCard: true,
+                  filteredIndex: ref.watch(filteredIndexProvider),
                   filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
                 ),
                 if (ref.watch(filteredShowProvider))

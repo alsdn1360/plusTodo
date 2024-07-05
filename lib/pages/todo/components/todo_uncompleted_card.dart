@@ -15,7 +15,7 @@ class TodoUncompletedCard extends ConsumerWidget {
   final String title;
   final String subtitle;
   final Color color;
-  final bool isDoCard;
+  final bool isDoOrEliminateCard;
   final int filteredIndex;
   final bool Function(Todo) filteredTodoData;
 
@@ -24,7 +24,7 @@ class TodoUncompletedCard extends ConsumerWidget {
     required this.title,
     required this.subtitle,
     required this.color,
-    this.isDoCard = false,
+    this.isDoOrEliminateCard = false,
     required this.filteredIndex,
     required this.filteredTodoData,
   });
@@ -36,7 +36,7 @@ class TodoUncompletedCard extends ConsumerWidget {
 
     if (filteredIndex == 1) {
       filteredData.sort(
-            (a, b) {
+        (a, b) {
           int compareUrgency = b.urgency.compareTo(a.urgency);
           if (compareUrgency != 0) {
             return compareUrgency;
@@ -46,7 +46,7 @@ class TodoUncompletedCard extends ConsumerWidget {
       );
     } else if (filteredIndex == 2) {
       filteredData.sort(
-            (a, b) {
+        (a, b) {
           int compareImportance = b.importance.compareTo(a.importance);
           if (compareImportance != 0) {
             return compareImportance;
@@ -84,22 +84,6 @@ class TodoUncompletedCard extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (filteredIndex == 1 && isDoCard)
-                InkWell(
-                  onTap: () => ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(2),
-                  child: Text(
-                    '긴급도 우선 정렬',
-                    style: CustomTextStyle.caption2,
-                  ),
-                )
-              else if (filteredIndex == 2 && isDoCard)
-                InkWell(
-                  onTap: () => ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(1),
-                  child: Text(
-                    '중요도 우선 정렬',
-                    style: CustomTextStyle.caption2,
-                  ),
-                ),
             ],
           ),
           const Gap(defaultGapS),

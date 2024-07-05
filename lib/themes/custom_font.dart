@@ -10,7 +10,7 @@ const TextStyle baseTextStyle = TextStyle(
 );
 
 class CustomTextStyle {
-  // Titles
+  // Headers
   /// header1 28px, 1.21, 400, Itim
   static TextStyle header1 = const TextStyle(
     fontFamily: 'Itim',
@@ -29,7 +29,7 @@ class CustomTextStyle {
     fontWeight: FontWeight.w700,
   );
 
-  // Headers
+  // Titles
   /// title1 22px, 1.22, 600, Pretendard
   static TextStyle title1 = baseTextStyle.copyWith(
     fontSize: 22,
@@ -53,7 +53,7 @@ class CustomTextStyle {
     fontWeight: FontWeight.w600,
   );
 
-  // Paragraphs
+  // Bodies
   /// body1 16px, 1.25, 600, Pretendard
   static TextStyle body1 = baseTextStyle.copyWith(
     fontSize: 16,

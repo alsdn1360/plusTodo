@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/providers/filtered/filtered_index_provider.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -40,34 +41,48 @@ class HomeSummary extends ConsumerWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Do', style: CustomTextStyle.body1.copyWith(color: red)),
                   const Gap(defaultGapS / 2),
                   Text('${doData.length}', style: CustomTextStyle.body2),
                 ],
               ),
+              // 긴급도 우선 정렬일 때
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Delegate', style: CustomTextStyle.body1.copyWith(color: blue)),
+                  Text(
+                    (ref.watch(filteredIndexProvider) == 1) ? 'Delegate' : 'Schedule',
+                    style: CustomTextStyle.body1.copyWith(
+                      color: (ref.watch(filteredIndexProvider) == 1) ? blue : orange,
+                    ),
+                  ),
                   const Gap(defaultGapS / 2),
-                  Text('${delegateData.length}', style: CustomTextStyle.body2),
+                  Text(
+                    (ref.watch(filteredIndexProvider) == 1) ? '${delegateData.length}' : '${scheduleData.length}',
+                    style: CustomTextStyle.body2,
+                  ),
+                ],
+              ),
+              // 중요도 우선 정렬일 때
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    (ref.watch(filteredIndexProvider) == 2) ? 'Delegate' : 'Schedule',
+                    style: CustomTextStyle.body1.copyWith(
+                      color: (ref.watch(filteredIndexProvider) == 2) ? blue : orange,
+                    ),
+                  ),
+                  const Gap(defaultGapS / 2),
+                  Text(
+                    (ref.watch(filteredIndexProvider) == 2) ? '${delegateData.length}' : '${scheduleData.length}',
+                    style: CustomTextStyle.body2,
+                  ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Schedule', style: CustomTextStyle.body1.copyWith(color: orange)),
-                  const Gap(defaultGapS / 2),
-                  Text('${scheduleData.length}', style: CustomTextStyle.body2),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Eliminate', style: CustomTextStyle.body1.copyWith(color: green)),
                   const Gap(defaultGapS / 2),

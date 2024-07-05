@@ -30,31 +30,32 @@ class TodoCompletedCard extends ConsumerWidget {
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '완료된 할 일',
                 style: CustomTextStyle.title2,
               ),
-              if (completedTodoData.isEmpty)
-                Text(
+              const Gap(defaultGapS),
+              Text(
+                '${completedTodoData.length}',
+                style: CustomTextStyle.caption2,
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () => (completedTodoData.isEmpty)
+                    ? null
+                    : showDialog(
+                        context: context,
+                        builder: (context) => CustomDialog(
+                          title: '완료된 일을 모두 삭제할까요?',
+                          onTap: () => _clearCompletedTodo(ref, context),
+                        ),
+                      ),
+                child: Text(
                   '모두 삭제',
-                  style: CustomTextStyle.caption2.copyWith(color: gray),
-                )
-              else
-                InkWell(
-                  onTap: () => showDialog(
-                    context: context,
-                    builder: (context) => CustomDialog(
-                      title: '완료된 일을 모두 삭제할까요?',
-                      onTap: () => _clearCompletedTodo(ref, context),
-                    ),
-                  ),
-                  child: Text(
-                    '모두 삭제',
-                    style: CustomTextStyle.caption2,
-                  ),
+                  style: (completedTodoData.isEmpty) ? CustomTextStyle.caption2.copyWith(color: gray) : CustomTextStyle.caption2,
                 ),
+              ),
             ],
           ),
           const Gap(defaultGapS),
