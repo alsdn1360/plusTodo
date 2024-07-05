@@ -18,7 +18,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
   Future<void> _loadUncompletedTodoList() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final todoList = prefs.getStringList('todoList') ?? [];
+      final todoList = prefs.getStringList('uncompletedTodoList') ?? [];
       state = todoList.map((e) => Todo.fromJson(json.decode(e))).toList();
     } catch (e) {
       print('할 일 목록 불러오기 실패: $e');
@@ -29,7 +29,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final todoList = state.map((e) => json.encode(e.toJson())).toList();
-      await prefs.setStringList('todoList', todoList);
+      await prefs.setStringList('uncompletedTodoList', todoList);
     } catch (e) {
       print('할 일 저장 실패: $e');
     }

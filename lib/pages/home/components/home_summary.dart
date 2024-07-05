@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/providers/filtered/filtered_index_provider.dart';
+import 'package:plus_todo/providers/filtered/filtered_sorting_index_provider.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -56,15 +56,15 @@ class HomeSummary extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    (ref.watch(filteredIndexProvider) == 1) ? 'Delegate' : 'Schedule',
+                    (ref.watch(filteredSortingIndexProvider) == 1) ? 'Delegate' : 'Schedule',
                     style: CustomTextStyle.body1.copyWith(
-                      color: (ref.watch(filteredIndexProvider) == 1) ? blue : orange,
+                      color: (ref.watch(filteredSortingIndexProvider) == 1) ? blue : orange,
                     ),
                     softWrap: true,
                   ),
                   const Gap(defaultGapS / 2),
                   Text(
-                    (ref.watch(filteredIndexProvider) == 1) ? '${delegateData.length}' : '${scheduleData.length}',
+                    (ref.watch(filteredSortingIndexProvider) == 1) ? '${delegateData.length}' : '${scheduleData.length}',
                     style: CustomTextStyle.body2,
                   ),
                 ],
@@ -74,15 +74,15 @@ class HomeSummary extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    (ref.watch(filteredIndexProvider) == 2) ? 'Delegate' : 'Schedule',
+                    (ref.watch(filteredSortingIndexProvider) == 2) ? 'Delegate' : 'Schedule',
                     style: CustomTextStyle.body1.copyWith(
-                      color: (ref.watch(filteredIndexProvider) == 2) ? blue : orange,
+                      color: (ref.watch(filteredSortingIndexProvider) == 2) ? blue : orange,
                     ),
                     softWrap: true,
                   ),
                   const Gap(defaultGapS / 2),
                   Text(
-                    (ref.watch(filteredIndexProvider) == 2) ? '${delegateData.length}' : '${scheduleData.length}',
+                    (ref.watch(filteredSortingIndexProvider) == 2) ? '${delegateData.length}' : '${scheduleData.length}',
                     style: CustomTextStyle.body2,
                   ),
                 ],

@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_completed_card.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
-import 'package:plus_todo/providers/filtered/filterd_show_provider.dart';
-import 'package:plus_todo/providers/filtered/filtered_index_provider.dart';
+import 'package:plus_todo/providers/filtered/filtered_show_completed_provider.dart';
+import 'package:plus_todo/providers/filtered/filtered_sorting_index_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -28,7 +28,7 @@ class TodoPage extends ConsumerWidget {
               borderRadius: BorderRadius.circular(defaultBorderRadiusM),
             ),
             padding: const EdgeInsets.all(defaultPaddingS),
-            onSelected: (value) => ref.read(filteredShowProvider.notifier).toggleFilteredShow(value),
+            onSelected: (value) => ref.read(filteredShowCompletedProvider.notifier).toggleFilteredShow(value),
             itemBuilder: (context) => <PopupMenuEntry>[
               PopupMenuItem(
                 value: true,
@@ -45,7 +45,7 @@ class TodoPage extends ConsumerWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -56,14 +56,14 @@ class TodoPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () => (ref.watch(filteredIndexProvider) == 1)
-                      ? ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(2)
-                      : ref.read(filteredIndexProvider.notifier).toggleFilteredIndex(1),
+                  onTap: () => (ref.watch(filteredSortingIndexProvider) == 1)
+                      ? ref.read(filteredSortingIndexProvider.notifier).toggleFilteredIndex(2)
+                      : ref.read(filteredSortingIndexProvider.notifier).toggleFilteredIndex(1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        (ref.watch(filteredIndexProvider) == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
+                        (ref.watch(filteredSortingIndexProvider) == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
                         style: CustomTextStyle.caption2,
                       ),
                       const Gap(defaultGapS),
@@ -77,12 +77,12 @@ class TodoPage extends ConsumerWidget {
                   subtitle: '긴급하고 중요한 일',
                   color: red,
                   isDoOrEliminateCard: true,
-                  filteredIndex: ref.watch(filteredIndexProvider),
+                  filteredIndex: ref.watch(filteredSortingIndexProvider),
                   filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
                 const Gap(defaultGapL),
                 // 긴급도 우서 정렬일 때
-                if (ref.watch(filteredIndexProvider) == 1)
+                if (ref.watch(filteredSortingIndexProvider) == 1)
                   Column(
                     children: [
                       TodoUncompletedCard(
@@ -105,7 +105,7 @@ class TodoPage extends ConsumerWidget {
                     ],
                   )
                 // 중요도 우선 정렬일 때
-                else if (ref.watch(filteredIndexProvider) == 2)
+                else if (ref.watch(filteredSortingIndexProvider) == 2)
                   Column(
                     children: [
                       TodoUncompletedCard(
@@ -133,10 +133,10 @@ class TodoPage extends ConsumerWidget {
                   subtitle: '긴급하지도 중요하지도 않은 일',
                   color: green,
                   isDoOrEliminateCard: true,
-                  filteredIndex: ref.watch(filteredIndexProvider),
+                  filteredIndex: ref.watch(filteredSortingIndexProvider),
                   filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
                 ),
-                if (ref.watch(filteredShowProvider))
+                if (ref.watch(filteredShowCompletedProvider))
                   const Column(
                     children: [
                       Gap(defaultGapL),

@@ -3,20 +3,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final filteredShowProvider = StateNotifierProvider<FilteredShowNotifier, bool>((ref) {
-  return FilteredShowNotifier(false);
+final filteredShowCompletedProvider = StateNotifierProvider<FilteredShowCompletedNotifier, bool>((ref) {
+  return FilteredShowCompletedNotifier(false);
 });
 
-class FilteredShowNotifier extends StateNotifier<bool> {
-  FilteredShowNotifier(super.state) {
+class FilteredShowCompletedNotifier extends StateNotifier<bool> {
+  FilteredShowCompletedNotifier(super.state) {
     _loadFilteredShow();
   }
 
   Future<void> _loadFilteredShow() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final filteredShow = prefs.getBool('filteredShowUncompleted') ?? false;
-      state = filteredShow;
+      final filteredShowUncompleted = prefs.getBool('filteredShowUncompleted') ?? false;
+      state = filteredShowUncompleted;
     } catch (e) {
       print('완료된 할 일 목록 보여주기/숨기기 불러오기 실패: $e');
     }
