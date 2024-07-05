@@ -10,7 +10,6 @@ import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_divider.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class TodoUncompletedCard extends ConsumerWidget {
   final String title;
