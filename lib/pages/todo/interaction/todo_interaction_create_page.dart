@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -9,14 +10,14 @@ import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
 
-class TodoInteractionCreatePage extends StatefulWidget {
+class TodoInteractionCreatePage extends ConsumerStatefulWidget {
   const TodoInteractionCreatePage({super.key});
 
   @override
-  State<TodoInteractionCreatePage> createState() => _TodoInteractionCreatePageState();
+  ConsumerState<TodoInteractionCreatePage> createState() => _TodoInteractionCreatePageState();
 }
 
-class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
+class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreatePage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -149,50 +150,13 @@ class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
           ),
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: SizedBox(
-            height: 56,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text('취소', style: CustomTextStyle.title3),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      return InkWell(
-                        onTap: () => _addTodo(ref),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Center(
-                            child: Text('저장', style: CustomTextStyle.title3),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      bottomNavigationBar: TodoInteractionBottomButton(
+        onTap: () => _createTodo(ref),
       ),
     );
   }
 
-  Future<void> _addTodo(WidgetRef ref) async {
+  Future<void> _createTodo(WidgetRef ref) async {
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -214,7 +178,7 @@ class _TodoInteractionCreatePageState extends State<TodoInteractionCreatePage> {
         importance: _importance,
         isDone: false,
       );
-      ref.read(todoUncompletedProvider.notifier).addUncompletedTodo(addTodo);
+      ref.read(todoUncompletedProvider.notifier).createUncompletedTodo(addTodo);
       Navigator.pop(context);
     }
   }

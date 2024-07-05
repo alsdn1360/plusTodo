@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +22,7 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       final completedTodoList = prefs.getStringList('completedTodoList') ?? [];
       state = completedTodoList.map((e) => Todo.fromJson(json.decode(e))).toList();
     } catch (e) {
-      print('Failed to load todos: $e');
+      print('완료된 할 일 목록 불러오기 실패: $e');
     }
   }
 
@@ -30,7 +32,7 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       final completedTodoList = state.map((e) => json.encode(e.toJson())).toList();
       await prefs.setStringList('completedTodoList', completedTodoList);
     } catch (e) {
-      print('Failed to save todos: $e');
+      print('완료된 할 일 저장 실패: $e');
     }
   }
 
@@ -39,7 +41,7 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       state = [...state, todo];
       await _saveCompletedTodo();
     } catch (e) {
-      print('Failed to add completed todo: $e');
+      print('완료된 할 일로 추가 실패: $e');
     }
   }
 
@@ -48,7 +50,7 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       state = List.from(state)..removeAt(index);
       await _saveCompletedTodo();
     } catch (e) {
-      print('Failed to remove todo: $e');
+      print('완료된 할 일 삭제 실패: $e');
     }
   }
 
@@ -59,9 +61,9 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       await toggleDone(index);
       state = List.from(state)..removeAt(index);
       await _saveCompletedTodo();
-      ref.read(todoUncompletedProvider.notifier).addUncompletedTodo(undoCompleteTodo);
+      ref.read(todoUncompletedProvider.notifier).createUncompletedTodo(undoCompleteTodo);
     } catch (e) {
-      print('Failed to remove todo: $e');
+      print('완료된 할 일 되돌리기 실패: $e');
     }
   }
 
@@ -70,7 +72,7 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       state = [];
       await _saveCompletedTodo();
     } catch (e) {
-      print('Failed to remove completed todo: $e');
+      print('완료된 할 일 일괄 삭제 실패: $e');
     }
   }
 
@@ -86,7 +88,7 @@ class TodoCompletedNotifier extends StateNotifier<List<Todo>> {
       ];
       _saveCompletedTodo();
     } catch (e) {
-      print('Failed to toggle done: $e');
+      print('토글 실패: $e');
     }
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/models/todo.dart';
@@ -19,7 +21,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
       final todoList = prefs.getStringList('todoList') ?? [];
       state = todoList.map((e) => Todo.fromJson(json.decode(e))).toList();
     } catch (e) {
-      print('Failed to load todos: $e');
+      print('할 일 목록 불러오기 실패: $e');
     }
   }
 
@@ -29,16 +31,16 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
       final todoList = state.map((e) => json.encode(e.toJson())).toList();
       await prefs.setStringList('todoList', todoList);
     } catch (e) {
-      print('Failed to save todos: $e');
+      print('할 일 저장 실패: $e');
     }
   }
 
-  Future<void> addUncompletedTodo(Todo todoData) async {
+  Future<void> createUncompletedTodo(Todo todoData) async {
     try {
       state = [...state, todoData];
       await _saveUncompletedTodo();
     } catch (e) {
-      print('Failed to add todo: $e');
+      print('할 일로 추가 실패: $e');
     }
   }
 
@@ -51,7 +53,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
       ];
       await _saveUncompletedTodo();
     } catch (e) {
-      print('Failed to update todo: $e');
+      print('할 일 수정 실패: $e');
     }
   }
 
@@ -60,7 +62,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
       state = List.from(state)..removeAt(index);
       await _saveUncompletedTodo();
     } catch (e) {
-      print('Failed to remove todo: $e');
+      print('할 일 삭제 실패: $e');
     }
   }
 
@@ -73,7 +75,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
       await _saveUncompletedTodo();
       ref.read(todoCompletedProvider.notifier).addCompletedTodo(completedTodo);
     } catch (e) {
-      print('Failed to remove todo: $e');
+      print('할 일 완료 실패: $e');
     }
   }
 
@@ -89,11 +91,7 @@ class TodoUncompletedNotifier extends StateNotifier<List<Todo>> {
       ];
       _saveUncompletedTodo();
     } catch (e) {
-      print('Failed to toggle done: $e');
+      print('토글 실패: $e');
     }
-  }
-
-  void refresh() {
-    _loadUncompletedTodoList();
   }
 }

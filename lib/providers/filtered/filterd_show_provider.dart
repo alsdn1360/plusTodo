@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +18,7 @@ class FilteredShowNotifier extends StateNotifier<bool> {
       final filteredShow = prefs.getBool('filteredShowUncompleted') ?? false;
       state = filteredShow;
     } catch (e) {
-      print('Failed to load filteredShow: $e');
+      print('완료된 할 일 목록 보여주기/숨기기 불러오기 실패: $e');
     }
   }
 
@@ -25,7 +27,7 @@ class FilteredShowNotifier extends StateNotifier<bool> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('filteredShowUncompleted', state);
     } catch (e) {
-      print('Failed to save filteredShow: $e');
+      print('완료된 할 일 목록 보여주기/숨기기 저장 실패: $e');
     }
   }
 
@@ -34,7 +36,7 @@ class FilteredShowNotifier extends StateNotifier<bool> {
       state = isShow;
       await _saveFilteredShow();
     } catch (e) {
-      print('Failed to toggle filteredShow: $e');
+      print('완료된 할 일 목록 보여주기/숨기기 토글 실패: $e');
     }
   }
 }
