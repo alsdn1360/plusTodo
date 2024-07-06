@@ -1,5 +1,5 @@
-### 플러스투두 - 아이젠아워 매트릭스를 이용한 투두 모바일 애플리케이션 서비스
-![프레젠테이션1.png](..%2F..%2FDownloads%2F%ED%94%84%EB%A0%88%EC%A0%A0%ED%85%8C%EC%9D%B4%EC%85%981.png)
+# 플러스투두 - 아이젠아워 매트릭스를 이용한 투두 모바일 애플리케이션 서비스
+![프레젠테이션1](https://github.com/alsdn1360/plusTodo/assets/110466553/a5efed02-36bc-41b3-a856-28a479db34b7)
 
 ## Description
 
@@ -9,19 +9,20 @@
 ## Features
 
 ### **홈 화면**
-![홈 화면.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%99%88%20%ED%99%94%EB%A9%B4.png)
-![홈 화면 - 필터 카드 선택.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%99%88%20%ED%99%94%EB%A9%B4%20-%20%ED%95%84%ED%84%B0%20%EC%B9%B4%EB%93%9C%20%EC%84%A0%ED%83%9D.png)
+![홈 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/26be8404-1ce3-4d85-b84c-33c2f5685cad)
+![홈 화면 - 필터 카드 선택](https://github.com/alsdn1360/plusTodo/assets/110466553/e47b708e-48cc-4019-8fc6-0a9b2639ff06)
 
 ### **할 일 추가 화면**
-![할 일 추가 화면.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EC%B6%94%EA%B0%80%20%ED%99%94%EB%A9%B4.png)
+![할 일 추가 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/65b8ab7c-ac6a-4509-bfaa-61f8e7cf1a7d)
 
 ### **할 일 목록 화면**
-![할 일 목록 화면(긴급도 우선 정렬).png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EB%AA%A9%EB%A1%9D%20%ED%99%94%EB%A9%B4%28%EA%B8%B4%EA%B8%89%EB%8F%84%20%EC%9A%B0%EC%84%A0%20%EC%A0%95%EB%A0%AC%29.png)
-![할 일 목록 - 할 일 상세 화면.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EB%AA%A9%EB%A1%9D%20-%20%ED%95%A0%20%EC%9D%BC%20%EC%83%81%EC%84%B8%20%ED%99%94%EB%A9%B4.png)
-![할 일 목록 - 완료된 할 일 보기 선택.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EB%AA%A9%EB%A1%9D%20-%20%EC%99%84%EB%A3%8C%EB%90%9C%20%ED%95%A0%20%EC%9D%BC%20%EB%B3%B4%EA%B8%B0%20%EC%84%A0%ED%83%9D.png)
-![할 일 목록 - 완료된 할 일 보기 선택.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EB%AA%A9%EB%A1%9D%20-%20%EC%99%84%EB%A3%8C%EB%90%9C%20%ED%95%A0%20%EC%9D%BC%20%EB%B3%B4%EA%B8%B0%20%EC%84%A0%ED%83%9D.png)
-![할 일 목록 - 완료된 할 일 일괄 삭제.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EB%AA%A9%EB%A1%9D%20-%20%EC%99%84%EB%A3%8C%EB%90%9C%20%ED%95%A0%20%EC%9D%BC%20%EC%9D%BC%EA%B4%84%20%EC%82%AD%EC%A0%9C.png)
-![할 일 목록 - 완료된 할 일 상세 화면.png](..%2F..%2FDownloads%2F%EB%AA%A9%EC%97%85%2F%ED%95%A0%20%EC%9D%BC%20%EB%AA%A9%EB%A1%9D%20-%20%EC%99%84%EB%A3%8C%EB%90%9C%20%ED%95%A0%20%EC%9D%BC%20%EC%83%81%EC%84%B8%20%ED%99%94%EB%A9%B4.png)
+![할 일 목록 화면(긴급도 우선 정렬)](https://github.com/alsdn1360/plusTodo/assets/110466553/edb3217a-436f-43d4-af7f-818b69342b84)
+![할 일 목록 화면(중요도 우선 정렬)](https://github.com/alsdn1360/plusTodo/assets/110466553/6a8595ab-ce98-4119-87c4-14ce25d9a798)
+![할 일 목록 - 할 일 상세 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/e1ff1656-72e3-4257-b40c-d90a21970b87)
+![할 일 목록 - 완료된 할 일 보기 선택](https://github.com/alsdn1360/plusTodo/assets/110466553/2722eb88-bb58-4932-9126-e70a142148cb)
+![할 일 목록 - 완료된 할 일](https://github.com/alsdn1360/plusTodo/assets/110466553/0ce6c789-8d43-4c84-9862-23279743cc82)
+![할 일 목록 - 완료된 할 일 일괄 삭제](https://github.com/alsdn1360/plusTodo/assets/110466553/5e80ffd1-9e1e-451b-aac7-c9361a8206a4)
+![할 일 목록 - 완료된 할 일 상세 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/51bd645b-4fcf-4216-887f-1e044ac2dd36)
 
 ## Development enviroment
 
