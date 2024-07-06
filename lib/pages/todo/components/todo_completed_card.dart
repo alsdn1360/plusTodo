@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
 import 'package:plus_todo/providers/todo/todo_completed_provider.dart';
+import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -73,7 +74,7 @@ class TodoCompletedCard extends ConsumerWidget {
                 children: [
                   Checkbox(
                     value: completedTodoList.isDone,
-                    onChanged: (bool? value) => _onCheck(ref, index, context),
+                    onChanged: (bool? value) => _onCheck(context, ref, completedTodoList.id),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: const VisualDensity(
                       horizontal: VisualDensity.minimumDensity,
@@ -88,7 +89,7 @@ class TodoCompletedCard extends ConsumerWidget {
                   const Gap(defaultGapM),
                   Expanded(
                     child: InkWell(
-                      onTap: () => _pushDetailPage(context, completedTodoList, index),
+                      onTap: () => _pushDetailPage(context, completedTodoList),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -127,7 +128,7 @@ class TodoCompletedCard extends ConsumerWidget {
   }
 
   Future<void> _clearCompletedTodo(WidgetRef ref, BuildContext context) async {
-    ref.read(todoCompletedProvider.notifier).clearCompletedTodo();
+    ref.read(todoProvider.notifier).clearCompletedTodo();
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -142,8 +143,8 @@ class TodoCompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _onCheck(WidgetRef ref, int index, BuildContext context) async {
-    ref.read(todoCompletedProvider.notifier).undoCompletedTodo(index, ref);
+  Future<void> _onCheck(BuildContext context, WidgetRef ref, int id) async {
+    ref.read(todoProvider.notifier).toggleTodo(id);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -158,13 +159,12 @@ class TodoCompletedCard extends ConsumerWidget {
     );
   }
 
-  Future _pushDetailPage(BuildContext context, Todo completedTodoList, int index) {
+  Future _pushDetailPage(BuildContext context, Todo completedTodoList) {
     return Navigator.push(
       context,
       CupertinoPageRoute(
         builder: (context) => TodoDetailCompletedPage(
           todoData: completedTodoList,
-          index: index,
         ),
       ),
     );

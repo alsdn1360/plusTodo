@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
-import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -150,9 +150,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
           ),
         ),
       ),
-      bottomNavigationBar: TodoInteractionBottomButton(
-        onTap: () => _createTodo(ref),
-      ),
+      bottomNavigationBar: TodoInteractionBottomButton(onTap: () => _createTodo(ref)),
     );
   }
 
@@ -178,7 +176,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
         importance: _importance,
         isDone: false,
       );
-      ref.read(todoUncompletedProvider.notifier).createUncompletedTodo(addTodo);
+      ref.read(todoProvider.notifier).createTodo(addTodo);
       Navigator.pop(context);
     }
   }

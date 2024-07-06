@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
 import 'package:plus_todo/pages/todo/interaction/todo_interaction_edit_page.dart';
-import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -13,12 +13,10 @@ import 'package:plus_todo/widgets/custom_slider.dart';
 
 class TodoDetailUncompletedPage extends ConsumerStatefulWidget {
   final Todo todoData;
-  final int originalIndex;
 
   const TodoDetailUncompletedPage({
     super.key,
     required this.todoData,
-    required this.originalIndex,
   });
 
   @override
@@ -50,7 +48,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () => _pushEditPage(context, _todoData, widget.originalIndex),
+                  onTap: () => _pushEditPage(context, _todoData, widget.todoData.id),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPaddingS),
@@ -85,7 +83,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                 ),
                 const Gap(defaultGapL),
                 InkWell(
-                  onTap: () => _pushEditPage(context, _todoData, widget.originalIndex),
+                  onTap: () => _pushEditPage(context, _todoData, widget.todoData.id),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(
@@ -160,12 +158,12 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TodoDetailBottomButton(
-                  onTap: () => _completeTodo(widget.originalIndex, context, ref),
+                  onTap: () => _completeTodo(context, widget.todoData.id),
                   icon: Icons.check_outlined,
                   content: '할 일 완료',
                 ),
                 TodoDetailBottomButton(
-                  onTap: () => _pushEditPage(context, _todoData, widget.originalIndex),
+                  onTap: () => _pushEditPage(context, _todoData, widget.todoData.id),
                   icon: Icons.edit_outlined,
                   content: '편집',
                 ),
@@ -174,7 +172,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                     context: context,
                     builder: (context) => CustomDialog(
                       title: '할 일을 삭제할까요?',
-                      onTap: () => _deleteUncompletedTodo(widget.originalIndex, context, ref),
+                      onTap: () => _deleteUncompletedTodo(context, widget.todoData.id),
                     ),
                   ),
                   icon: Icons.delete_outlined,
@@ -188,8 +186,8 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
     );
   }
 
-  void _completeTodo(int index, BuildContext context, WidgetRef ref) {
-    ref.read(todoUncompletedProvider.notifier).completeTodo(index, ref);
+  void _completeTodo(BuildContext context, int id) {
+    ref.read(todoProvider.notifier).toggleTodo(id);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -205,13 +203,13 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
     Navigator.pop(context);
   }
 
-  Future<void> _pushEditPage(BuildContext context, Todo uncompletedTodoList, int originalIndex) async {
+  Future<void> _pushEditPage(BuildContext context, Todo uncompletedTodoList, int id) async {
     final updatedTodo = await Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => TodoInteractionEditPage(
           todoData: uncompletedTodoList,
-          originalIndex: originalIndex,
+          originalIndex: id,
         ),
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,
@@ -225,8 +223,8 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
     }
   }
 
-  void _deleteUncompletedTodo(int index, BuildContext context, WidgetRef ref) {
-    ref.read(todoUncompletedProvider.notifier).deleteUncompletedTodoAt(index);
+  void _deleteUncompletedTodo(BuildContext context, int id) {
+    ref.read(todoProvider.notifier).deleteTodo(id);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

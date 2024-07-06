@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
+import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -30,11 +31,10 @@ class TodoUncompletedCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoData = ref.watch(todoUncompletedProvider);
-    final filteredData = todoData.where(filteredTodoData).toList();
+    final uncompletedTodoData = ref.watch(todoUncompletedProvider).where(filteredTodoData).toList();
 
     if (filteredIndex == 1) {
-      filteredData.sort(
+      uncompletedTodoData.sort(
         (a, b) {
           int compareUrgency = b.urgency.compareTo(a.urgency);
           if (compareUrgency != 0) {
@@ -44,7 +44,7 @@ class TodoUncompletedCard extends ConsumerWidget {
         },
       );
     } else if (filteredIndex == 2) {
-      filteredData.sort(
+      uncompletedTodoData.sort(
         (a, b) {
           int compareImportance = b.importance.compareTo(a.importance);
           if (compareImportance != 0) {
@@ -92,16 +92,15 @@ class TodoUncompletedCard extends ConsumerWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) => const Gap(defaultGapS / 2),
-            itemCount: filteredData.length,
+            itemCount: uncompletedTodoData.length,
             itemBuilder: (context, index) {
-              final uncompletedTodoList = filteredData[index];
-              final originalIndex = todoData.indexOf(uncompletedTodoList);
+              final uncompletedTodoList = uncompletedTodoData[index];
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Checkbox(
                     value: uncompletedTodoList.isDone,
-                    onChanged: (bool? value) => _onCheck(ref, originalIndex, context),
+                    onChanged: (bool? value) => _onCheck(context, ref, uncompletedTodoList.id),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: const VisualDensity(
                       horizontal: VisualDensity.minimumDensity,
@@ -116,7 +115,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                   const Gap(defaultGapM),
                   Expanded(
                     child: InkWell(
-                      onTap: () => _pushDetailPage(context, uncompletedTodoList, originalIndex),
+                      onTap: () => _pushDetailPage(context, uncompletedTodoList),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -129,7 +128,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                             '긴급도: ${uncompletedTodoList.urgency.toInt()}  중요도: ${uncompletedTodoList.importance.toInt()}',
                             style: CustomTextStyle.caption2,
                           ),
-                          if (index != filteredData.length - 1)
+                          if (index != uncompletedTodoData.length - 1)
                             const Column(
                               children: [
                                 Gap(defaultGapM / 2),
@@ -144,7 +143,7 @@ class TodoUncompletedCard extends ConsumerWidget {
               );
             },
           ),
-          if (filteredData.isEmpty)
+          if (uncompletedTodoData.isEmpty)
             Text(
               '할 일이 없어요.',
               style: CustomTextStyle.body3,
@@ -154,8 +153,8 @@ class TodoUncompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _onCheck(WidgetRef ref, int originalIndex, BuildContext context) async {
-    ref.read(todoUncompletedProvider.notifier).completeTodo(originalIndex, ref);
+  Future<void> _onCheck(BuildContext context, WidgetRef ref, int id) async {
+    ref.read(todoProvider.notifier).toggleTodo(id);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -170,13 +169,12 @@ class TodoUncompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<dynamic> _pushDetailPage(BuildContext context, Todo uncompletedTodoList, int originalIndex) {
+  Future<dynamic> _pushDetailPage(BuildContext context, Todo uncompletedTodoList) {
     return Navigator.push(
       context,
       CupertinoPageRoute(
         builder: (context) => TodoDetailUncompletedPage(
           todoData: uncompletedTodoList,
-          originalIndex: originalIndex,
         ),
       ),
     );

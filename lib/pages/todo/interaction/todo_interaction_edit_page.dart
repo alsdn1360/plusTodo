@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
-import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
+import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -176,7 +176,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
       } else {
         widget.todoData.title = _titleController.text;
         widget.todoData.content = _contentController.text;
-        ref.read(todoUncompletedProvider.notifier).updateUncompletedTodo(index, widget.todoData);
+        ref.read(todoProvider.notifier).updateTodo(index, widget.todoData);
         Navigator.pop(context, widget.todoData);
       }
     } catch (e) {
