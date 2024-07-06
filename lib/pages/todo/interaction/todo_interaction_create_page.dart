@@ -154,7 +154,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
     );
   }
 
-  Future<void> _createTodo(WidgetRef ref) async {
+  void _createTodo(WidgetRef ref) {
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(

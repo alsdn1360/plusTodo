@@ -127,7 +127,7 @@ class TodoCompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _clearCompletedTodo(WidgetRef ref, BuildContext context) async {
+  void _clearCompletedTodo(WidgetRef ref, BuildContext context) {
     ref.read(todoProvider.notifier).clearCompletedTodo();
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -143,7 +143,7 @@ class TodoCompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _onCheck(BuildContext context, WidgetRef ref, int id) async {
+  void _onCheck(BuildContext context, WidgetRef ref, int id) {
     ref.read(todoProvider.notifier).toggleTodo(id);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -159,13 +159,11 @@ class TodoCompletedCard extends ConsumerWidget {
     );
   }
 
-  Future _pushDetailPage(BuildContext context, Todo completedTodoList) {
+  Future<dynamic> _pushDetailPage(BuildContext context, Todo completedTodoList) {
     return Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (context) => TodoDetailCompletedPage(
-          todoData: completedTodoList,
-        ),
+        builder: (context) => TodoDetailCompletedPage(todoData: completedTodoList),
       ),
     );
   }

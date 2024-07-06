@@ -207,9 +207,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
     final updatedTodo = await Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => TodoInteractionEditPage(
-          todoData: uncompletedTodoList,
-        ),
+        pageBuilder: (context, animation, secondaryAnimation) => TodoInteractionEditPage(todoData: uncompletedTodoList),
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,
       ),

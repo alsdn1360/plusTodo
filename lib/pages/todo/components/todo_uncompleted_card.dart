@@ -153,7 +153,7 @@ class TodoUncompletedCard extends ConsumerWidget {
     );
   }
 
-  Future<void> _onCheck(BuildContext context, WidgetRef ref, int id) async {
+  void _onCheck(BuildContext context, WidgetRef ref, int id) {
     ref.read(todoProvider.notifier).toggleTodo(id);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -173,9 +173,7 @@ class TodoUncompletedCard extends ConsumerWidget {
     return Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (context) => TodoDetailUncompletedPage(
-          todoData: uncompletedTodoList,
-        ),
+        builder: (context) => TodoDetailUncompletedPage(todoData: uncompletedTodoList),
       ),
     );
   }

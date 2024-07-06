@@ -3,16 +3,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final filteredCardIndexProvider = StateNotifierProvider<FilteredCardIndexNotifier, int>((ref) {
-  return FilteredCardIndexNotifier(1);
+final filteredHomeCardIndexProvider = StateNotifierProvider<FilteredHomeCardIndexNotifier, int>((ref) {
+  return FilteredHomeCardIndexNotifier(1);
 });
 
-class FilteredCardIndexNotifier extends StateNotifier<int> {
-  FilteredCardIndexNotifier(super.state) {
-    _loadFilteredCardIndex();
+class FilteredHomeCardIndexNotifier extends StateNotifier<int> {
+  FilteredHomeCardIndexNotifier(super.state) {
+    _loadFilteredHomeCardIndex();
   }
 
-  Future<void> _loadFilteredCardIndex() async {
+  Future<void> _loadFilteredHomeCardIndex() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final filteredCardIndex = prefs.getInt('filteredCardIndex') ?? 1;
@@ -22,7 +22,7 @@ class FilteredCardIndexNotifier extends StateNotifier<int> {
     }
   }
 
-  Future<void> _saveFilteredCardIndex() async {
+  Future<void> _saveFilteredHomeCardIndex() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('filteredCardIndex', state);
@@ -31,10 +31,10 @@ class FilteredCardIndexNotifier extends StateNotifier<int> {
     }
   }
 
-  Future<void> toggleFilteredCardIndex(int index) async {
+  Future<void> toggleFilteredHomeCardIndex(int index) async {
     try {
       state = index;
-      await _saveFilteredCardIndex();
+      await _saveFilteredHomeCardIndex();
     } catch (e) {
       print('개요 카드 인덱스 토글 실패: $e');
     }

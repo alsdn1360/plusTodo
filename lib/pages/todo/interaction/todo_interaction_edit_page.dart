@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
@@ -11,7 +9,6 @@ import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class TodoInteractionEditPage extends ConsumerStatefulWidget {
   final Todo todoData;
@@ -159,30 +156,25 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     );
   }
 
-  Future<void> _editTodo(BuildContext context, WidgetRef ref, int id) async {
-    try {
-      if (_titleController.text.isEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 2),
-            content: Center(
-              child: Text(
-                '할 일을 입력해 주세요.',
-                style: CustomTextStyle.body3.copyWith(color: white),
-              ),
+  void _editTodo(BuildContext context, WidgetRef ref, int id) {
+    if (_titleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 2),
+          content: Center(
+            child: Text(
+              '할 일을 입력해 주세요.',
+              style: CustomTextStyle.body3.copyWith(color: white),
             ),
           ),
-        );
-      } else {
-        widget.todoData.title = _titleController.text;
-        widget.todoData.content = _contentController.text;
-        ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
-        Navigator.pop(context, widget.todoData);
-      }
-    } catch (e) {
-      // ignore: avoid_print
-      print('Failed to update todo: $e');
+        ),
+      );
+    } else {
+      widget.todoData.title = _titleController.text;
+      widget.todoData.content = _contentController.text;
+      ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
+      Navigator.pop(context, widget.todoData);
     }
   }
 }
