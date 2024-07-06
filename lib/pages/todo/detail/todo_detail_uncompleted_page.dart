@@ -48,7 +48,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () => _pushEditPage(context, _todoData, widget.todoData.id),
+                  onTap: () => _pushEditPage(context, _todoData),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPaddingS),
@@ -83,7 +83,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                 ),
                 const Gap(defaultGapL),
                 InkWell(
-                  onTap: () => _pushEditPage(context, _todoData, widget.todoData.id),
+                  onTap: () => _pushEditPage(context, _todoData),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(
@@ -163,7 +163,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                   content: '할 일 완료',
                 ),
                 TodoDetailBottomButton(
-                  onTap: () => _pushEditPage(context, _todoData, widget.todoData.id),
+                  onTap: () => _pushEditPage(context, _todoData),
                   icon: Icons.edit_outlined,
                   content: '편집',
                 ),
@@ -203,13 +203,12 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
     Navigator.pop(context);
   }
 
-  Future<void> _pushEditPage(BuildContext context, Todo uncompletedTodoList, int id) async {
+  Future<void> _pushEditPage(BuildContext context, Todo uncompletedTodoList) async {
     final updatedTodo = await Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => TodoInteractionEditPage(
           todoData: uncompletedTodoList,
-          originalIndex: id,
         ),
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,

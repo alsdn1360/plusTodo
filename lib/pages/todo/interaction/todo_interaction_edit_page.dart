@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
@@ -9,15 +11,14 @@ import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_slider.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class TodoInteractionEditPage extends ConsumerStatefulWidget {
   final Todo todoData;
-  final int originalIndex;
 
   const TodoInteractionEditPage({
     super.key,
     required this.todoData,
-    required this.originalIndex,
   });
 
   @override
@@ -153,12 +154,12 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
         ),
       ),
       bottomNavigationBar: TodoInteractionBottomButton(
-        onTap: () => _editTodo(widget.originalIndex, context, ref),
+        onTap: () => _editTodo(context, ref, widget.todoData.id),
       ),
     );
   }
 
-  Future<void> _editTodo(int index, BuildContext context, WidgetRef ref) async {
+  Future<void> _editTodo(BuildContext context, WidgetRef ref, int id) async {
     try {
       if (_titleController.text.isEmpty) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -176,7 +177,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
       } else {
         widget.todoData.title = _titleController.text;
         widget.todoData.content = _contentController.text;
-        ref.read(todoProvider.notifier).updateTodo(index, widget.todoData);
+        ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
         Navigator.pop(context, widget.todoData);
       }
     } catch (e) {
