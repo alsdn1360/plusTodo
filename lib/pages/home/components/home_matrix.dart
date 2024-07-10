@@ -51,7 +51,7 @@ class HomeMatrixPainter extends CustomPainter {
     canvas.drawLine(Offset(0, size.height / 2), Offset(size.width, size.height / 2), paint);
 
     final thinPaint = Paint()
-      ..color = lightGray
+      ..color = black.withOpacity(0.2)
       ..strokeWidth = 0.5;
 
     for (int i = 1; i < 10; i++) {
@@ -72,7 +72,6 @@ class HomeMatrixPainter extends CustomPainter {
       final x = (todo.urgency / 10) * size.width;
       final y = size.height - (todo.importance / 10) * size.height;
 
-      // 중복된 점 처리
       final pointKey = '$x,$y';
       pointCount[pointKey] = (pointCount[pointKey] ?? 0) + 1;
     }
