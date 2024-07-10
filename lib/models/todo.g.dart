@@ -22,23 +22,28 @@ const TodoSchema = CollectionSchema(
       name: r'content',
       type: IsarType.string,
     ),
-    r'importance': PropertySchema(
+    r'deadline': PropertySchema(
       id: 1,
+      name: r'deadline',
+      type: IsarType.dateTime,
+    ),
+    r'importance': PropertySchema(
+      id: 2,
       name: r'importance',
       type: IsarType.double,
     ),
     r'isDone': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'isDone',
       type: IsarType.bool,
     ),
     r'title': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'title',
       type: IsarType.string,
     ),
     r'urgency': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'urgency',
       type: IsarType.double,
     )
@@ -75,10 +80,11 @@ void _todoSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.content);
-  writer.writeDouble(offsets[1], object.importance);
-  writer.writeBool(offsets[2], object.isDone);
-  writer.writeString(offsets[3], object.title);
-  writer.writeDouble(offsets[4], object.urgency);
+  writer.writeDateTime(offsets[1], object.deadline);
+  writer.writeDouble(offsets[2], object.importance);
+  writer.writeBool(offsets[3], object.isDone);
+  writer.writeString(offsets[4], object.title);
+  writer.writeDouble(offsets[5], object.urgency);
 }
 
 Todo _todoDeserialize(
@@ -89,10 +95,11 @@ Todo _todoDeserialize(
 ) {
   final object = Todo(
     content: reader.readString(offsets[0]),
-    importance: reader.readDouble(offsets[1]),
-    isDone: reader.readBool(offsets[2]),
-    title: reader.readString(offsets[3]),
-    urgency: reader.readDouble(offsets[4]),
+    deadline: reader.readDateTimeOrNull(offsets[1]),
+    importance: reader.readDouble(offsets[2]),
+    isDone: reader.readBool(offsets[3]),
+    title: reader.readString(offsets[4]),
+    urgency: reader.readDouble(offsets[5]),
   );
   object.id = id;
   return object;
@@ -108,12 +115,14 @@ P _todoDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -332,6 +341,75 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'content',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> deadlineIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'deadline',
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> deadlineIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'deadline',
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> deadlineEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'deadline',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> deadlineGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'deadline',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> deadlineLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'deadline',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> deadlineBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'deadline',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -667,6 +745,18 @@ extension TodoQuerySortBy on QueryBuilder<Todo, Todo, QSortBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByDeadline() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deadline', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByDeadlineDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deadline', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> sortByImportance() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'importance', Sort.asc);
@@ -726,6 +816,18 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
   QueryBuilder<Todo, Todo, QAfterSortBy> thenByContentDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'content', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByDeadline() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deadline', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByDeadlineDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deadline', Sort.desc);
     });
   }
 
@@ -798,6 +900,12 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QDistinct> distinctByDeadline() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'deadline');
+    });
+  }
+
   QueryBuilder<Todo, Todo, QDistinct> distinctByImportance() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'importance');
@@ -834,6 +942,12 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
   QueryBuilder<Todo, String, QQueryOperations> contentProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'content');
+    });
+  }
+
+  QueryBuilder<Todo, DateTime?, QQueryOperations> deadlineProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'deadline');
     });
   }
 

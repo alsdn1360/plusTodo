@@ -24,6 +24,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
 
   double _importance = 1;
   double _urgency = 1;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -79,6 +80,24 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                           textController: _contentController,
                         ),
                       ],
+                    ),
+                  ),
+                  const Gap(defaultGapL),
+                  InkWell(
+                    onTap: () => _selectDate(context),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(defaultPaddingS),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                        color: white,
+                      ),
+                      child: Text(
+                        _formatDate(_selectedDate),
+                        style: CustomTextStyle.body1.copyWith(
+                          color: _getDateTextColor(_selectedDate),
+                        ),
+                      ),
                     ),
                   ),
                   const Gap(defaultGapL),
@@ -154,6 +173,36 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2099),
+      builder: (context, child) => Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: const ColorScheme.light(primary: black),
+        ),
+        child: child!,
+      ),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() => _selectedDate = pickedDate);
+    }
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) {
+      return '마감일';
+    } else {
+      return '${date.year}년 ${date.month}월 ${date.day}일';
+    }
+  }
+
+  Color _getDateTextColor(DateTime? date) {
+    return date == null ? Colors.grey : Colors.black;
+  }
+
   void _createTodo(WidgetRef ref) {
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -168,6 +217,19 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
           ),
         ),
       );
+    } else if (_selectedDate == null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 2),
+          content: Center(
+            child: Text(
+              '마감일을 선택해 주세요.',
+              style: CustomTextStyle.body3.copyWith(color: white),
+            ),
+          ),
+        ),
+      );
     } else {
       final addTodo = Todo(
         title: _titleController.text,
@@ -175,6 +237,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
         urgency: _urgency,
         importance: _importance,
         isDone: false,
+        deadline: _selectedDate,
       );
       ref.read(todoProvider.notifier).createTodo(addTodo);
       Navigator.pop(context);

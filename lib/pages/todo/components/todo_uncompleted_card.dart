@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
@@ -125,8 +126,22 @@ class TodoUncompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '긴급도: ${uncompletedTodoList.urgency.toInt()}  중요도: ${uncompletedTodoList.importance.toInt()}',
-                            style: CustomTextStyle.caption2,
+                            '${uncompletedTodoList.deadline!.year}. ${uncompletedTodoList.deadline!.month}. ${uncompletedTodoList.deadline!.day}.',
+                            style: CustomTextStyle.body3,
+                          ),
+                          const Gap(defaultGapS / 4),
+                          Row(
+                            children: [
+                              TodoUrgencyImportanceCard(
+                                color: color,
+                                content: '긴급도: ${uncompletedTodoList.urgency.toInt()}',
+                              ),
+                              const Gap(defaultGapS / 2),
+                              TodoUrgencyImportanceCard(
+                                color: color,
+                                content: '중요도: ${uncompletedTodoList.importance.toInt()}',
+                              ),
+                            ],
                           ),
                           if (index != uncompletedTodoData.length - 1)
                             const Column(

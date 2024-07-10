@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
 import 'package:plus_todo/pages/todo/interaction/todo_interaction_edit_page.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
@@ -84,64 +86,12 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                 const Gap(defaultGapL),
                 InkWell(
                   onTap: () => _pushEditPage(context, _todoData),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(
-                      top: defaultPaddingS,
-                      bottom: defaultPaddingM / 4,
-                      left: defaultPaddingS,
-                      right: defaultPaddingS,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: white,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (_todoData.urgency >= 5 && _todoData.importance >= 5)
-                          Text(
-                            'Do',
-                            style: CustomTextStyle.title2.copyWith(color: red),
-                          )
-                        else if (_todoData.urgency >= 5 && _todoData.importance < 5)
-                          Text(
-                            'Delegate',
-                            style: CustomTextStyle.title2.copyWith(color: blue),
-                          )
-                        else if (_todoData.urgency < 5 && _todoData.importance >= 5)
-                          Text(
-                            'Schedule',
-                            style: CustomTextStyle.title2.copyWith(color: orange),
-                          )
-                        else
-                          Text(
-                            'Eliminate',
-                            style: CustomTextStyle.title2,
-                          ),
-                        const Gap(defaultGapM),
-                        Text(
-                          '긴급도: ${_todoData.urgency.toInt()}',
-                          style: CustomTextStyle.body2,
-                        ),
-                        const Gap(defaultGapS / 2),
-                        CustomSlider(
-                          value: _todoData.urgency,
-                          isEnabled: false,
-                        ),
-                        const Gap(defaultGapM),
-                        Text(
-                          '중요도: ${_todoData.importance.toInt()}',
-                          style: CustomTextStyle.body2,
-                        ),
-                        const Gap(defaultGapS / 2),
-                        CustomSlider(
-                          value: _todoData.importance,
-                          isEnabled: false,
-                        ),
-                      ],
-                    ),
-                  ),
+                  child: TodoDetailDeadlineCard(todoData: _todoData),
+                ),
+                const Gap(defaultGapL),
+                InkWell(
+                  onTap: () => _pushEditPage(context, _todoData),
+                  child: TodoDetailUrgencyImportanceCard(todoData: _todoData),
                 ),
               ],
             ),

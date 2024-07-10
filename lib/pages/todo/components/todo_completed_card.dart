@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
 import 'package:plus_todo/providers/todo/todo_completed_provider.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
@@ -23,7 +24,7 @@ class TodoCompletedCard extends ConsumerWidget {
       padding: const EdgeInsets.all(defaultPaddingS),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: white,
+        color: gray.withOpacity(0.1),
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
       ),
       child: Column(
@@ -99,8 +100,24 @@ class TodoCompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '긴급도: ${completedTodoList.urgency.toInt()}  중요도: ${completedTodoList.importance.toInt()}',
-                            style: CustomTextStyle.caption2.copyWith(decoration: TextDecoration.lineThrough),
+                            '${completedTodoList.deadline!.year}. ${completedTodoList.deadline!.month}. ${completedTodoList.deadline!.day}.',
+                            style: CustomTextStyle.body3.copyWith(decoration: TextDecoration.lineThrough),
+                          ),
+                          const Gap(defaultGapS / 4),
+                          Row(
+                            children: [
+                              TodoUrgencyImportanceCard(
+                                color: gray.withOpacity(0.6),
+                                content: '긴급도: ${completedTodoList.urgency.toInt()}',
+                                isCompleted: true,
+                              ),
+                              const Gap(defaultGapS / 2),
+                              TodoUrgencyImportanceCard(
+                                color: gray.withOpacity(0.6),
+                                content: '중요도: ${completedTodoList.importance.toInt()}',
+                                isCompleted: true,
+                              ),
+                            ],
                           ),
                           if (index != completedTodoData.length - 1)
                             const Column(

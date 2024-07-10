@@ -51,7 +51,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
             ..content = updatedTodo.content
             ..urgency = updatedTodo.urgency
             ..importance = updatedTodo.importance
-            ..isDone = updatedTodo.isDone;
+            ..isDone = updatedTodo.isDone
+            ..deadline = updatedTodo.deadline;
           await _isar.todos.put(updatingTodo);
         }
       });

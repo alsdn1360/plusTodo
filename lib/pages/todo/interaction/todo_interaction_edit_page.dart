@@ -27,11 +27,14 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
   late final TextEditingController _contentController;
   final FocusNode _focusNode = FocusNode();
 
+  DateTime? _selectedDate;
+
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.todoData.title);
     _contentController = TextEditingController(text: widget.todoData.content);
+    _selectedDate = widget.todoData.deadline;
     _focusNode.requestFocus();
   }
 
@@ -79,6 +82,22 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                           textController: _contentController,
                         ),
                       ],
+                    ),
+                  ),
+                  const Gap(defaultGapL),
+                  InkWell(
+                    onTap: () => _selectDate(context),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(defaultPaddingS),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                        color: white,
+                      ),
+                      child: Text(
+                        '${widget.todoData.deadline!.year}년 ${widget.todoData.deadline!.month}월 ${widget.todoData.deadline!.day}일',
+                        style: CustomTextStyle.body1,
+                      ),
                     ),
                   ),
                   const Gap(defaultGapL),
@@ -156,6 +175,29 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2099),
+      builder: (context, child) => Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: const ColorScheme.light(primary: black),
+        ),
+        child: child!,
+      ),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(
+        () {
+          _selectedDate = pickedDate;
+          widget.todoData.deadline = _selectedDate;
+        },
+      );
+    }
+  }
+
   void _editTodo(BuildContext context, WidgetRef ref, int id) {
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -173,6 +215,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     } else {
       widget.todoData.title = _titleController.text;
       widget.todoData.content = _contentController.text;
+      widget.todoData.deadline = _selectedDate;
       ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
       Navigator.pop(context, widget.todoData);
     }

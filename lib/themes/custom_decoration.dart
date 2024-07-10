@@ -14,7 +14,7 @@ const double defaultGapL = 16.0;
 /// Gap: 20
 const double defaultGapXL = 20.0;
 
-/// Border radius: 16
-const double defaultBorderRadiusM = 16.0;
+/// Border radius: 20
+const double defaultBorderRadiusM = 20.0;
 /// Border radius: 24
 const double defaultBorderRadiusL = 24.0;

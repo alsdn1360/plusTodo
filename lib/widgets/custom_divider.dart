@@ -9,7 +9,7 @@ class CustomDivider extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 0.5,
-      color: gray,
+      color: black.withOpacity(0.2),
     );
   }
 }
