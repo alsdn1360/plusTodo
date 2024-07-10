@@ -1,5 +1,5 @@
 # 플러스투두 - 아이젠아워 매트릭스를 이용한 투두 모바일 애플리케이션 서비스
-![프레젠테이션1](https://github.com/alsdn1360/plusTodo/assets/110466553/a5efed02-36bc-41b3-a856-28a479db34b7)
+![프레젠테이션1](https://github.com/alsdn1360/plusTodo/assets/110466553/b10df2c5-b9c3-47ee-8781-d6814658f56f)
 
 ## Description
 
@@ -9,20 +9,18 @@
 ## Features
 
 ### **홈 화면**
-![홈 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/26be8404-1ce3-4d85-b84c-33c2f5685cad)
-![홈 화면 - 필터 카드 선택](https://github.com/alsdn1360/plusTodo/assets/110466553/e47b708e-48cc-4019-8fc6-0a9b2639ff06)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 30 41](https://github.com/alsdn1360/plusTodo/assets/110466553/7206137b-3b31-47c5-a90d-1e141249aa31)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 30 50](https://github.com/alsdn1360/plusTodo/assets/110466553/8bc015b8-072e-45a7-a7e8-b5a67aadc07d)
 
 ### **할 일 추가 화면**
-![할 일 추가 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/65b8ab7c-ac6a-4509-bfaa-61f8e7cf1a7d)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 31 29](https://github.com/alsdn1360/plusTodo/assets/110466553/981351ea-e7e3-4750-9e83-454d28496e35)
 
 ### **할 일 목록 화면**
-![할 일 목록 화면(긴급도 우선 정렬)](https://github.com/alsdn1360/plusTodo/assets/110466553/edb3217a-436f-43d4-af7f-818b69342b84)
-![할 일 목록 화면(중요도 우선 정렬)](https://github.com/alsdn1360/plusTodo/assets/110466553/6a8595ab-ce98-4119-87c4-14ce25d9a798)
-![할 일 목록 - 할 일 상세 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/e1ff1656-72e3-4257-b40c-d90a21970b87)
-![할 일 목록 - 완료된 할 일 보기 선택](https://github.com/alsdn1360/plusTodo/assets/110466553/2722eb88-bb58-4932-9126-e70a142148cb)
-![할 일 목록 - 완료된 할 일](https://github.com/alsdn1360/plusTodo/assets/110466553/0ce6c789-8d43-4c84-9862-23279743cc82)
-![할 일 목록 - 완료된 할 일 일괄 삭제](https://github.com/alsdn1360/plusTodo/assets/110466553/5e80ffd1-9e1e-451b-aac7-c9361a8206a4)
-![할 일 목록 - 완료된 할 일 상세 화면](https://github.com/alsdn1360/plusTodo/assets/110466553/51bd645b-4fcf-4216-887f-1e044ac2dd36)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 31 43](https://github.com/alsdn1360/plusTodo/assets/110466553/9e0cbc8b-73ae-488c-890a-a1f093ed20ee)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 31 39](https://github.com/alsdn1360/plusTodo/assets/110466553/02ef74ac-c4f4-43ee-83b3-334799fc55aa)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 31 47](https://github.com/alsdn1360/plusTodo/assets/110466553/5930023b-ce47-4762-bdaf-dca9d170b57f)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 31 51](https://github.com/alsdn1360/plusTodo/assets/110466553/b5cf381b-02ed-4a47-920f-b6d077cb4d9b)
+![Simulator Screenshot - iPhone 15 Pro Max - 2024-07-10 at 16 31 53](https://github.com/alsdn1360/plusTodo/assets/110466553/527d6894-87e0-49f7-9583-6b6f61ecc8d7)
 
 ## Development enviroment
 
