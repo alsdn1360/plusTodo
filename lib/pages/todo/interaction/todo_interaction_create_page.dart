@@ -255,7 +255,11 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     style: CustomTextStyle.body1,
                   ),
                   onPressed: () {
-                    setState(() => _selectedDate = tempPickedDate);
+                    if (tempPickedDate == null) {
+                      setState(() => _selectedDate = DateTime.now());
+                    } else {
+                      setState(() => _selectedDate = tempPickedDate);
+                    }
                     Navigator.pop(context);
                   },
                 ),
@@ -287,13 +291,8 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                   height: 200,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.time,
-                    initialDateTime: DateTime(
-                      _selectedDate?.year ?? DateTime.now().year,
-                      _selectedDate?.month ?? DateTime.now().month,
-                      _selectedDate?.day ?? DateTime.now().day,
-                      _selectedTime?.hour ?? TimeOfDay.now().hour,
-                      _selectedTime?.minute ?? TimeOfDay.now().minute,
-                    ),
+                    initialDateTime: _getAdjustedInitialDateTime(),
+                    minuteInterval: 5,
                     onDateTimeChanged: (DateTime newDateTime) {
                       tempPickedTime = TimeOfDay(hour: newDateTime.hour, minute: newDateTime.minute);
                     },
@@ -305,7 +304,11 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     style: CustomTextStyle.body1,
                   ),
                   onPressed: () {
-                    setState(() => _selectedTime = tempPickedTime);
+                    if (tempPickedTime == null) {
+                      setState(() => _selectedTime = TimeOfDay.fromDateTime(_getAdjustedInitialDateTime()));
+                    } else {
+                      setState(() => _selectedTime = tempPickedTime);
+                    }
                     Navigator.pop(context);
                   },
                 ),
@@ -355,6 +358,39 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
       default:
         return '';
     }
+  }
+
+  DateTime _getAdjustedInitialDateTime() {
+    final now = DateTime.now();
+    final initialDateTime = DateTime(
+      _selectedDate?.year ?? now.year,
+      _selectedDate?.month ?? now.month,
+      _selectedDate?.day ?? now.day,
+      _selectedTime?.hour ?? now.hour,
+      _selectedTime?.minute ?? now.minute,
+    );
+
+    int minuteInterval = 5;
+    int adjustedMinute = (initialDateTime.minute + minuteInterval - 1) ~/ minuteInterval * minuteInterval;
+
+    if (adjustedMinute >= 60) {
+      adjustedMinute -= 60;
+      return DateTime(
+        initialDateTime.year,
+        initialDateTime.month,
+        initialDateTime.day,
+        initialDateTime.hour + 1,
+        adjustedMinute,
+      );
+    }
+
+    return DateTime(
+      initialDateTime.year,
+      initialDateTime.month,
+      initialDateTime.day,
+      initialDateTime.hour,
+      adjustedMinute,
+    );
   }
 
   Color _getDateTextColor(DateTime? date) {

@@ -19,29 +19,28 @@ class TodoInteractionSimpleTimeButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _buildTimeButton('30분 후', 0, 30),
+          _buildTimeButton('오전 6시', 6, 0),
           const Gap(defaultGapM),
-          _buildTimeButton('1시간 후', 1, 0),
+          _buildTimeButton('오전 9시', 9, 0),
           const Gap(defaultGapM),
-          _buildTimeButton('2시간 후', 2, 0),
+          _buildTimeButton('오후 12시', 12, 0),
           const Gap(defaultGapM),
-          _buildTimeButton('3시간 후', 3, 0),
+          _buildTimeButton('오후 3시', 15, 0),
           const Gap(defaultGapM),
-          _buildTimeButton('6시간 후', 6, 0),
+          _buildTimeButton('오후 6시', 18, 0),
           const Gap(defaultGapM),
-          _buildTimeButton('12시간 후', 12, 0),
+          _buildTimeButton('오후 9시', 21, 0),
+          const Gap(defaultGapM),
+          _buildTimeButton('오전 12시', 00, 0),
         ],
       ),
     );
   }
 
-  Widget _buildTimeButton(String content, int afterHours, int afterMinutes) {
+  Widget _buildTimeButton(String content, int setHours, int setMinutes) {
     return InkWell(
       onTap: () {
-        final now = TimeOfDay.now();
-        final newHour = (now.hour + afterHours + (now.minute + afterMinutes) ~/ 60) % 24;
-        final newMinute = (now.minute + afterMinutes) % 60;
-        onTimeSelected(TimeOfDay(hour: newHour, minute: newMinute));
+        onTimeSelected(TimeOfDay(hour: setHours, minute: setMinutes));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(

@@ -264,7 +264,8 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                   height: 200,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.time,
-                    initialDateTime: DateTime.now(),
+                    initialDateTime: DateTime(2000, 2, 10, _selectedTime!.hour, _selectedTime!.minute),
+                    minuteInterval: 5,
                     onDateTimeChanged: (DateTime newDateTime) {
                       tempPickedTime = TimeOfDay(hour: newDateTime.hour, minute: newDateTime.minute);
                     },
