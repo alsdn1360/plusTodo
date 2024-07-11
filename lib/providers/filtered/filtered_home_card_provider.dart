@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final filteredHomeCardIndexProvider = StateNotifierProvider<FilteredHomeCardIndexNotifier, int>((ref) {
-  return FilteredHomeCardIndexNotifier(1);
+  return FilteredHomeCardIndexNotifier(0);
 });
 
 class FilteredHomeCardIndexNotifier extends StateNotifier<int> {
@@ -15,7 +15,7 @@ class FilteredHomeCardIndexNotifier extends StateNotifier<int> {
   Future<void> _loadFilteredHomeCardIndex() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final filteredCardIndex = prefs.getInt('filteredCardIndex') ?? 1;
+      final filteredCardIndex = prefs.getInt('filteredCardIndex') ?? 0;
       state = filteredCardIndex;
     } catch (e) {
       print('개요 카드 인덱스 불러오기 실패: $e');

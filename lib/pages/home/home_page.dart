@@ -18,6 +18,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoData = ref.watch(todoUncompletedProvider);
+    final filteredHomeCardIndex = ref.watch(filteredHomeCardIndexProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,35 +52,35 @@ class HomePage extends ConsumerWidget {
             onSelected: (value) => ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex(value),
             itemBuilder: (context) => <PopupMenuEntry>[
               PopupMenuItem(
-                value: 1,
+                value: 0,
                 child: Text(
                   'Do 목록 보기',
                   style: CustomTextStyle.body3,
                 ),
               ),
               PopupMenuItem(
-                value: 2,
+                value: 1,
                 child: Text(
                   'Delegate 목록 보기',
                   style: CustomTextStyle.body3,
                 ),
               ),
               PopupMenuItem(
-                value: 3,
+                value: 2,
                 child: Text(
                   'Schedule 목록 보기',
                   style: CustomTextStyle.body3,
                 ),
               ),
               PopupMenuItem(
-                value: 4,
+                value: 3,
                 child: Text(
                   'Eliminate 목록 보기',
                   style: CustomTextStyle.body3,
                 ),
               ),
               PopupMenuItem(
-                value: 5,
+                value: 4,
                 child: Text(
                   '목록 숨기기',
                   style: CustomTextStyle.body3,
@@ -100,42 +101,50 @@ class HomePage extends ConsumerWidget {
                 const Gap(defaultGapL),
                 const HomeSummary(),
                 const Gap(defaultGapL),
-                if (ref.watch(filteredHomeCardIndexProvider) == 1)
-                  TodoUncompletedCard(
-                    title: 'Do',
-                    subtitle: '긴급하고 중요한 일',
-                    color: red,
-                    isDoOrEliminateCard: true,
-                    filteredIndex: ref.watch(filteredSortingIndexProvider),
-                    filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
-                  )
-                else if (ref.watch(filteredHomeCardIndexProvider) == 2)
-                  TodoUncompletedCard(
-                    title: 'Delegate',
-                    subtitle: '긴급하지만 중요하진 않은 일',
-                    color: blue,
-                    filteredIndex: ref.watch(filteredSortingIndexProvider),
-                    filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
-                  )
-                else if (ref.watch(filteredHomeCardIndexProvider) == 3)
-                  TodoUncompletedCard(
-                    title: 'Schedule',
-                    subtitle: '중요하지만 급하지 않은 일',
-                    color: orange,
-                    filteredIndex: ref.watch(filteredSortingIndexProvider),
-                    filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
-                  )
-                else if (ref.watch(filteredHomeCardIndexProvider) == 4)
-                  TodoUncompletedCard(
-                    title: 'Eliminate',
-                    subtitle: '긴급하지도 중요하지도 않은 일',
-                    color: green,
-                    isDoOrEliminateCard: true,
-                    filteredIndex: ref.watch(filteredSortingIndexProvider),
-                    filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
-                  )
-                else if (ref.watch(filteredHomeCardIndexProvider) == 5)
-                  const SizedBox(),
+                GestureDetector(
+                  onHorizontalDragEnd: (details) {
+                    if (details.primaryVelocity! < 0) {
+                      ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex((filteredHomeCardIndex % 4) + 1);
+                    } else if (details.primaryVelocity! > 0) {
+                      ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex((filteredHomeCardIndex % 4) - 1);
+                    }
+                  },
+                  child: IndexedStack(
+                    index: filteredHomeCardIndex % 4,
+                    children: [
+                      TodoUncompletedCard(
+                        title: 'Do',
+                        subtitle: '긴급하고 중요한 일',
+                        color: red,
+                        isDoOrEliminateCard: true,
+                        filteredIndex: ref.watch(filteredSortingIndexProvider),
+                        filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
+                      ),
+                      TodoUncompletedCard(
+                        title: 'Delegate',
+                        subtitle: '긴급하지만 중요하진 않은 일',
+                        color: blue,
+                        filteredIndex: ref.watch(filteredSortingIndexProvider),
+                        filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+                      ),
+                      TodoUncompletedCard(
+                        title: 'Schedule',
+                        subtitle: '중요하지만 급하지 않은 일',
+                        color: orange,
+                        filteredIndex: ref.watch(filteredSortingIndexProvider),
+                        filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+                      ),
+                      TodoUncompletedCard(
+                        title: 'Eliminate',
+                        subtitle: '긴급하지도 중요하지도 않은 일',
+                        color: green,
+                        isDoOrEliminateCard: true,
+                        filteredIndex: ref.watch(filteredSortingIndexProvider),
+                        filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
