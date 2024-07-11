@@ -19,12 +19,12 @@ class TodoUrgencyImportanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: defaultPaddingL / 4,
-        vertical: defaultPaddingS / 8,
+        horizontal: defaultPaddingL / 2,
+        vertical: defaultPaddingS / 4,
       ),
       decoration: BoxDecoration(
         color: color.withOpacity(0.6),
-        borderRadius: BorderRadius.circular(defaultBorderRadiusL / 4),
+        borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
       ),
       child: Text(
         content,

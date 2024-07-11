@@ -68,7 +68,7 @@ class TodoDetailDeadlineCard extends StatelessWidget {
   }
 
   String _formatTime(DateTime time) {
-    final hours = time!.hour % 12 == 0 ? 12 : time.hour % 12;
+    final hours = time.hour % 12 == 0 ? 12 : time.hour % 12;
     final period = time.hour < 12 ? '오전' : '오후';
     final minutes = time.minute.toString().padLeft(2, '0');
     return '$period $hours:$minutes';

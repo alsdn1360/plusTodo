@@ -54,7 +54,7 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
           const Gap(defaultGapM),
           Text(
             '긴급도: ${todoData.urgency.toInt()}',
-            style: CustomTextStyle.body2,
+            style: CustomTextStyle.body1,
           ),
           const Gap(defaultGapS / 2),
           CustomSlider(
@@ -64,7 +64,7 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
           const Gap(defaultGapM),
           Text(
             '중요도: ${todoData.importance.toInt()}',
-            style: CustomTextStyle.body2,
+            style: CustomTextStyle.body1,
           ),
           const Gap(defaultGapS / 2),
           CustomSlider(

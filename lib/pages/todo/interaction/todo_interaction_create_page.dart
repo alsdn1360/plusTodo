@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_date_button.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_time_button.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -85,39 +87,67 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     ),
                   ),
                   const Gap(defaultGapL),
-                  InkWell(
-                    onTap: () => _showDatePicker(context),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(defaultPaddingS),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: white,
-                      ),
-                      child: Text(
-                        _formatDate(_selectedDate),
-                        style: CustomTextStyle.body1.copyWith(
-                          color: _getDateTextColor(_selectedDate),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => _showDatePicker(context),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              _formatDate(_selectedDate),
+                              style: CustomTextStyle.body1.copyWith(
+                                color: _getDateTextColor(_selectedDate),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        const Gap(defaultGapM),
+                        TodoInteractionSimpleDateButton(
+                          onDateSelected: (selectedDate) {
+                            setState(() => _selectedDate = selectedDate);
+                          },
+                        )
+                      ],
                     ),
                   ),
                   const Gap(defaultGapL),
-                  InkWell(
-                    onTap: () => _showTimePicker(context),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(defaultPaddingS),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: white,
-                      ),
-                      child: Text(
-                        _formatTime(_selectedTime),
-                        style: CustomTextStyle.body1.copyWith(
-                          color: _getTimeTextColor(_selectedTime),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => _showTimePicker(context),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              _formatTime(_selectedTime),
+                              style: CustomTextStyle.body1.copyWith(
+                                color: _getTimeTextColor(_selectedTime),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        const Gap(defaultGapM),
+                        TodoInteractionSimpleTimeButton(
+                          onTimeSelected: (selectedTime) {
+                            setState(() => _selectedTime = selectedTime);
+                          },
+                        )
+                      ],
                     ),
                   ),
                   const Gap(defaultGapL),
@@ -159,7 +189,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                         const Gap(defaultGapM),
                         Text(
                           '긴급도: ${_urgency.toInt()}',
-                          style: CustomTextStyle.body2,
+                          style: CustomTextStyle.body1,
                         ),
                         const Gap(defaultGapS / 2),
                         CustomSlider(
@@ -171,7 +201,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                         const Gap(defaultGapM),
                         Text(
                           '중요도: ${_importance.toInt()}',
-                          style: CustomTextStyle.body2,
+                          style: CustomTextStyle.body1,
                         ),
                         const Gap(defaultGapS / 2),
                         CustomSlider(

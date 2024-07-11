@@ -83,9 +83,9 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         ),
                         const Gap(defaultGapM),
                         CustomTextField(
-                          hintText: widget.todoData.content.isEmpty ? '내용' : null,
                           textStyle: CustomTextStyle.body2,
                           textController: _contentController,
+                          hintText: widget.todoData.content.isEmpty ? '내용' : null,
                         ),
                       ],
                     ),
@@ -161,7 +161,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         const Gap(defaultGapM),
                         Text(
                           '긴급도: ${widget.todoData.urgency.toInt()}',
-                          style: CustomTextStyle.body2,
+                          style: CustomTextStyle.body1,
                         ),
                         const Gap(defaultGapS / 2),
                         CustomSlider(
@@ -173,7 +173,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         const Gap(defaultGapM),
                         Text(
                           '중요도: ${widget.todoData.importance.toInt()}',
-                          style: CustomTextStyle.body2,
+                          style: CustomTextStyle.body1,
                         ),
                         const Gap(defaultGapS / 2),
                         CustomSlider(

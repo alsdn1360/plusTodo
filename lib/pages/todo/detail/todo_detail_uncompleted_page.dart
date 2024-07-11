@@ -11,7 +11,6 @@ import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_dialog.dart';
-import 'package:plus_todo/widgets/custom_slider.dart';
 
 class TodoDetailUncompletedPage extends ConsumerStatefulWidget {
   final Todo todoData;
