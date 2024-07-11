@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
@@ -28,6 +29,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
   final FocusNode _focusNode = FocusNode();
 
   DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
 
   @override
   void initState() {
@@ -35,6 +37,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     _titleController = TextEditingController(text: widget.todoData.title);
     _contentController = TextEditingController(text: widget.todoData.content);
     _selectedDate = widget.todoData.deadline;
+    _selectedTime = widget.todoData.deadline != null ? TimeOfDay.fromDateTime(widget.todoData.deadline!) : null;
     _focusNode.requestFocus();
   }
 
@@ -50,7 +53,10 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('할 일 수정'),
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
@@ -86,7 +92,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                   ),
                   const Gap(defaultGapL),
                   InkWell(
-                    onTap: () => _selectDate(context),
+                    onTap: () => _showDatePicker(context),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(defaultPaddingS),
@@ -95,7 +101,23 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         color: white,
                       ),
                       child: Text(
-                        '${widget.todoData.deadline!.year}년 ${widget.todoData.deadline!.month}월 ${widget.todoData.deadline!.day}일',
+                        '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일 (${_getDayOfWeek(_selectedDate!.weekday)})',
+                        style: CustomTextStyle.body1,
+                      ),
+                    ),
+                  ),
+                  const Gap(defaultGapL),
+                  InkWell(
+                    onTap: () => _showTimePicker(context),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(defaultPaddingS),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                        color: white,
+                      ),
+                      child: Text(
+                        _formatTime(_selectedTime!),
                         style: CustomTextStyle.body1,
                       ),
                     ),
@@ -175,27 +197,126 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
+  void _showDatePicker(BuildContext context) {
+    DateTime? tempPickedDate = _selectedDate;
+    showCupertinoModalPopup(
       context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2024),
-      lastDate: DateTime(2099),
-      builder: (context, child) => Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: const ColorScheme.light(primary: black),
-        ),
-        child: child!,
-      ),
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 3,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPaddingS),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: _selectedDate ?? DateTime.now(),
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      tempPickedDate = newDateTime;
+                    },
+                  ),
+                ),
+                CupertinoButton(
+                  child: Text(
+                    '확인',
+                    style: CustomTextStyle.body1,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _selectedDate = tempPickedDate;
+                      widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
-    if (pickedDate != null && pickedDate != _selectedDate) {
-      setState(
-        () {
-          _selectedDate = pickedDate;
-          widget.todoData.deadline = _selectedDate;
-        },
-      );
+  }
+
+  void _showTimePicker(BuildContext context) {
+    TimeOfDay? tempPickedTime = _selectedTime;
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 3,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPaddingS),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.time,
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      tempPickedTime = TimeOfDay(hour: newDateTime.hour, minute: newDateTime.minute);
+                    },
+                  ),
+                ),
+                CupertinoButton(
+                  child: Text(
+                    '확인',
+                    style: CustomTextStyle.body1,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _selectedTime = tempPickedTime;
+                      widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  String _getDayOfWeek(int day) {
+    switch (day) {
+      case 1:
+        return '월';
+      case 2:
+        return '화';
+      case 3:
+        return '수';
+      case 4:
+        return '목';
+      case 5:
+        return '금';
+      case 6:
+        return '토';
+      case 7:
+        return '일';
+      default:
+        return '';
     }
+  }
+
+  String _formatTime(TimeOfDay time) {
+    final hours = time.hour % 12 == 0 ? 12 : time.hour % 12;
+    final period = time.hour < 12 ? '오전' : '오후';
+    final minutes = time.minute.toString().padLeft(2, '0');
+    return '$period $hours:$minutes';
   }
 
   void _editTodo(BuildContext context, WidgetRef ref, int id) {
@@ -215,9 +336,13 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     } else {
       widget.todoData.title = _titleController.text;
       widget.todoData.content = _contentController.text;
-      widget.todoData.deadline = _selectedDate;
+      widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
       ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
       Navigator.pop(context, widget.todoData);
     }
+  }
+
+  DateTime? _inputDeadline(DateTime date, TimeOfDay time) {
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 }

@@ -126,7 +126,8 @@ class TodoUncompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '${uncompletedTodoList.deadline!.year}. ${uncompletedTodoList.deadline!.month}. ${uncompletedTodoList.deadline!.day}.',
+                            '${uncompletedTodoList.deadline!.year}년 ${uncompletedTodoList.deadline!.month}월 ${uncompletedTodoList.deadline!.day}일 (${_getDayOfWeek(uncompletedTodoList.deadline!.weekday)}) '
+                            '${_formatTime(uncompletedTodoList.deadline!)}',
                             style: CustomTextStyle.body3,
                           ),
                           const Gap(defaultGapS / 4),
@@ -166,6 +167,34 @@ class TodoUncompletedCard extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  String _getDayOfWeek(int day) {
+    switch (day) {
+      case 1:
+        return '월';
+      case 2:
+        return '화';
+      case 3:
+        return '수';
+      case 4:
+        return '목';
+      case 5:
+        return '금';
+      case 6:
+        return '토';
+      case 7:
+        return '일';
+      default:
+        return '';
+    }
+  }
+
+  String _formatTime(DateTime time) {
+    final hours = time.hour % 12 == 0 ? 12 : time.hour % 12;
+    final period = time.hour < 12 ? '오전' : '오후';
+    final minutes = time.minute.toString().padLeft(2, '0');
+    return '$period $hours:$minutes';
   }
 
   void _onCheck(BuildContext context, WidgetRef ref, int id) {
