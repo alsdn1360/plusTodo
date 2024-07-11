@@ -210,11 +210,11 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
             borderRadius: BorderRadius.circular(defaultBorderRadiusM),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(defaultPaddingS),
+            padding: const EdgeInsets.only(top: defaultPaddingL),
             child: Column(
               children: [
                 SizedBox(
-                  height: 200,
+                  height: MediaQuery.of(context).size.height / 5,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.date,
                     initialDateTime: _selectedDate ?? DateTime.now(),
@@ -257,11 +257,11 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
             borderRadius: BorderRadius.circular(defaultBorderRadiusM),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(defaultPaddingS),
+            padding: const EdgeInsets.only(top: defaultPaddingL),
             child: Column(
               children: [
                 SizedBox(
-                  height: 200,
+                  height: MediaQuery.of(context).size.height / 5,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.time,
                     initialDateTime: DateTime(2000, 2, 10, _selectedTime!.hour, _selectedTime!.minute),
