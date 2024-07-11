@@ -339,6 +339,18 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
       widget.todoData.content = _contentController.text;
       widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
       ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 1),
+          content: Center(
+            child: Text(
+              '수정을 완료했어요.',
+              style: CustomTextStyle.body3.copyWith(color: white),
+            ),
+          ),
+        ),
+      );
       Navigator.pop(context, widget.todoData);
     }
   }

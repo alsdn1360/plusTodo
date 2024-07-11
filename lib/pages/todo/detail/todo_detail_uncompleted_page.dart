@@ -114,7 +114,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                 TodoDetailBottomButton(
                   onTap: () => _pushEditPage(context, _todoData),
                   icon: Icons.edit_outlined,
-                  content: '편집',
+                  content: '수정',
                 ),
                 TodoDetailBottomButton(
                   onTap: () => showDialog(
