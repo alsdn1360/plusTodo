@@ -96,6 +96,8 @@ class TodoUncompletedCard extends ConsumerWidget {
             itemCount: uncompletedTodoData.length,
             itemBuilder: (context, index) {
               final uncompletedTodoList = uncompletedTodoData[index];
+              final isDeadlineSoon = uncompletedTodoList.deadline != null && uncompletedTodoList.deadline!.difference(DateTime.now()).inHours < 1;
+
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -128,7 +130,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                           Text(
                             '${uncompletedTodoList.deadline!.year}년 ${uncompletedTodoList.deadline!.month}월 ${uncompletedTodoList.deadline!.day}일 (${_getDayOfWeek(uncompletedTodoList.deadline!.weekday)}) '
                             '${_formatTime(uncompletedTodoList.deadline!)}',
-                            style: CustomTextStyle.body3,
+                            style: isDeadlineSoon ? CustomTextStyle.body3.copyWith(color: red) : CustomTextStyle.body3,
                           ),
                           const Gap(defaultGapS / 4),
                           Row(
