@@ -205,9 +205,12 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
         return Container(
           height: MediaQuery.of(context).size.height / 3,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: white,
-            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(defaultBorderRadiusM),
+              topRight: Radius.circular(defaultBorderRadiusM),
+            ),
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: defaultPaddingL),
@@ -218,16 +221,13 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.date,
                     initialDateTime: _selectedDate ?? DateTime.now(),
+                    minimumYear: 2024,
                     onDateTimeChanged: (DateTime newDateTime) {
                       tempPickedDate = newDateTime;
                     },
                   ),
                 ),
                 CupertinoButton(
-                  child: Text(
-                    '확인',
-                    style: CustomTextStyle.body1,
-                  ),
                   onPressed: () {
                     setState(() {
                       _selectedDate = tempPickedDate;
@@ -235,6 +235,10 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     });
                     Navigator.pop(context);
                   },
+                  child: Text(
+                    '확인',
+                    style: CustomTextStyle.title3,
+                  ),
                 ),
               ],
             ),
@@ -252,9 +256,12 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
         return Container(
           height: MediaQuery.of(context).size.height / 3,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: white,
-            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(defaultBorderRadiusM),
+              topRight: Radius.circular(defaultBorderRadiusM),
+            ),
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: defaultPaddingL),
@@ -272,10 +279,6 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                   ),
                 ),
                 CupertinoButton(
-                  child: Text(
-                    '확인',
-                    style: CustomTextStyle.body1,
-                  ),
                   onPressed: () {
                     setState(() {
                       _selectedTime = tempPickedTime;
@@ -283,6 +286,10 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     });
                     Navigator.pop(context);
                   },
+                  child: Text(
+                    '확인',
+                    style: CustomTextStyle.title3,
+                  ),
                 ),
               ],
             ),
