@@ -15,6 +15,9 @@ class TodoPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showCompleted = ref.watch(filteredShowCompletedProvider);
+    final sortingIndex = ref.watch(filteredSortingIndexProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('할 일 목록'),
@@ -56,14 +59,14 @@ class TodoPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () => (ref.watch(filteredSortingIndexProvider) == 1)
+                  onTap: () => (sortingIndex == 1)
                       ? ref.read(filteredSortingIndexProvider.notifier).toggleFilteredIndex(2)
                       : ref.read(filteredSortingIndexProvider.notifier).toggleFilteredIndex(1),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        (ref.watch(filteredSortingIndexProvider) == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
+                        (sortingIndex == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
                         style: CustomTextStyle.caption2,
                       ),
                       const Gap(defaultGapS),
@@ -77,19 +80,17 @@ class TodoPage extends ConsumerWidget {
                   subtitle: '긴급하고 중요한 일',
                   color: red,
                   isDoOrEliminateCard: true,
-                  filteredIndex: ref.watch(filteredSortingIndexProvider),
+                  filteredIndex: sortingIndex,
                   filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
                 const Gap(defaultGapL),
-                // 긴급도 우서 정렬일 때
-                if (ref.watch(filteredSortingIndexProvider) == 1)
+                if (sortingIndex == 1)
                   Column(
                     children: [
                       TodoUncompletedCard(
                         title: 'Delegate',
                         subtitle: '긴급하지만 중요하진 않은 일',
                         color: blue,
-                        // 긴급도 우선 정렬
                         filteredIndex: 1,
                         filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
                       ),
@@ -98,21 +99,18 @@ class TodoPage extends ConsumerWidget {
                         title: 'Schedule',
                         subtitle: '긴급하진 않지만 중요한 일',
                         color: orange,
-                        // 중요도 우선 정렬
                         filteredIndex: 2,
                         filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
                       ),
                     ],
                   )
-                // 중요도 우선 정렬일 때
-                else if (ref.watch(filteredSortingIndexProvider) == 2)
+                else if (sortingIndex == 2)
                   Column(
                     children: [
                       TodoUncompletedCard(
                         title: 'Schedule',
                         subtitle: '긴급하진 않지만 중요한 일',
                         color: orange,
-                        // 중요도 우선 정렬
                         filteredIndex: 2,
                         filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
                       ),
@@ -121,7 +119,6 @@ class TodoPage extends ConsumerWidget {
                         title: 'Delegate',
                         subtitle: '긴급하지만 중요하진 않은 일',
                         color: blue,
-                        // 긴급도 우선 정렬
                         filteredIndex: 1,
                         filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
                       ),
@@ -133,16 +130,16 @@ class TodoPage extends ConsumerWidget {
                   subtitle: '긴급하지도 중요하지도 않은 일',
                   color: green,
                   isDoOrEliminateCard: true,
-                  filteredIndex: ref.watch(filteredSortingIndexProvider),
+                  filteredIndex: sortingIndex,
                   filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
                 ),
-                if (ref.watch(filteredShowCompletedProvider))
+                if (showCompleted)
                   const Column(
                     children: [
                       Gap(defaultGapL),
                       TodoCompletedCard(),
                     ],
-                  )
+                  ),
               ],
             ),
           ),

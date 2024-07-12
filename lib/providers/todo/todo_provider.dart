@@ -1,9 +1,7 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:plus_todo/models/todo.dart';
-import 'dart:async';
+import 'package:plus_todo/notification/notification.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier();
@@ -26,7 +24,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       final todoList = await _isar.todos.where().findAll();
       state = todoList;
     } catch (e) {
-      print('할 일 목록 불러오기 실패: $e');
+      print('Failed to load todos: $e');
     }
   }
 
@@ -36,8 +34,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       await _isar.writeTxn(() async {
         await _isar.todos.put(todoData);
       });
+      if (todoData.deadline != null && !todoData.isDone) {
+        await sendNotification(
+          idx: todoData.id,
+          date: todoData.deadline!,
+          title: '마감 시간이 1시간 남았어요!',
+          content: todoData.title,
+        );
+      }
     } catch (e) {
-      print('할 일로 추가 실패: $e');
+      print('Failed to add todo: $e');
     }
   }
 
@@ -57,8 +63,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         }
       });
       state = state.map((todo) => todo.id == id ? updatedTodo : todo).toList();
+      if (updatedTodo.deadline != null && !updatedTodo.isDone) {
+        await sendNotification(
+          idx: updatedTodo.id,
+          date: updatedTodo.deadline!,
+          title: '마감 시간이 1시간 남았어요!',
+          content: updatedTodo.title,
+        );
+      }
     } catch (e) {
-      print('할 일 수정 실패: $e');
+      print('Failed to update todo: $e');
     }
   }
 
@@ -69,7 +83,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       });
       state = state.where((todo) => todo.id != id).toList();
     } catch (e) {
-      print('할 일 삭제 실패: $e');
+      print('Failed to delete todo: $e');
     }
   }
 
@@ -80,7 +94,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       });
       state = state.where((todo) => !todo.isDone).toList();
     } catch (e) {
-      print('완료된 할 일 일괄 삭제 실패: $e');
+      print('Failed to clear completed todos: $e');
     }
   }
 
@@ -100,7 +114,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         return todo;
       }).toList();
     } catch (e) {
-      print('토글 실패: $e');
+      print('Failed to toggle todo: $e');
     }
   }
 }

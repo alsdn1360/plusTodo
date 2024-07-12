@@ -299,7 +299,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.time,
                     initialDateTime: _getAdjustedInitialDateTime(),
-                    minuteInterval: 5,
+                    //minuteInterval: 5,
                     onDateTimeChanged: (DateTime newDateTime) {
                       tempPickedTime = TimeOfDay(hour: newDateTime.hour, minute: newDateTime.minute);
                     },
