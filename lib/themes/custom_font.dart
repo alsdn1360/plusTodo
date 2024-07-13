@@ -50,6 +50,7 @@ class CustomTextStyle {
   static TextStyle title3 = baseTextStyle.copyWith(
     fontSize: 18,
     height: 1.27,
+    letterSpacing: 0,
     fontWeight: FontWeight.w600,
   );
 
@@ -77,18 +78,10 @@ class CustomTextStyle {
   );
 
   // Captions
-  /// caption1 14px, 1.25, 400, Itim
+  /// caption2 12px, 1.25, 400, Pretendard
   static TextStyle caption1 = baseTextStyle.copyWith(
-    fontFamily: 'Itim',
     fontSize: 12,
     height: 1.25,
     letterSpacing: 0,
-    fontWeight: FontWeight.w400,
-  );
-
-  /// caption2 12px, 1.25, 400, Pretendard
-  static TextStyle caption2 = baseTextStyle.copyWith(
-    fontSize: 12,
-    height: 1.25,
   );
 }

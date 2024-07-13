@@ -28,7 +28,7 @@ class TodoDetailBottomButton extends StatelessWidget {
               children: [
                 Icon(icon, color: black),
                 const Gap(defaultGapS / 4),
-                Text(content, style: CustomTextStyle.caption2),
+                Text(content, style: CustomTextStyle.caption1),
               ],
             ),
           ),

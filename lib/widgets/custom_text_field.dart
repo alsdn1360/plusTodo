@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
         hintStyle: textStyle.copyWith(color: gray, letterSpacing: 0),
         border: InputBorder.none,
       ),
-      style: textStyle,
+      style: textStyle.copyWith(letterSpacing: 0),
       controller: textController,
       focusNode: focusNode,
       textAlign: TextAlign.justify,

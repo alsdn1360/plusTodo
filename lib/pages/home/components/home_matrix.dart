@@ -112,14 +112,14 @@ class HomeMatrixPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
 
-    textIntroducePainter.text = TextSpan(text: '중요도', style: CustomTextStyle.caption2);
+    textIntroducePainter.text = TextSpan(text: '중요도', style: CustomTextStyle.caption1);
     textIntroducePainter.layout(minWidth: 0, maxWidth: size.width);
     textIntroducePainter.paint(
       canvas,
       Offset((size.width / 2) - (textIntroducePainter.width + 6), 2),
     );
 
-    textIntroducePainter.text = TextSpan(text: '긴급도', style: CustomTextStyle.caption2);
+    textIntroducePainter.text = TextSpan(text: '긴급도', style: CustomTextStyle.caption1);
     textIntroducePainter.layout(minWidth: 0, maxWidth: size.width);
     textIntroducePainter.paint(
       canvas,

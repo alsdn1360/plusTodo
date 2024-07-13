@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_snack_bar.dart';
+import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
+import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -80,7 +83,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                   const Gap(defaultGapS / 4),
                   Text(
                     subtitle,
-                    style: CustomTextStyle.caption2,
+                    style: CustomTextStyle.caption1,
                   ),
                 ],
               ),
@@ -128,8 +131,8 @@ class TodoUncompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '${uncompletedTodoList.deadline!.year}년 ${uncompletedTodoList.deadline!.month}월 ${uncompletedTodoList.deadline!.day}일 (${_getDayOfWeek(uncompletedTodoList.deadline!.weekday)}) '
-                            '${_formatTime(uncompletedTodoList.deadline!)}',
+                            '${uncompletedTodoList.deadline!.year}년 ${uncompletedTodoList.deadline!.month}월 ${uncompletedTodoList.deadline!.day}일 (${dayOfWeekToKorean(DayOfWeek.values[uncompletedTodoList.deadline!.weekday - 1])}) '
+                            '${GeneralFormatTime.formatShowTime(uncompletedTodoList.deadline!)}',
                             style: isDeadlineSoon ? CustomTextStyle.body3.copyWith(color: red) : CustomTextStyle.body3,
                           ),
                           const Gap(defaultGapS / 4),
@@ -171,48 +174,9 @@ class TodoUncompletedCard extends ConsumerWidget {
     );
   }
 
-  String _getDayOfWeek(int day) {
-    switch (day) {
-      case 1:
-        return '월';
-      case 2:
-        return '화';
-      case 3:
-        return '수';
-      case 4:
-        return '목';
-      case 5:
-        return '금';
-      case 6:
-        return '토';
-      case 7:
-        return '일';
-      default:
-        return '';
-    }
-  }
-
-  String _formatTime(DateTime time) {
-    final hours = time.hour % 12 == 0 ? 12 : time.hour % 12;
-    final period = time.hour < 12 ? '오전' : '오후';
-    final minutes = time.minute.toString().padLeft(2, '0');
-    return '$period $hours:$minutes';
-  }
-
   void _onCheck(BuildContext context, WidgetRef ref, int id) {
     ref.read(todoProvider.notifier).toggleTodo(id);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Center(
-          child: Text(
-            '할 일을 완료했어요.',
-            style: CustomTextStyle.body3.copyWith(color: white),
-          ),
-        ),
-      ),
-    );
+    GeneralSnackBar.showSnackBar(context, '할 일을 완료했어요.');
   }
 
   Future<dynamic> _pushDetailPage(BuildContext context, Todo uncompletedTodoList) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_urgency_importance_card.dart';
@@ -137,18 +138,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
 
   void _completeTodo(BuildContext context, int id) {
     ref.read(todoProvider.notifier).toggleTodo(id);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Center(
-          child: Text(
-            '할 일을 완료했어요.',
-            style: CustomTextStyle.body3.copyWith(color: white),
-          ),
-        ),
-      ),
-    );
+    GeneralSnackBar.showSnackBar(context, '할 일을 완료했어요.');
     Navigator.pop(context);
   }
 
@@ -171,18 +161,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
 
   void _deleteUncompletedTodo(BuildContext context, int id) {
     ref.read(todoProvider.notifier).deleteTodo(id);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Center(
-          child: Text(
-            '할 일을 삭제했어요.',
-            style: CustomTextStyle.body3.copyWith(color: white),
-          ),
-        ),
-      ),
-    );
+    GeneralSnackBar.showSnackBar(context, '할 일을 삭제했어요.');
     Navigator.pop(context);
   }
 }

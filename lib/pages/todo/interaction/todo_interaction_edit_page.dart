@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_date_picker.dart';
+import 'package:plus_todo/functions/general_snack_bar.dart';
+import 'package:plus_todo/functions/general_time_picker.dart';
+import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
+import 'package:plus_todo/functions/general_format_time.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_urgency_importance_card.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
-import 'package:plus_todo/widgets/custom_slider.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
 
 class TodoInteractionEditPage extends ConsumerStatefulWidget {
@@ -30,12 +34,16 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
 
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  double? _newUrgencyValue;
+  double? _newImportanceValue;
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.todoData.title);
     _contentController = TextEditingController(text: widget.todoData.content);
+    _newUrgencyValue = widget.todoData.urgency;
+    _newImportanceValue = widget.todoData.importance;
     _selectedDate = widget.todoData.deadline;
     _selectedTime = widget.todoData.deadline != null ? TimeOfDay.fromDateTime(widget.todoData.deadline!) : null;
     _focusNode.requestFocus();
@@ -92,7 +100,16 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                   ),
                   const Gap(defaultGapL),
                   InkWell(
-                    onTap: () => _showDatePicker(context),
+                    onTap: () => GeneralDatePicker.showDatePicker(
+                      context: context,
+                      initialDate: _selectedDate,
+                      onDateSelected: (DateTime? selectedDate) {
+                        setState(() {
+                          _selectedDate = selectedDate;
+                          widget.todoData.deadline = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
+                        });
+                      },
+                    ),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(defaultPaddingS),
@@ -101,14 +118,22 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         color: white,
                       ),
                       child: Text(
-                        '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일 (${_getDayOfWeek(_selectedDate!.weekday)})',
+                        '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일 (${dayOfWeekToKorean(DayOfWeek.values[_selectedDate!.weekday - 1])})',
                         style: CustomTextStyle.body1,
                       ),
                     ),
                   ),
                   const Gap(defaultGapL),
                   InkWell(
-                    onTap: () => _showTimePicker(context),
+                    onTap: () => GeneralTimePicker.showTimePicker(
+                        context: context,
+                        initialTime: _selectedTime,
+                        onTimeSelected: (TimeOfDay? selectedTime) {
+                          setState(() {
+                            _selectedTime = selectedTime;
+                            widget.todoData.deadline = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
+                          });
+                        }),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(defaultPaddingS),
@@ -117,73 +142,17 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         color: white,
                       ),
                       child: Text(
-                        _formatTime(_selectedTime!),
+                        GeneralFormatTime.formatInteractionTime(_selectedTime!),
                         style: CustomTextStyle.body1,
                       ),
                     ),
                   ),
                   const Gap(defaultGapL),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(
-                      top: defaultPaddingS,
-                      bottom: defaultPaddingM / 4,
-                      left: defaultPaddingS,
-                      right: defaultPaddingS,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: white,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (widget.todoData.urgency >= 5 && widget.todoData.importance >= 5)
-                          Text(
-                            'Do',
-                            style: CustomTextStyle.title2.copyWith(color: red),
-                          )
-                        else if (widget.todoData.urgency >= 5 && widget.todoData.importance < 5)
-                          Text(
-                            'Delegate',
-                            style: CustomTextStyle.title2.copyWith(color: blue),
-                          )
-                        else if (widget.todoData.urgency < 5 && widget.todoData.importance >= 5)
-                          Text(
-                            'Schedule',
-                            style: CustomTextStyle.title2.copyWith(color: orange),
-                          )
-                        else
-                          Text(
-                            'Eliminate',
-                            style: CustomTextStyle.title2,
-                          ),
-                        const Gap(defaultGapM),
-                        Text(
-                          '긴급도: ${widget.todoData.urgency.toInt()}',
-                          style: CustomTextStyle.body1,
-                        ),
-                        const Gap(defaultGapS / 2),
-                        CustomSlider(
-                          value: widget.todoData.urgency,
-                          onChanged: (double newValue) {
-                            setState(() => widget.todoData.urgency = newValue);
-                          },
-                        ),
-                        const Gap(defaultGapM),
-                        Text(
-                          '중요도: ${widget.todoData.importance.toInt()}',
-                          style: CustomTextStyle.body1,
-                        ),
-                        const Gap(defaultGapS / 2),
-                        CustomSlider(
-                          value: widget.todoData.importance,
-                          onChanged: (double newValue) {
-                            setState(() => widget.todoData.importance = newValue);
-                          },
-                        ),
-                      ],
-                    ),
+                  TodoInteractionUrgencyImportanceCard(
+                    urgency: _newUrgencyValue!,
+                    importance: _newImportanceValue!,
+                    onUrgencyChanged: (double newValue) => setState(() => _newUrgencyValue = newValue),
+                    onImportanceChanged: (double newValue) => setState(() => _newImportanceValue = newValue),
                   ),
                 ],
               ),
@@ -197,172 +166,18 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     );
   }
 
-  void _showDatePicker(BuildContext context) {
-    DateTime? tempPickedDate = _selectedDate;
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height / 3,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(defaultBorderRadiusM),
-              topRight: Radius.circular(defaultBorderRadiusM),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: defaultPaddingL),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 5,
-                  child: CupertinoDatePicker(
-                    mode: CupertinoDatePickerMode.date,
-                    initialDateTime: _selectedDate ?? DateTime.now(),
-                    minimumYear: 2024,
-                    onDateTimeChanged: (DateTime newDateTime) {
-                      tempPickedDate = newDateTime;
-                    },
-                  ),
-                ),
-                CupertinoButton(
-                  onPressed: () {
-                    setState(() {
-                      _selectedDate = tempPickedDate;
-                      widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
-                    });
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    '확인',
-                    style: CustomTextStyle.title3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showTimePicker(BuildContext context) {
-    TimeOfDay? tempPickedTime = _selectedTime;
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height / 3,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(defaultBorderRadiusM),
-              topRight: Radius.circular(defaultBorderRadiusM),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: defaultPaddingL),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 5,
-                  child: CupertinoDatePicker(
-                    mode: CupertinoDatePickerMode.time,
-                    initialDateTime: DateTime(2000, 2, 10, _selectedTime!.hour, _selectedTime!.minute),
-                    minuteInterval: 5,
-                    onDateTimeChanged: (DateTime newDateTime) {
-                      tempPickedTime = TimeOfDay(hour: newDateTime.hour, minute: newDateTime.minute);
-                    },
-                  ),
-                ),
-                CupertinoButton(
-                  onPressed: () {
-                    setState(() {
-                      _selectedTime = tempPickedTime;
-                      widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
-                    });
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    '확인',
-                    style: CustomTextStyle.title3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  String _getDayOfWeek(int day) {
-    switch (day) {
-      case 1:
-        return '월';
-      case 2:
-        return '화';
-      case 3:
-        return '수';
-      case 4:
-        return '목';
-      case 5:
-        return '금';
-      case 6:
-        return '토';
-      case 7:
-        return '일';
-      default:
-        return '';
-    }
-  }
-
-  String _formatTime(TimeOfDay time) {
-    final hours = time.hour % 12 == 0 ? 12 : time.hour % 12;
-    final period = time.hour < 12 ? '오전' : '오후';
-    final minutes = time.minute.toString().padLeft(2, '0');
-    return '$period $hours:$minutes';
-  }
-
   void _editTodo(BuildContext context, WidgetRef ref, int id) {
     if (_titleController.text.isEmpty) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 2),
-          content: Center(
-            child: Text(
-              '할 일을 입력해 주세요.',
-              style: CustomTextStyle.body3.copyWith(color: white),
-            ),
-          ),
-        ),
-      );
+      GeneralSnackBar.showSnackBar(context, '할 일을 입력해 주세요.');
     } else {
       widget.todoData.title = _titleController.text;
       widget.todoData.content = _contentController.text;
-      widget.todoData.deadline = _inputDeadline(_selectedDate!, _selectedTime!);
+      widget.todoData.urgency = _newUrgencyValue!;
+      widget.todoData.importance = _newImportanceValue!;
+      widget.todoData.deadline = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
       ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 1),
-          content: Center(
-            child: Text(
-              '수정을 완료했어요.',
-              style: CustomTextStyle.body3.copyWith(color: white),
-            ),
-          ),
-        ),
-      );
+      GeneralSnackBar.showSnackBar(context, '수정을 완료했어요.');
       Navigator.pop(context, widget.todoData);
     }
-  }
-
-  DateTime? _inputDeadline(DateTime date, TimeOfDay time) {
-    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 }

@@ -67,7 +67,7 @@ class TodoPage extends ConsumerWidget {
                     children: [
                       Text(
                         (sortingIndex == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
-                        style: CustomTextStyle.caption2,
+                        style: CustomTextStyle.caption1,
                       ),
                       const Gap(defaultGapS),
                       const Icon(Icons.swap_vert_rounded, color: black, size: 16),

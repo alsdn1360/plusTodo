@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_urgency_importance_card.dart';
@@ -109,35 +110,13 @@ class TodoDetailCompletedPage extends ConsumerWidget {
 
   void _undoCompletedTodo(BuildContext context, WidgetRef ref, int id) {
     ref.read(todoProvider.notifier).toggleTodo(id);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Center(
-          child: Text(
-            '완료된 일을 다시 되돌렸어요.',
-            style: CustomTextStyle.body3.copyWith(color: white),
-          ),
-        ),
-      ),
-    );
+    GeneralSnackBar.showSnackBar(context, '완료된 일을 다시 되돌렸어요.');
     Navigator.pop(context);
   }
 
   void _deleteCompletedTodo(BuildContext context, WidgetRef ref, int id) {
     ref.read(todoProvider.notifier).deleteTodo(id);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Center(
-          child: Text(
-            '완료된 일을 삭제했어요.',
-            style: CustomTextStyle.body3.copyWith(color: white),
-          ),
-        ),
-      ),
-    );
+    GeneralSnackBar.showSnackBar(context, '완료된 일을 삭제했어요.');
     Navigator.pop(context);
   }
 }
