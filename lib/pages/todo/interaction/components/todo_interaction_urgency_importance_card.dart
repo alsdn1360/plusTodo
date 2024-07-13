@@ -31,19 +31,61 @@ class TodoInteractionUrgencyImportanceCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-        color: white,
+        color: (urgency >= 5 && importance >= 5)
+            ? red.withOpacity(0.1)
+            : (urgency >= 5 && importance < 5)
+                ? blue.withOpacity(0.1)
+                : (urgency < 5 && importance >= 5)
+                    ? orange.withOpacity(0.1)
+                    : green.withOpacity(0.1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (urgency >= 5 && importance >= 5)
-            Text('Do', style: CustomTextStyle.title2.copyWith(color: red))
-          else if (urgency >= 5 && importance < 5)
-            Text('Delegate', style: CustomTextStyle.title2.copyWith(color: blue))
-          else if (urgency < 5 && importance >= 5)
-            Text('Schedule', style: CustomTextStyle.title2.copyWith(color: orange))
-          else
-            Text('Eliminate', style: CustomTextStyle.title2.copyWith(color: green)),
+          Visibility(
+            visible: urgency >= 5 && importance >= 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Do', style: CustomTextStyle.title2.copyWith(color: red)),
+                const Gap(defaultGapS / 4),
+                Text('긴급하고 중요한 일', style: CustomTextStyle.caption1),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: urgency >= 5 && importance < 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Delegate', style: CustomTextStyle.title2.copyWith(color: blue)),
+                const Gap(defaultGapS / 4),
+                Text('긴급하지만 중요하진 않은 일', style: CustomTextStyle.caption1),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: urgency < 5 && importance >= 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Schedule', style: CustomTextStyle.title2.copyWith(color: orange)),
+                const Gap(defaultGapS / 4),
+                Text('중요하지만 급하지 않은 일', style: CustomTextStyle.caption1),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: urgency < 5 && importance < 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Eliminate', style: CustomTextStyle.title2.copyWith(color: green)),
+                const Gap(defaultGapS / 4),
+                Text('긴급하지도 중요하지도 않은 일', style: CustomTextStyle.caption1),
+              ],
+            ),
+          ),
           const Gap(defaultGapM),
           Text(
             '긴급도: ${urgency.toInt()}',
@@ -54,7 +96,7 @@ class TodoInteractionUrgencyImportanceCard extends StatelessWidget {
             value: urgency,
             onChanged: onUrgencyChanged,
           ),
-          const Gap(defaultGapM),
+          const Gap(defaultGapS / 2),
           Text(
             '중요도: ${importance.toInt()}',
             style: CustomTextStyle.body1,

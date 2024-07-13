@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_completed_card.dart';
+import 'package:plus_todo/pages/todo/components/todo_pop_up_menu_button.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
 import 'package:plus_todo/providers/filtered/filtered_show_completed_provider.dart';
 import 'package:plus_todo/providers/filtered/filtered_sorting_index_provider.dart';
@@ -21,35 +22,7 @@ class TodoPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('할 일 목록'),
-        actions: [
-          PopupMenuButton(
-            elevation: 1,
-            color: white,
-            surfaceTintColor: white,
-            icon: const Icon(Icons.more_vert_rounded, color: black),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-            ),
-            padding: const EdgeInsets.all(defaultPaddingS),
-            onSelected: (value) => ref.read(filteredShowCompletedProvider.notifier).toggleFilteredShow(value),
-            itemBuilder: (context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                value: true,
-                child: Text(
-                  '완료된 할 일 목록 보기',
-                  style: CustomTextStyle.body3,
-                ),
-              ),
-              PopupMenuItem(
-                value: false,
-                child: Text(
-                  '완료된 할 일 목록 숨기기',
-                  style: CustomTextStyle.body3,
-                ),
-              ),
-            ],
-          ),
-        ],
+        actions: const [TodoPopUpMenuButton()],
       ),
       body: SafeArea(
         child: Padding(
@@ -84,46 +57,49 @@ class TodoPage extends ConsumerWidget {
                   filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
                 const Gap(defaultGapL),
-                if (sortingIndex == 1)
-                  Column(
-                    children: [
-                      TodoUncompletedCard(
-                        title: 'Delegate',
-                        subtitle: '긴급하지만 중요하진 않은 일',
-                        color: blue,
-                        filteredIndex: 1,
-                        filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
-                      ),
-                      const Gap(defaultGapL),
-                      TodoUncompletedCard(
-                        title: 'Schedule',
-                        subtitle: '긴급하진 않지만 중요한 일',
-                        color: orange,
-                        filteredIndex: 2,
-                        filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
-                      ),
-                    ],
-                  )
-                else if (sortingIndex == 2)
-                  Column(
-                    children: [
-                      TodoUncompletedCard(
-                        title: 'Schedule',
-                        subtitle: '긴급하진 않지만 중요한 일',
-                        color: orange,
-                        filteredIndex: 2,
-                        filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
-                      ),
-                      const Gap(defaultGapL),
-                      TodoUncompletedCard(
-                        title: 'Delegate',
-                        subtitle: '긴급하지만 중요하진 않은 일',
-                        color: blue,
-                        filteredIndex: 1,
-                        filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
-                      ),
-                    ],
+                // 긴급도 우선 정렬일 때
+                Visibility(
+                  visible: sortingIndex == 1,
+                  child: TodoUncompletedCard(
+                    title: 'Delegate',
+                    subtitle: '긴급하지만 중요하진 않은 일',
+                    color: blue,
+                    filteredIndex: 1,
+                    filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
                   ),
+                ),
+                Visibility(
+                  visible: sortingIndex == 2,
+                  child: TodoUncompletedCard(
+                    title: 'Schedule',
+                    subtitle: '긴급하진 않지만 중요한 일',
+                    color: orange,
+                    filteredIndex: 2,
+                    filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+                  ),
+                ),
+                const Gap(defaultGapL),
+                // 중요도 우선 정렬일 때
+                Visibility(
+                  visible: sortingIndex == 1,
+                  child: TodoUncompletedCard(
+                    title: 'Schedule',
+                    subtitle: '긴급하진 않지만 중요한 일',
+                    color: orange,
+                    filteredIndex: 2,
+                    filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+                  ),
+                ),
+                Visibility(
+                  visible: sortingIndex == 2,
+                  child: TodoUncompletedCard(
+                    title: 'Delegate',
+                    subtitle: '긴급하지만 중요하진 않은 일',
+                    color: blue,
+                    filteredIndex: 1,
+                    filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+                  ),
+                ),
                 const Gap(defaultGapL),
                 TodoUncompletedCard(
                   title: 'Eliminate',
@@ -133,13 +109,15 @@ class TodoPage extends ConsumerWidget {
                   filteredIndex: sortingIndex,
                   filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
                 ),
-                if (showCompleted)
-                  const Column(
-                    children: [
-                      Gap(defaultGapL),
-                      TodoCompletedCard(),
-                    ],
-                  ),
+                // 완료된 할 일 보기 선택 했을 때 토글
+                Visibility(
+                  visible: showCompleted,
+                  child: const Gap(defaultGapL),
+                ),
+                Visibility(
+                  visible: showCompleted,
+                  child: const TodoCompletedCard(),
+                ),
               ],
             ),
           ),

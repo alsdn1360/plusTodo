@@ -18,48 +18,60 @@ class HomeIndexCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
+        int newIndex;
         if (details.primaryVelocity! < 0) {
-          ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex((filteredHomeCardIndex % 4) + 1);
-        } else if (details.primaryVelocity! > 0) {
-          ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex((filteredHomeCardIndex % 4) - 1);
+          newIndex = (filteredHomeCardIndex + 1) % 4;
+        } else {
+          newIndex = (filteredHomeCardIndex - 1) % 4;
         }
+        ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex(newIndex);
       },
-      child: (filteredHomeCardIndex != 4) ? IndexedStack(
-        index: filteredHomeCardIndex % 4,
+      child: Column(
         children: [
-          TodoUncompletedCard(
-            title: 'Do',
-            subtitle: '긴급하고 중요한 일',
-            color: red,
-            isDoOrEliminateCard: true,
-            filteredIndex: ref.watch(filteredSortingIndexProvider),
-            filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
+          Visibility(
+            visible: filteredHomeCardIndex == 0,
+            child: TodoUncompletedCard(
+              title: 'Do',
+              subtitle: '긴급하고 중요한 일',
+              color: red,
+              isDoOrEliminateCard: true,
+              filteredIndex: ref.watch(filteredSortingIndexProvider),
+              filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
+            ),
           ),
-          TodoUncompletedCard(
-            title: 'Delegate',
-            subtitle: '긴급하지만 중요하진 않은 일',
-            color: blue,
-            filteredIndex: ref.watch(filteredSortingIndexProvider),
-            filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+          Visibility(
+            visible: filteredHomeCardIndex == 1,
+            child: TodoUncompletedCard(
+              title: 'Delegate',
+              subtitle: '긴급하지만 중요하진 않은 일',
+              color: blue,
+              filteredIndex: ref.watch(filteredSortingIndexProvider),
+              filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
+            ),
           ),
-          TodoUncompletedCard(
-            title: 'Schedule',
-            subtitle: '중요하지만 급하지 않은 일',
-            color: orange,
-            filteredIndex: ref.watch(filteredSortingIndexProvider),
-            filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+          Visibility(
+            visible: filteredHomeCardIndex == 2,
+            child: TodoUncompletedCard(
+              title: 'Schedule',
+              subtitle: '중요하지만 급하지 않은 일',
+              color: orange,
+              filteredIndex: ref.watch(filteredSortingIndexProvider),
+              filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
+            ),
           ),
-          TodoUncompletedCard(
-            title: 'Eliminate',
-            subtitle: '긴급하지도 중요하지도 않은 일',
-            color: green,
-            isDoOrEliminateCard: true,
-            filteredIndex: ref.watch(filteredSortingIndexProvider),
-            filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
+          Visibility(
+            visible: filteredHomeCardIndex == 3,
+            child: TodoUncompletedCard(
+              title: 'Eliminate',
+              subtitle: '긴급하지도 중요하지도 않은 일',
+              color: green,
+              isDoOrEliminateCard: true,
+              filteredIndex: ref.watch(filteredSortingIndexProvider),
+              filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
+            ),
           ),
         ],
-      ) :
-          Container(),
+      ),
     );
   }
 }
