@@ -6,9 +6,7 @@ import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 
 class HomePopUpMenuButton extends ConsumerWidget {
-  const HomePopUpMenuButton({
-    super.key,
-  });
+  const HomePopUpMenuButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
