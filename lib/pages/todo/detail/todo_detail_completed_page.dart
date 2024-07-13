@@ -81,8 +81,6 @@ class TodoDetailCompletedPage extends ConsumerWidget {
           child: SizedBox(
             height: 56,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TodoDetailBottomButton(
                   onTap: () => _undoCompletedTodo(context, ref, todoData.id),

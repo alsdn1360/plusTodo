@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -39,70 +40,51 @@ class HomeSummary extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Do',
-                    style: CustomTextStyle.body1.copyWith(color: red),
-                    softWrap: true,
-                  ),
-                  const Gap(defaultGapS / 2),
-                  Text('${doData.length}', style: CustomTextStyle.body2),
-                ],
+              Flexible(
+                flex: 1,
+                child: _buildSummaryColumn('Do', '${doData.length}', red),
               ),
-              // 긴급도 우선 정렬일 때
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    (ref.watch(filteredSortingIndexProvider) == 1) ? 'Delegate' : 'Schedule',
-                    style: CustomTextStyle.body1.copyWith(
-                      color: (ref.watch(filteredSortingIndexProvider) == 1) ? blue : orange,
-                    ),
-                    softWrap: true,
-                  ),
-                  const Gap(defaultGapS / 2),
-                  Text(
-                    (ref.watch(filteredSortingIndexProvider) == 1) ? '${delegateData.length}' : '${scheduleData.length}',
-                    style: CustomTextStyle.body2,
-                  ),
-                ],
+              Flexible(
+                flex: 1,
+                child: _buildSummaryColumn(
+                  (ref.watch(filteredSortingIndexProvider) == 1) ? 'Delegate' : 'Schedule',
+                  (ref.watch(filteredSortingIndexProvider) == 1) ? '${delegateData.length}' : '${scheduleData.length}',
+                  (ref.watch(filteredSortingIndexProvider) == 1) ? blue : orange,
+                ),
               ),
-              // 중요도 우선 정렬일 때
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    (ref.watch(filteredSortingIndexProvider) == 2) ? 'Delegate' : 'Schedule',
-                    style: CustomTextStyle.body1.copyWith(
-                      color: (ref.watch(filteredSortingIndexProvider) == 2) ? blue : orange,
-                    ),
-                    softWrap: true,
-                  ),
-                  const Gap(defaultGapS / 2),
-                  Text(
-                    (ref.watch(filteredSortingIndexProvider) == 2) ? '${delegateData.length}' : '${scheduleData.length}',
-                    style: CustomTextStyle.body2,
-                  ),
-                ],
+              Flexible(
+                flex: 1,
+                child: _buildSummaryColumn(
+                  (ref.watch(filteredSortingIndexProvider) == 2) ? 'Delegate' : 'Schedule',
+                  (ref.watch(filteredSortingIndexProvider) == 2) ? '${delegateData.length}' : '${scheduleData.length}',
+                  (ref.watch(filteredSortingIndexProvider) == 2) ? blue : orange,
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Eliminate',
-                    style: CustomTextStyle.body1.copyWith(color: green),
-                    softWrap: true,
-                  ),
-                  const Gap(defaultGapS / 2),
-                  Text('${eliminateData.length}', style: CustomTextStyle.body2),
-                ],
+              Flexible(
+                flex: 1,
+                child: _buildSummaryColumn('Eliminate', '${eliminateData.length}', green),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSummaryColumn(String title, String count, Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AutoSizeText(
+          title,
+          style: CustomTextStyle.body1.copyWith(color: color),
+          maxLines: 1,
+          maxFontSize: 40,
+          softWrap: true,
+        ),
+        const Gap(defaultGapS / 2),
+        Text(count, style: CustomTextStyle.body2),
+      ],
     );
   }
 }

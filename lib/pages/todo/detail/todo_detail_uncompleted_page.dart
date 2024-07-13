@@ -104,8 +104,6 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
           child: SizedBox(
             height: 56,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TodoDetailBottomButton(
                   onTap: () => _completeTodo(context, widget.todoData.id),

@@ -25,6 +25,7 @@ class TodoDetailBottomButton extends StatelessWidget {
           width: double.infinity,
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(icon, color: black),
                 const Gap(defaultGapS / 4),

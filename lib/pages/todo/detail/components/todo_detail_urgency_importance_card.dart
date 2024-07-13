@@ -91,7 +91,7 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
             value: todoData.urgency,
             isEnabled: false,
           ),
-          const Gap(defaultGapM),
+          const Gap(defaultGapS / 2),
           Text(
             '중요도: ${todoData.importance.toInt()}',
             style: CustomTextStyle.body1,
