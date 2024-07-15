@@ -89,6 +89,7 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
           const Gap(defaultGapS / 2),
           CustomSlider(
             value: todoData.urgency,
+            color: sliderColor(todoData.urgency, todoData.importance),
             isEnabled: false,
           ),
           const Gap(defaultGapS / 2),
@@ -99,10 +100,23 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
           const Gap(defaultGapS / 2),
           CustomSlider(
             value: todoData.importance,
+            color: sliderColor(todoData.urgency, todoData.importance),
             isEnabled: false,
           ),
         ],
       ),
     );
+  }
+
+  Color sliderColor(double todoDataUrgency, double todoDataImportance) {
+    if (todoDataUrgency >= 5 && todoDataImportance >= 5) {
+      return red;
+    } else if (todoDataUrgency >= 5 && todoDataImportance < 5) {
+      return blue;
+    } else if (todoDataUrgency < 5 && todoDataImportance >= 5) {
+      return orange;
+    } else {
+      return green;
+    }
   }
 }

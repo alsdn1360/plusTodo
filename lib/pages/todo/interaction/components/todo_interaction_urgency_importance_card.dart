@@ -91,23 +91,34 @@ class TodoInteractionUrgencyImportanceCard extends StatelessWidget {
             '긴급도: ${urgency.toInt()}',
             style: CustomTextStyle.body1,
           ),
-          const Gap(defaultGapS / 2),
           CustomSlider(
             value: urgency,
+            color: sliderColor(urgency, importance),
             onChanged: onUrgencyChanged,
           ),
-          const Gap(defaultGapS / 2),
           Text(
             '중요도: ${importance.toInt()}',
             style: CustomTextStyle.body1,
           ),
-          const Gap(defaultGapS / 2),
           CustomSlider(
             value: importance,
+            color: sliderColor(urgency, importance),
             onChanged: onImportanceChanged,
           ),
         ],
       ),
     );
+  }
+
+  Color sliderColor(double urgency, double importance) {
+    if (urgency >= 5 && importance >= 5) {
+      return red;
+    } else if (urgency >= 5 && importance < 5) {
+      return blue;
+    } else if (urgency < 5 && importance >= 5) {
+      return orange;
+    } else {
+      return green;
+    }
   }
 }

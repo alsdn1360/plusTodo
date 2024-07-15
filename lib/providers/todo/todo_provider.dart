@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:plus_todo/functions/general_format_time.dart';
+import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/notification/notification.dart';
 
@@ -38,8 +40,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         await sendNotification(
           idx: todoData.id,
           date: todoData.deadline!,
-          title: '마감 시간이 1시간 남았어요!',
-          content: todoData.title,
+          title: todoData.title,
+          content: _deadlineFormatted(todoData.deadline!),
         );
       }
     } catch (e) {
@@ -67,8 +69,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         await sendNotification(
           idx: updatedTodo.id,
           date: updatedTodo.deadline!,
-          title: '마감 시간이 1시간 남았어요!',
-          content: updatedTodo.title,
+          title: updatedTodo.title,
+          content: _deadlineFormatted(updatedTodo.deadline!),
         );
       }
     } catch (e) {
@@ -116,5 +118,10 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     } catch (e) {
       print('Failed to toggle todo: $e');
     }
+  }
+
+  String _deadlineFormatted(DateTime deadline) {
+    return '${deadline.year}년 ${deadline.month}월 ${deadline.day}일(${dayOfWeekToKorean(DayOfWeek.values[deadline.weekday - 1])}) '
+        '${GeneralFormatTime.formatTime(deadline)}까지';
   }
 }

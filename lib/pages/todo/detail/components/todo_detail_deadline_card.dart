@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -27,7 +26,7 @@ class TodoDetailDeadlineCard extends StatelessWidget {
             color: white,
           ),
           child: Text(
-            '${todoData.deadline!.year}년 ${todoData.deadline!.month}월 ${todoData.deadline!.day}일 (${dayOfWeekToKorean(DayOfWeek.values[todoData.deadline!.weekday - 1])})',
+            GeneralFormatTime.formatDetailDate(todoData.deadline!),
             style: CustomTextStyle.body1,
           ),
         ),
@@ -40,7 +39,7 @@ class TodoDetailDeadlineCard extends StatelessWidget {
             color: white,
           ),
           child: Text(
-            GeneralFormatTime.formatShowTime(todoData.deadline!),
+            GeneralFormatTime.formatTime(todoData.deadline!),
             style: CustomTextStyle.body1,
           ),
         ),

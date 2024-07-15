@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
-import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
@@ -103,9 +102,9 @@ class TodoCompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '${completedTodoList.deadline!.year}년 ${completedTodoList.deadline!.month}월 ${completedTodoList.deadline!.day}일 (${dayOfWeekToKorean(DayOfWeek.values[completedTodoList.deadline!.weekday - 1])}) '
-                            '${GeneralFormatTime.formatShowTime(completedTodoList.deadline!)}',
-                            style: CustomTextStyle.body3.copyWith(decoration: TextDecoration.lineThrough),
+                            '${GeneralFormatTime.formatDate(completedTodoList.deadline!)} '
+                            '${GeneralFormatTime.formatTime(completedTodoList.deadline!)}',
+                            style: CustomTextStyle.body3.copyWith(decoration: TextDecoration.lineThrough, letterSpacing: 0.2),
                           ),
                           const Gap(defaultGapS / 4),
                           Row(

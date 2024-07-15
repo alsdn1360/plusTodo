@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
-import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
@@ -131,9 +130,9 @@ class TodoUncompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '${uncompletedTodoList.deadline!.year}년 ${uncompletedTodoList.deadline!.month}월 ${uncompletedTodoList.deadline!.day}일 (${dayOfWeekToKorean(DayOfWeek.values[uncompletedTodoList.deadline!.weekday - 1])}) '
-                            '${GeneralFormatTime.formatShowTime(uncompletedTodoList.deadline!)}',
-                            style: isDeadlineSoon ? CustomTextStyle.body3.copyWith(color: red) : CustomTextStyle.body3,
+                            '${GeneralFormatTime.formatDate(uncompletedTodoList.deadline!)} '
+                            '${GeneralFormatTime.formatTime(uncompletedTodoList.deadline!)}',
+                            style: isDeadlineSoon ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2) : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
                           ),
                           const Gap(defaultGapS / 4),
                           Row(
@@ -152,7 +151,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                           if (index != uncompletedTodoData.length - 1)
                             const Column(
                               children: [
-                                Gap(defaultGapM / 2),
+                                Gap(defaultGapS),
                                 CustomDivider(),
                               ],
                             ),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:plus_todo/themes/custom_color.dart';
 
 class CustomSlider extends StatelessWidget {
   final double value;
+  final Color color;
   final bool isEnabled;
   final ValueChanged<double>? onChanged;
 
   const CustomSlider({
     super.key,
     required this.value,
+    required this.color,
     this.isEnabled = true,
     this.onChanged,
   });
@@ -20,13 +21,13 @@ class CustomSlider extends StatelessWidget {
         trackShape: const CustomSliderTrackShape(),
         thumbShape: const CustomSliderThumbShape(),
         overlayShape: const CustomSliderOverlayShape(),
-        activeTrackColor: black,
-        inactiveTrackColor: black.withOpacity(0.1),
-        disabledActiveTrackColor: black,
-        disabledInactiveTrackColor: black.withOpacity(0.1),
-        thumbColor: black,
-        disabledThumbColor: black,
-        overlayColor: black.withOpacity(0.1),
+        activeTrackColor: color.withOpacity(0.5),
+        inactiveTrackColor: color.withOpacity(0.1),
+        disabledActiveTrackColor: color.withOpacity(0.5),
+        disabledInactiveTrackColor: color.withOpacity(0.1),
+        thumbColor: color,
+        disabledThumbColor: color,
+        overlayColor: color.withOpacity(0.1),
       ),
       child: Slider(
         value: value,
