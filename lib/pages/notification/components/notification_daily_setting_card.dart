@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/functions/general_time_picker.dart';
 import 'package:plus_todo/providers/notification/notification_daily_porvider.dart';
@@ -40,19 +41,22 @@ class NotificationDailySettingCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '오늘 해야 할 일 알림 시간',
-                  style: CustomTextStyle.title3,
-                ),
-                Text(
-                  '매일 해당 시각에 오늘 해야 할 일의 개수를 알려줍니다.',
-                  style: CustomTextStyle.caption1,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '오늘 해야 할 일 알림 시간',
+                    style: CustomTextStyle.title3,
+                  ),
+                  Text(
+                    '매일 해당 시각에 오늘 해야 할 일의 개수를 알려줍니다.',
+                    style: CustomTextStyle.caption1,
+                  ),
+                ],
+              ),
             ),
+            const Gap(defaultGapXL),
             Text(
               _formatTime(dailyNotificationTime['hour'], dailyNotificationTime['minute']),
               style: CustomTextStyle.body1,

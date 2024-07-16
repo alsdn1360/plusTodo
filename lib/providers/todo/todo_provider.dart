@@ -18,12 +18,12 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
   TodoNotifier() : super([]) {
     _initIsar();
-    _scheduleDailyTodoCountNotification();
   }
 
   Future<void> _initIsar() async {
     _isar = await initIsar();
     _loadTodo();
+    _scheduleDailyTodoCountNotification();
   }
 
   Future<void> _loadTodo() async {
@@ -36,7 +36,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   Future<void> _scheduleDailyTodoCountNotification() async {
-    final count = await _countTodosForToday();
+    final count = countTodosForToday();
     await dailyNotification(
       idx: 0,
       title: '오늘 해야 할 일을 확인하세요!',
@@ -181,7 +181,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   Future<void> updateDailyNotificationSettings(int newHour, int newMinute) async {
-    final count = await _countTodosForToday();
+    final count = countTodosForToday();
     await dailyNotification(
       idx: 0,
       title: '오늘 해야 할 일을 확인하세요!',
@@ -191,7 +191,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     );
   }
 
-  Future<int> _countTodosForToday() async {
+  Future<int> countTodosForToday() async {
     final now = DateTime.now();
     final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
     final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);

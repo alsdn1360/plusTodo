@@ -28,19 +28,22 @@ class NotificationSettingCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '마감 전 알림 시간',
-                    style: CustomTextStyle.title3,
-                  ),
-                  Text(
-                    '할 일의 마감 시간 전에 알림을 보냅니다.',
-                    style: CustomTextStyle.caption1,
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '마감 전 알림 시간',
+                      style: CustomTextStyle.title3,
+                    ),
+                    Text(
+                      '할 일의 마감 시간 전에 알림을 보냅니다.',
+                      style: CustomTextStyle.caption1,
+                    ),
+                  ],
+                ),
               ),
+              const Gap(defaultGapXL),
               Text(
                 _formatNotificationTime(notificationTime),
                 style: CustomTextStyle.body1,
