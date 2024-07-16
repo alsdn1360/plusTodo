@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plus_todo/pages/notification/notification_setting_page.dart';
+import 'package:plus_todo/themes/custom_color.dart';
 
 class HomeNotificationSettingIconButton extends StatelessWidget {
   const HomeNotificationSettingIconButton({super.key});
@@ -14,7 +15,7 @@ class HomeNotificationSettingIconButton extends StatelessWidget {
           builder: (context) => const NotificationSettingPage(),
         ),
       ),
-      icon: const Icon(Icons.notifications_rounded),
+      icon: const Icon(Icons.notifications_rounded, color: black),
     );
   }
 }

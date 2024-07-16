@@ -12,9 +12,13 @@ final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
 
 class TodoNotifier extends StateNotifier<List<Todo>> {
   late final Isar _isar;
+  int? minutesBefore;
+  int? dailyNotiHour;
+  int? dailyNotiMinute;
 
   TodoNotifier() : super([]) {
     _initIsar();
+    _scheduleDailyTodoCountNotification();
   }
 
   Future<void> _initIsar() async {
@@ -31,6 +35,17 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     }
   }
 
+  Future<void> _scheduleDailyTodoCountNotification() async {
+    final count = await _countTodosForToday();
+    await dailyNotification(
+      idx: 0,
+      title: '오늘 해야 할 일을 확인하세요!',
+      content: '$count개의 항목이 있어요.',
+      notiHour: dailyNotiHour ?? 9,
+      notiMinute: dailyNotiMinute ?? 0,
+    );
+  }
+
   Future<void> createTodo(Todo todoData) async {
     try {
       state = [...state, todoData];
@@ -43,6 +58,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
           date: todoData.deadline!,
           title: todoData.title,
           content: _deadlineFormatted(todoData.deadline!),
+          minutesBefore: minutesBefore ?? 30,
         );
       }
     } catch (e) {
@@ -72,6 +88,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
           date: updatedTodo.deadline!,
           title: updatedTodo.title,
           content: _deadlineFormatted(updatedTodo.deadline!),
+          minutesBefore: minutesBefore ?? 30,
         );
       } else {
         await cancelNotification(updatedTodo.id);
@@ -123,6 +140,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
               date: existingTodo.deadline!,
               title: existingTodo.title,
               content: _deadlineFormatted(existingTodo.deadline!),
+              minutesBefore: minutesBefore ?? 30,
             );
           }
         }
@@ -138,20 +156,39 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     }
   }
 
-  Future<void> scheduleDailyTodoCountNotification(int notiHour, int notiMinute) async {
+  Future<void> updateNotificationForAllTodos(int minute) async {
+    try {
+      final todos = await _isar.todos.filter().isDoneEqualTo(false).findAll();
+
+      for (final todo in todos) {
+        if (todo.deadline != null) {
+          await sendNotification(
+            idx: todo.id,
+            date: todo.deadline!,
+            title: todo.title,
+            content: _deadlineFormatted(todo.deadline!),
+            minutesBefore: minutesBefore ?? 30,
+          );
+        }
+      }
+    } catch (e) {
+      print('Failed to schedule notifications for all todos: $e');
+    }
+  }
+
+  void updateNotificationSettings(int newMinutesBefore) {
+    minutesBefore = newMinutesBefore;
+  }
+
+  Future<void> updateDailyNotificationSettings(int newHour, int newMinute) async {
     final count = await _countTodosForToday();
     await dailyNotification(
       idx: 0,
       title: '오늘 해야 할 일을 확인하세요!',
-      content: '오늘 해야 할 일이 $count개 있어요.',
-      notiHour: notiHour,
-      notiMinute: notiMinute,
+      content: '$count개의 항목이 있어요.',
+      notiHour: newHour,
+      notiMinute: newMinute,
     );
-  }
-
-  String _deadlineFormatted(DateTime deadline) {
-    return '${deadline.year}년 ${deadline.month}월 ${deadline.day}일(${dayOfWeekToKorean(DayOfWeek.values[deadline.weekday - 1])}) '
-        '${GeneralFormatTime.formatTime(deadline)}까지';
   }
 
   Future<int> _countTodosForToday() async {
@@ -160,5 +197,10 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
     final todosForToday = await _isar.todos.filter().deadlineBetween(startOfDay, endOfDay).and().isDoneEqualTo(false).findAll();
     return todosForToday.length;
+  }
+
+  String _deadlineFormatted(DateTime deadline) {
+    return '${deadline.year}년 ${deadline.month}월 ${deadline.day}일(${dayOfWeekToKorean(DayOfWeek.values[deadline.weekday - 1])}) '
+        '${GeneralFormatTime.formatTime(deadline)}까지';
   }
 }

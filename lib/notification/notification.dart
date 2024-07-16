@@ -8,6 +8,7 @@ Future<void> sendNotification({
   required DateTime date,
   required String title,
   required String content,
+  required int minutesBefore,
 }) async {
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   bool? result;
@@ -39,7 +40,7 @@ Future<void> sendNotification({
       idx,
       title,
       content,
-      _setNotificationTime(date: date),
+      _setNotificationTime(date: date, minutesBefore: minutesBefore),
       detail,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
@@ -47,11 +48,14 @@ Future<void> sendNotification({
   }
 }
 
-tz.TZDateTime _setNotificationTime({required DateTime date}) {
+tz.TZDateTime _setNotificationTime({
+  required DateTime date,
+  required int minutesBefore,
+}) {
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
   final deadline = tz.TZDateTime.from(date, tz.local);
-  return deadline.subtract(const Duration(hours: 1));
+  return deadline.subtract(Duration(minutes: minutesBefore));
 }
 
 Future<void> cancelNotification(int idx) async {

@@ -4,13 +4,20 @@ import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 
-class TodoInteractionSimpleDateButton extends StatelessWidget {
+class TodoInteractionSimpleDateButton extends StatefulWidget {
   final Function(DateTime) onDateSelected;
 
   const TodoInteractionSimpleDateButton({
     super.key,
     required this.onDateSelected,
   });
+
+  @override
+  State<TodoInteractionSimpleDateButton> createState() => _TodoInteractionSimpleDateButtonState();
+}
+
+class _TodoInteractionSimpleDateButtonState extends State<TodoInteractionSimpleDateButton> {
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +42,31 @@ class TodoInteractionSimpleDateButton extends StatelessWidget {
     );
   }
 
-  Widget _buildDateButton(String content, int afterDate) {
+  Widget _buildDateButton(String content, int afterDays) {
+    DateTime currentDate = DateTime.now().add(Duration(days: afterDays));
+    bool isSelected =
+        selectedDate != null && selectedDate!.year == currentDate.year && selectedDate!.month == currentDate.month && selectedDate!.day == currentDate.day;
+
     return InkWell(
-      onTap: () => onDateSelected(DateTime.now().add(Duration(days: afterDate))),
+      onTap: () {
+        setState(() {
+          selectedDate = currentDate;
+        });
+        widget.onDateSelected(currentDate);
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: defaultPaddingL / 2,
-          vertical: defaultPaddingS / 4,
+          vertical: defaultPaddingL / 4,
         ),
         decoration: BoxDecoration(
-          color: black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
+          color: isSelected ? black : black.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
         ),
         child: Center(
           child: Text(
             content,
-            style: CustomTextStyle.body3,
+            style: isSelected ? CustomTextStyle.body3.copyWith(color: Colors.white, fontWeight: FontWeight.bold) : CustomTextStyle.body3,
           ),
         ),
       ),

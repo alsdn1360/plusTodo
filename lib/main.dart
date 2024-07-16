@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
-      // Set the navigator key
       debugShowCheckedModeBanner: false,
       theme: CustomTheme.customThemeData(),
       localizationsDelegates: const [

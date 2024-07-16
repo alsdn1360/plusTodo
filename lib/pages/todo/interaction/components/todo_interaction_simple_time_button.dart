@@ -4,13 +4,20 @@ import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 
-class TodoInteractionSimpleTimeButton extends StatelessWidget {
+class TodoInteractionSimpleTimeButton extends StatefulWidget {
   final Function(TimeOfDay) onTimeSelected;
 
   const TodoInteractionSimpleTimeButton({
     super.key,
     required this.onTimeSelected,
   });
+
+  @override
+  State<TodoInteractionSimpleTimeButton> createState() => _TodoInteractionSimpleTimeButtonState();
+}
+
+class _TodoInteractionSimpleTimeButtonState extends State<TodoInteractionSimpleTimeButton> {
+  TimeOfDay? selectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +43,29 @@ class TodoInteractionSimpleTimeButton extends StatelessWidget {
   }
 
   Widget _buildTimeButton(String content, int setHours, int setMinutes) {
+    TimeOfDay time = TimeOfDay(hour: setHours, minute: setMinutes);
+    bool isSelected = (selectedTime != null && selectedTime == time);
+
     return InkWell(
       onTap: () {
-        onTimeSelected(TimeOfDay(hour: setHours, minute: setMinutes));
+        setState(() {
+          selectedTime = TimeOfDay(hour: setHours, minute: setMinutes);
+        });
+        widget.onTimeSelected(time);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: defaultPaddingL / 2,
-          vertical: defaultPaddingS / 4,
+          vertical: defaultPaddingL / 4,
         ),
         decoration: BoxDecoration(
-          color: black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
+          color: isSelected ? black : black.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
         ),
         child: Center(
           child: Text(
             content,
-            style: CustomTextStyle.body3,
+            style: isSelected ? CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600) : CustomTextStyle.body3,
           ),
         ),
       ),
