@@ -2,75 +2,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
-import 'package:plus_todo/functions/general_format_time.dart';
+import 'package:plus_todo/providers/todo/todo_daily_provider.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
-import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_divider.dart';
 
-class TodoUncompletedCard extends ConsumerWidget {
-  final String title;
-  final String subtitle;
-  final Color color;
-  final bool isDoOrEliminateCard;
-  final int filteredIndex;
-  final bool Function(Todo) filteredTodoData;
-
-  const TodoUncompletedCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.color,
-    this.isDoOrEliminateCard = false,
-    required this.filteredIndex,
-    required this.filteredTodoData,
-  });
+class TodoDailyCard extends ConsumerWidget {
+  const TodoDailyCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uncompletedTodoData = ref.watch(todoUncompletedProvider).where(filteredTodoData).toList();
+    final dailyTodoData = ref.watch(todoDailyProvider);
 
-    if (filteredIndex == 1) {
-      uncompletedTodoData.sort(
-        (a, b) {
-          int compareUrgency = b.urgency.compareTo(a.urgency);
-          if (compareUrgency != 0) {
-            return compareUrgency;
-          }
-          return b.importance.compareTo(a.importance);
-        },
-      );
-    } else if (filteredIndex == 2) {
-      uncompletedTodoData.sort(
-        (a, b) {
-          int compareImportance = b.importance.compareTo(a.importance);
-          if (compareImportance != 0) {
-            return compareImportance;
-          }
-          return b.urgency.compareTo(a.urgency);
-        },
-      );
-    }
+    final sortedTodoData = dailyTodoData.where((todo) => todo.deadline != null).toList()..sort((a, b) => a.deadline!.compareTo(b.deadline!));
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: white,
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: CustomTextStyle.title2.copyWith(color: color)),
+          Text('오늘 해야 할 일', style: CustomTextStyle.title2),
           const Gap(defaultGapS / 4),
-          Text(subtitle, style: CustomTextStyle.caption1),
+          Text('오늘 해야 할 일을 시간 순으로 정렬', style: CustomTextStyle.caption1),
           const Gap(defaultGapS),
           const CustomDivider(),
           const Gap(defaultGapS),
@@ -78,17 +43,17 @@ class TodoUncompletedCard extends ConsumerWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) => const Gap(defaultGapS / 2),
-            itemCount: uncompletedTodoData.length,
+            itemCount: sortedTodoData.length,
             itemBuilder: (context, index) {
-              final uncompletedTodoList = uncompletedTodoData[index];
-              final isDeadlineSoon = uncompletedTodoList.deadline != null && uncompletedTodoList.deadline!.isBefore(DateTime.now());
+              final dailyTodoList = sortedTodoData[index];
+              final isDeadlineSoon = dailyTodoList.deadline != null && dailyTodoList.deadline!.isBefore(DateTime.now());
 
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Checkbox(
-                    value: uncompletedTodoList.isDone,
-                    onChanged: (bool? value) => _onCheck(context, ref, uncompletedTodoList.id),
+                    value: dailyTodoList.isDone,
+                    onChanged: (bool? value) => _onCheck(context, ref, dailyTodoList.id),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: const VisualDensity(
                       horizontal: VisualDensity.minimumDensity,
@@ -103,12 +68,12 @@ class TodoUncompletedCard extends ConsumerWidget {
                   const Gap(defaultGapM),
                   Expanded(
                     child: InkWell(
-                      onTap: () => _pushDetailPage(context, uncompletedTodoList),
+                      onTap: () => _pushDetailPage(context, dailyTodoList),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            uncompletedTodoList.title,
+                            dailyTodoList.title,
                             style: CustomTextStyle.body2,
                             softWrap: true,
                           ),
@@ -116,8 +81,8 @@ class TodoUncompletedCard extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${GeneralFormatTime.formatDate(uncompletedTodoList.deadline!)} '
-                                '${GeneralFormatTime.formatTime(uncompletedTodoList.deadline!)}',
+                                '${GeneralFormatTime.formatDate(dailyTodoList.deadline!)} '
+                                '${GeneralFormatTime.formatTime(dailyTodoList.deadline!)}',
                                 style: isDeadlineSoon
                                     ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2)
                                     : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
@@ -136,17 +101,17 @@ class TodoUncompletedCard extends ConsumerWidget {
                           Row(
                             children: [
                               TodoUrgencyImportanceCard(
-                                color: color,
-                                content: '긴급도: ${uncompletedTodoList.urgency.toInt()}',
+                                color: urgencyImportanceColor(dailyTodoList.urgency, dailyTodoList.importance),
+                                content: '긴급도: ${dailyTodoList.urgency.toInt()}',
                               ),
                               const Gap(defaultGapS / 2),
                               TodoUrgencyImportanceCard(
-                                color: color,
-                                content: '중요도: ${uncompletedTodoList.importance.toInt()}',
+                                color: urgencyImportanceColor(dailyTodoList.urgency, dailyTodoList.importance),
+                                content: '중요도: ${dailyTodoList.importance.toInt()}',
                               ),
                             ],
                           ),
-                          if (index != uncompletedTodoData.length - 1)
+                          if (index != sortedTodoData.length - 1)
                             const Column(
                               children: [
                                 Gap(defaultGapS),
@@ -161,7 +126,7 @@ class TodoUncompletedCard extends ConsumerWidget {
               );
             },
           ),
-          if (uncompletedTodoData.isEmpty)
+          if (sortedTodoData.isEmpty)
             Text(
               '할 일이 없어요.',
               style: CustomTextStyle.body3,
@@ -171,16 +136,28 @@ class TodoUncompletedCard extends ConsumerWidget {
     );
   }
 
+  Color urgencyImportanceColor(double urgency, double importance) {
+    if (urgency >= 5 && importance >= 5) {
+      return red;
+    } else if (urgency >= 5 && importance < 5) {
+      return blue;
+    } else if (urgency < 5 && importance >= 5) {
+      return orange;
+    } else {
+      return green;
+    }
+  }
+
   void _onCheck(BuildContext context, WidgetRef ref, int id) {
     ref.read(todoProvider.notifier).toggleTodo(id);
     GeneralSnackBar.showSnackBar(context, '할 일을 완료했어요.');
   }
 
-  Future<dynamic> _pushDetailPage(BuildContext context, Todo uncompletedTodoList) {
+  Future<dynamic> _pushDetailPage(BuildContext context, Todo dailyTodoData) {
     return Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (context) => TodoDetailUncompletedPage(todoData: uncompletedTodoList),
+        builder: (context) => TodoDetailUncompletedPage(todoData: dailyTodoData),
       ),
     );
   }

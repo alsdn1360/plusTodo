@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/home/components/home_daily_card.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
 import 'package:plus_todo/providers/filtered/filtered_home_card_provider.dart';
 import 'package:plus_todo/providers/filtered/filtered_sorting_index_provider.dart';
@@ -20,9 +21,11 @@ class HomeIndexCard extends ConsumerWidget {
       onHorizontalDragEnd: (details) {
         int newIndex;
         if (details.primaryVelocity! < 0) {
-          newIndex = (filteredHomeCardIndex + 1) % 4;
+          newIndex = (filteredHomeCardIndex + 1) % 5;
+        } else if (details.primaryVelocity! > 0) {
+          newIndex = (filteredHomeCardIndex - 1 + 5) % 5;
         } else {
-          newIndex = (filteredHomeCardIndex - 1) % 4;
+          newIndex = filteredHomeCardIndex;
         }
         ref.read(filteredHomeCardIndexProvider.notifier).toggleFilteredHomeCardIndex(newIndex);
       },
@@ -30,6 +33,10 @@ class HomeIndexCard extends ConsumerWidget {
         children: [
           Visibility(
             visible: filteredHomeCardIndex == 0,
+            child: const TodoDailyCard(),
+          ),
+          Visibility(
+            visible: filteredHomeCardIndex == 1,
             child: TodoUncompletedCard(
               title: 'Do',
               subtitle: '긴급하고 중요한 일',
@@ -40,7 +47,7 @@ class HomeIndexCard extends ConsumerWidget {
             ),
           ),
           Visibility(
-            visible: filteredHomeCardIndex == 1,
+            visible: filteredHomeCardIndex == 2,
             child: TodoUncompletedCard(
               title: 'Delegate',
               subtitle: '긴급하지만 중요하진 않은 일',
@@ -50,7 +57,7 @@ class HomeIndexCard extends ConsumerWidget {
             ),
           ),
           Visibility(
-            visible: filteredHomeCardIndex == 2,
+            visible: filteredHomeCardIndex == 3,
             child: TodoUncompletedCard(
               title: 'Schedule',
               subtitle: '중요하지만 급하지 않은 일',
@@ -60,7 +67,7 @@ class HomeIndexCard extends ConsumerWidget {
             ),
           ),
           Visibility(
-            visible: filteredHomeCardIndex == 3,
+            visible: filteredHomeCardIndex == 4,
             child: TodoUncompletedCard(
               title: 'Eliminate',
               subtitle: '긴급하지도 중요하지도 않은 일',

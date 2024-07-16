@@ -30,8 +30,6 @@ class TodoInteractionSimpleTimeButton extends StatelessWidget {
           _buildTimeButton('오후 6시', 18, 0),
           const Gap(defaultGapM),
           _buildTimeButton('오후 9시', 21, 0),
-          const Gap(defaultGapM),
-          _buildTimeButton('오전 12시', 00, 0),
         ],
       ),
     );

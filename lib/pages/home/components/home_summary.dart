@@ -30,10 +30,7 @@ class HomeSummary extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '남은 할 일 수',
-            style: CustomTextStyle.title2,
-          ),
+          Text('남은 할 일 수', style: CustomTextStyle.title2),
           const Gap(defaultGapS),
           const CustomDivider(),
           const Gap(defaultGapS),

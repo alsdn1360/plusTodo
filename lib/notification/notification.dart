@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:plus_todo/themes/custom_color.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -17,10 +16,10 @@ Future<void> sendNotification({
     result = true;
   } else {
     result = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   var android = AndroidNotificationDetails(
@@ -29,7 +28,6 @@ Future<void> sendNotification({
     channelDescription: content,
     importance: Importance.max,
     priority: Priority.max,
-    color: white,
   );
 
   var ios = const DarwinNotificationDetails();
@@ -54,4 +52,9 @@ tz.TZDateTime _setNotificationTime({required DateTime date}) {
   tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
   final deadline = tz.TZDateTime.from(date, tz.local);
   return deadline.subtract(const Duration(hours: 1));
+}
+
+Future<void> cancelNotification(int idx) async {
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  await flutterLocalNotificationsPlugin.cancel(idx);
 }

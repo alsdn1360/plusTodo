@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:plus_todo/pages/main_page.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_theme.dart';
@@ -18,6 +19,7 @@ void main() async {
       systemNavigationBarColor: background,
     ),
   );
+  Permission.notification.request();
   await _initNotification();
   runApp(const ProviderScope(child: MyApp()));
 }
