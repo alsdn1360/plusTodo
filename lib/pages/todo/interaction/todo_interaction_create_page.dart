@@ -214,6 +214,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
       );
       ref.read(todoProvider.notifier).createTodo(addTodo);
       Navigator.pop(context);
+      GeneralSnackBar.showSnackBar(context, '할 일이 추가되었습니다.');
     }
   }
 }
