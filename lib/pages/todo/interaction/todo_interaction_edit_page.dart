@@ -33,7 +33,6 @@ class TodoInteractionEditPage extends ConsumerStatefulWidget {
 class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPage> {
   late final TextEditingController _titleController;
   late final TextEditingController _contentController;
-  final FocusNode _focusNode = FocusNode();
 
   DateTime? _newSelectedDate;
   TimeOfDay? _newSelectedTime;
@@ -51,7 +50,6 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     _newSelectedDate = widget.todoData.deadline;
     _newSelectedTime = widget.todoData.deadline != null ? TimeOfDay.fromDateTime(widget.todoData.deadline!) : null;
     _newNotificationTime = widget.todoData.notificationTime;
-    _focusNode.requestFocus();
   }
 
   @override
@@ -59,7 +57,6 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     super.dispose();
     _titleController.dispose();
     _contentController.dispose();
-    _focusNode.dispose();
   }
 
   @override
@@ -92,9 +89,8 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         CustomTextField(
                           textStyle: CustomTextStyle.body1,
                           textController: _titleController,
-                          focusNode: _focusNode,
                         ),
-                        const Gap(defaultGapM),
+                        const Gap(defaultGapS),
                         CustomTextField(
                           textStyle: CustomTextStyle.body2,
                           textController: _contentController,
@@ -103,7 +99,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                       ],
                     ),
                   ),
-                  const Gap(defaultGapL),
+                  const Gap(defaultGapM),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPaddingS),
@@ -136,7 +132,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                             ),
                           ),
                         ),
-                        const Gap(defaultGapM),
+                        const Gap(defaultGapS),
                         TodoInteractionSimpleDateButton(
                           onDateSelected: (selectedDate) {
                             setState(() => _newSelectedDate = selectedDate);
@@ -145,7 +141,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                       ],
                     ),
                   ),
-                  const Gap(defaultGapL),
+                  const Gap(defaultGapM),
                   Row(
                     children: [
                       Expanded(
@@ -180,7 +176,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                                   ),
                                 ),
                               ),
-                              const Gap(defaultGapM),
+                              const Gap(defaultGapS),
                               TodoInteractionSimpleTimeButton(
                                 onTimeSelected: (selectedTime) {
                                   setState(() => _newSelectedTime = selectedTime);
@@ -190,7 +186,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                           ),
                         ),
                       ),
-                      const Gap(defaultGapL),
+                      const Gap(defaultGapM),
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.all(defaultPaddingS),
@@ -209,7 +205,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                                   style: CustomTextStyle.body1,
                                 ),
                               ),
-                              const Gap(defaultGapM),
+                              const Gap(defaultGapS),
                               TodoInteractionSimpleNotificationButton(
                                 onNotificationTimeSelected: (selectedNotificationTime) {
                                   setState(() => _newNotificationTime = selectedNotificationTime);
@@ -221,7 +217,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                       ),
                     ],
                   ),
-                  const Gap(defaultGapL),
+                  const Gap(defaultGapM),
                   TodoInteractionUrgencyImportanceCard(
                     urgency: _newUrgencyValue!,
                     importance: _newImportanceValue!,

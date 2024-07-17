@@ -84,7 +84,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                           textController: _titleController,
                           focusNode: _focusNode,
                         ),
-                        const Gap(defaultGapM),
+                        const Gap(defaultGapS),
                         CustomTextField(
                           hintText: '메모',
                           textStyle: CustomTextStyle.body2,
@@ -93,7 +93,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                       ],
                     ),
                   ),
-                  const Gap(defaultGapL),
+                  const Gap(defaultGapM),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPaddingS),
@@ -128,7 +128,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                             ),
                           ),
                         ),
-                        const Gap(defaultGapM),
+                        const Gap(defaultGapS),
                         TodoInteractionSimpleDateButton(
                           onDateSelected: (selectedDate) {
                             setState(() => _selectedDate = selectedDate);
@@ -137,7 +137,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                       ],
                     ),
                   ),
-                  const Gap(defaultGapL),
+                  const Gap(defaultGapM),
                   Row(
                     children: [
                       Expanded(
@@ -175,7 +175,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                                   ),
                                 ),
                               ),
-                              const Gap(defaultGapM),
+                              const Gap(defaultGapS),
                               TodoInteractionSimpleTimeButton(
                                 onTimeSelected: (selectedTime) {
                                   setState(() => _selectedTime = selectedTime);
@@ -185,7 +185,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                           ),
                         ),
                       ),
-                      const Gap(defaultGapL),
+                      const Gap(defaultGapM),
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.all(defaultPaddingS),
@@ -206,7 +206,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                                   ),
                                 ),
                               ),
-                              const Gap(defaultGapM),
+                              const Gap(defaultGapS),
                               TodoInteractionSimpleNotificationButton(
                                 onNotificationTimeSelected: (selectedNotificationTime) {
                                   setState(() => _selectedNotificationTime = selectedNotificationTime);
@@ -218,7 +218,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                       ),
                     ],
                   ),
-                  const Gap(defaultGapL),
+                  const Gap(defaultGapM),
                   TodoInteractionUrgencyImportanceCard(
                     urgency: _urgency,
                     importance: _importance,

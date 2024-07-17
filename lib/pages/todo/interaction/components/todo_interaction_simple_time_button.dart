@@ -55,8 +55,8 @@ class _TodoInteractionSimpleTimeButtonState extends State<TodoInteractionSimpleT
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: defaultPaddingL / 2,
-          vertical: defaultPaddingL / 4,
+          horizontal: defaultPaddingM / 2,
+          vertical: defaultPaddingL / 6,
         ),
         decoration: BoxDecoration(
           color: isSelected ? black : black.withOpacity(0.1),

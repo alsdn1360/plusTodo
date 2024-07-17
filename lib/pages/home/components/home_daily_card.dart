@@ -36,9 +36,9 @@ class TodoDailyCard extends ConsumerWidget {
           Text('오늘 해야 할 일', style: CustomTextStyle.title2),
           const Gap(defaultGapS / 4),
           Text('시간순으로 정렬된 오늘 해야 할 일', style: CustomTextStyle.caption1),
-          const Gap(defaultGapS),
+          const Gap(defaultGapS / 2),
           const CustomDivider(),
-          const Gap(defaultGapS),
+          const Gap(defaultGapS / 2),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

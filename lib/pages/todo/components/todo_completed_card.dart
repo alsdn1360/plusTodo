@@ -62,9 +62,9 @@ class TodoCompletedCard extends ConsumerWidget {
               ),
             ],
           ),
-          const Gap(defaultGapS),
+          const Gap(defaultGapS / 2),
           const CustomDivider(),
-          const Gap(defaultGapS),
+          const Gap(defaultGapS / 2),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

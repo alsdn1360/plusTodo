@@ -86,7 +86,7 @@ class TodoInteractionUrgencyImportanceCard extends StatelessWidget {
               ],
             ),
           ),
-          const Gap(defaultGapM),
+          const Gap(defaultGapS),
           Text(
             '긴급도: ${urgency.toInt()}',
             style: CustomTextStyle.body1,

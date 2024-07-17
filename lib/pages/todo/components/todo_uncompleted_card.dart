@@ -71,9 +71,9 @@ class TodoUncompletedCard extends ConsumerWidget {
           Text(title, style: CustomTextStyle.title2.copyWith(color: color)),
           const Gap(defaultGapS / 4),
           Text(subtitle, style: CustomTextStyle.caption1),
-          const Gap(defaultGapS),
+          const Gap(defaultGapS / 2),
           const CustomDivider(),
-          const Gap(defaultGapS),
+          const Gap(defaultGapS / 2),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

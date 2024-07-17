@@ -47,7 +47,7 @@ class TodoPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 TodoUncompletedCard(
                   title: 'Do',
                   subtitle: '긴급하고 중요한 일',
@@ -56,7 +56,7 @@ class TodoPage extends ConsumerWidget {
                   filteredIndex: sortingIndex,
                   filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 // 긴급도 우선 정렬일 때
                 Visibility(
                   visible: sortingIndex == 1,
@@ -78,7 +78,7 @@ class TodoPage extends ConsumerWidget {
                     filteredTodoData: (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
                   ),
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 // 중요도 우선 정렬일 때
                 Visibility(
                   visible: sortingIndex == 1,
@@ -100,7 +100,7 @@ class TodoPage extends ConsumerWidget {
                     filteredTodoData: (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5,
                   ),
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 TodoUncompletedCard(
                   title: 'Eliminate',
                   subtitle: '긴급하지도 중요하지도 않은 일',
@@ -112,7 +112,7 @@ class TodoPage extends ConsumerWidget {
                 // 완료된 할 일 보기 선택 했을 때 토글
                 Visibility(
                   visible: showCompleted,
-                  child: const Gap(defaultGapL),
+                  child: const Gap(defaultGapM),
                 ),
                 Visibility(
                   visible: showCompleted,

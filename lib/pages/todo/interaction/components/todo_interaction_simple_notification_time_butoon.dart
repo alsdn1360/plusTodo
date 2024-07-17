@@ -52,18 +52,15 @@ class _TodoInteractionSimpleNotificationButtonState extends State<TodoInteractio
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: defaultPaddingL / 2,
-          vertical: defaultPaddingL / 4,
+          horizontal: defaultPaddingM / 2,
+          vertical: defaultPaddingL / 6,
         ),
         decoration: BoxDecoration(
           color: isSelected ? black : black.withOpacity(0.1),
           borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
         ),
         child: Center(
-          child: Text(
-            content,
-            style: isSelected ? CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600) : CustomTextStyle.body3,
-          ),
+          child: Text(content, style: isSelected ? CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600) : CustomTextStyle.body3),
         ),
       ),
     );

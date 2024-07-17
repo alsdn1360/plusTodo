@@ -85,12 +85,12 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                     ),
                   ),
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 InkWell(
                   onTap: () => _pushEditPage(context, _todoData),
                   child: TodoDetailDeadlineDateCard(todoData: _todoData),
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 Row(
                   children: [
                     Expanded(
@@ -99,7 +99,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                         child: TodoDetailDeadlineTimeCard(todoData: _todoData),
                       ),
                     ),
-                    const Gap(defaultGapL),
+                    const Gap(defaultGapM),
                     Expanded(
                       child: InkWell(
                         onTap: () => _pushEditPage(context, _todoData),
@@ -108,7 +108,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                     ),
                   ],
                 ),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 InkWell(
                   onTap: () => _pushEditPage(context, _todoData),
                   child: TodoDetailUrgencyImportanceCard(todoData: _todoData),

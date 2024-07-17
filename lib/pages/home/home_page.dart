@@ -51,9 +51,9 @@ class HomePage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 HomeMatrix(todoData: todoData),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 const HomeSummary(),
-                const Gap(defaultGapL),
+                const Gap(defaultGapM),
                 HomeIndexCard(filteredHomeCardIndex: filteredHomeCardIndex),
               ],
             ),
