@@ -13,6 +13,7 @@ class Todo {
   late double importance;
   late bool isDone;
   late DateTime? deadline;
+  late int notificationTime = 0;
 
   Todo({
     required this.title,
@@ -21,6 +22,7 @@ class Todo {
     required this.importance,
     required this.isDone,
     required this.deadline,
+    required this.notificationTime,
   });
 }
 

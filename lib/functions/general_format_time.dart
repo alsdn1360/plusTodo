@@ -27,4 +27,15 @@ class GeneralFormatTime {
     final minutes = time.minute.toString().padLeft(2, '0');
     return '$period $hours:$minutes';
   }
+
+  static String formatNotificationTime(int minuteBefore) {
+    int hours = minuteBefore ~/ 60;
+    if (minuteBefore == 0) {
+      return '마감 시간';
+    } else if (minuteBefore < 60) {
+      return '$minuteBefore분 전';
+    } else {
+      return '$hours시간 전';
+    }
+  }
 }

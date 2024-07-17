@@ -37,13 +37,18 @@ const TodoSchema = CollectionSchema(
       name: r'isDone',
       type: IsarType.bool,
     ),
-    r'title': PropertySchema(
+    r'notificationTime': PropertySchema(
       id: 4,
+      name: r'notificationTime',
+      type: IsarType.long,
+    ),
+    r'title': PropertySchema(
+      id: 5,
       name: r'title',
       type: IsarType.string,
     ),
     r'urgency': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'urgency',
       type: IsarType.double,
     )
@@ -83,8 +88,9 @@ void _todoSerialize(
   writer.writeDateTime(offsets[1], object.deadline);
   writer.writeDouble(offsets[2], object.importance);
   writer.writeBool(offsets[3], object.isDone);
-  writer.writeString(offsets[4], object.title);
-  writer.writeDouble(offsets[5], object.urgency);
+  writer.writeLong(offsets[4], object.notificationTime);
+  writer.writeString(offsets[5], object.title);
+  writer.writeDouble(offsets[6], object.urgency);
 }
 
 Todo _todoDeserialize(
@@ -98,8 +104,9 @@ Todo _todoDeserialize(
     deadline: reader.readDateTimeOrNull(offsets[1]),
     importance: reader.readDouble(offsets[2]),
     isDone: reader.readBool(offsets[3]),
-    title: reader.readString(offsets[4]),
-    urgency: reader.readDouble(offsets[5]),
+    notificationTime: reader.readLong(offsets[4]),
+    title: reader.readString(offsets[5]),
+    urgency: reader.readDouble(offsets[6]),
   );
   object.id = id;
   return object;
@@ -121,8 +128,10 @@ P _todoDeserializeProp<P>(
     case 3:
       return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
+      return (reader.readString(offset)) as P;
+    case 6:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -537,6 +546,59 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> notificationTimeEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'notificationTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> notificationTimeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'notificationTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> notificationTimeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'notificationTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> notificationTimeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'notificationTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -781,6 +843,18 @@ extension TodoQuerySortBy on QueryBuilder<Todo, Todo, QSortBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByNotificationTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByNotificationTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -867,6 +941,18 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByNotificationTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByNotificationTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -918,6 +1004,12 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QDistinct> distinctByNotificationTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'notificationTime');
+    });
+  }
+
   QueryBuilder<Todo, Todo, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -960,6 +1052,12 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
   QueryBuilder<Todo, bool, QQueryOperations> isDoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDone');
+    });
+  }
+
+  QueryBuilder<Todo, int, QQueryOperations> notificationTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'notificationTime');
     });
   }
 

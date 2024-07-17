@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/functions/general_time_picker.dart';
 import 'package:plus_todo/providers/notification/notification_daily_porvider.dart';
@@ -25,7 +26,8 @@ class NotificationDailySettingCard extends ConsumerWidget {
             if (newTime != null) {
               ref.read(notificationDailyProvider.notifier).setNotificationTime(newTime.hour, newTime.minute);
               ref.read(todoProvider.notifier).updateDailyNotificationSettings(newTime.hour, newTime.minute);
-              GeneralSnackBar.showSnackBar(context, '이제 ${_formatTime(newTime.hour, newTime.minute)}에 오늘 해야 할 일 알림이 울려요.');
+              GeneralSnackBar.showSnackBar(context,
+                  '이제 ${GeneralFormatTime.formatTime(DateTime(2000, 2, 10, dailyNotificationTime['hour'], dailyNotificationTime['minute']))}에 오늘 해야 할 일 알림이 울려요.');
             }
           },
         );
@@ -50,7 +52,7 @@ class NotificationDailySettingCard extends ConsumerWidget {
                     style: CustomTextStyle.title3,
                   ),
                   Text(
-                    '매일 해당 시각에 오늘 해야 할 일의 개수를 알려줍니다.',
+                    '매일 오늘 해야 할 일의 개수를 알려줍니다.',
                     style: CustomTextStyle.caption1,
                   ),
                 ],
@@ -58,19 +60,12 @@ class NotificationDailySettingCard extends ConsumerWidget {
             ),
             const Gap(defaultGapXL),
             Text(
-              _formatTime(dailyNotificationTime['hour'], dailyNotificationTime['minute']),
+              GeneralFormatTime.formatTime(DateTime(2000, 2, 10, dailyNotificationTime['hour'], dailyNotificationTime['minute'])),
               style: CustomTextStyle.body1,
             ),
           ],
         ),
       ),
     );
-  }
-
-  String _formatTime(int hour, int minute) {
-    final hours = hour % 12 == 0 ? 12 : hour % 12;
-    final period = hour < 12 ? '오전' : '오후';
-    final minutes = minute.toString().padLeft(2, '0');
-    return '$period $hours:$minutes';
   }
 }

@@ -34,7 +34,7 @@ class GeneralTimePicker {
                   height: MediaQuery.of(context).size.height / 5,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.time,
-                    initialDateTime: DateTime(2000, 1, 1, initialTime?.hour ?? DateTime.now().hour, initialTime?.minute ?? DateTime.now().minute),
+                    initialDateTime: DateTime(2000, 2, 10, initialTime?.hour ?? DateTime.now().hour, initialTime?.minute ?? DateTime.now().minute),
                     minuteInterval: minuteInterval,
                     onDateTimeChanged: (DateTime newDateTime) {
                       tempPickedTime = TimeOfDay(hour: newDateTime.hour, minute: newDateTime.minute);

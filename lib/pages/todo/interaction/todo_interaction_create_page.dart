@@ -10,6 +10,7 @@ import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_date_button.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_notification_time_butoon.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_time_button.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_urgency_importance_card.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
@@ -34,6 +35,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
   double _urgency = 1;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  int? _selectedNotificationTime;
 
   @override
   void initState() {
@@ -131,53 +133,90 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                           onDateSelected: (selectedDate) {
                             setState(() => _selectedDate = selectedDate);
                           },
-                        )
+                        ),
                       ],
                     ),
                   ),
                   const Gap(defaultGapL),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(defaultPaddingS),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                      color: white,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () => GeneralTimePicker.showTimePicker(
-                            context: context,
-                            initialTime: GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
-                            onTimeSelected: (TimeOfDay? selectedTime) {
-                              if (selectedTime == null) {
-                                setState(
-                                  () => _selectedTime = GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
-                                );
-                              } else {
-                                setState(() => _selectedTime = selectedTime);
-                              }
-                            },
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(defaultPaddingS),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                            color: white,
                           ),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              GeneralFormatTime.formatInteractionTime(_selectedTime),
-                              style: CustomTextStyle.body1.copyWith(
-                                color: (_selectedTime == null) ? gray : black,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                onTap: () => GeneralTimePicker.showTimePicker(
+                                  context: context,
+                                  initialTime: GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
+                                  onTimeSelected: (TimeOfDay? selectedTime) {
+                                    if (selectedTime == null) {
+                                      setState(
+                                        () => _selectedTime = GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
+                                      );
+                                    } else {
+                                      setState(() => _selectedTime = selectedTime);
+                                    }
+                                  },
+                                ),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    GeneralFormatTime.formatInteractionTime(_selectedTime),
+                                    style: CustomTextStyle.body1.copyWith(
+                                      color: (_selectedTime == null) ? gray : black,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                              const Gap(defaultGapM),
+                              TodoInteractionSimpleTimeButton(
+                                onTimeSelected: (selectedTime) {
+                                  setState(() => _selectedTime = selectedTime);
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        const Gap(defaultGapM),
-                        TodoInteractionSimpleTimeButton(
-                          onTimeSelected: (selectedTime) {
-                            setState(() => _selectedTime = selectedTime);
-                          },
-                        )
-                      ],
-                    ),
+                      ),
+                      const Gap(defaultGapL),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(defaultPaddingS),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  (_selectedNotificationTime == null) ? '알림 시간' : GeneralFormatTime.formatNotificationTime(_selectedNotificationTime!),
+                                  style: CustomTextStyle.body1.copyWith(
+                                    color: (_selectedNotificationTime == null) ? gray : black,
+                                  ),
+                                ),
+                              ),
+                              const Gap(defaultGapM),
+                              TodoInteractionSimpleNotificationButton(
+                                onNotificationTimeSelected: (selectedNotificationTime) {
+                                  setState(() => _selectedNotificationTime = selectedNotificationTime);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const Gap(defaultGapL),
                   TodoInteractionUrgencyImportanceCard(
@@ -203,6 +242,8 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
       GeneralSnackBar.showSnackBar(context, '날짜를 선택해 주세요.');
     } else if (_selectedTime == null) {
       GeneralSnackBar.showSnackBar(context, '시간을 선택해 주세요.');
+    } else if (_selectedNotificationTime == null) {
+      GeneralSnackBar.showSnackBar(context, '알림 시간을 선택해 주세요.');
     } else {
       final addTodo = Todo(
         title: _titleController.text,
@@ -211,6 +252,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
         importance: _importance,
         isDone: false,
         deadline: DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute),
+        notificationTime: _selectedNotificationTime!,
       );
       ref.read(todoProvider.notifier).createTodo(addTodo);
       Navigator.pop(context);

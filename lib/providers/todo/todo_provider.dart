@@ -12,7 +12,6 @@ final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
 
 class TodoNotifier extends StateNotifier<List<Todo>> {
   late final Isar _isar;
-  int? minutesBefore;
   int? dailyNotiHour;
   int? dailyNotiMinute;
 
@@ -63,7 +62,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
           date: todoData.deadline!,
           title: todoData.title,
           content: _deadlineFormatted(todoData.deadline!),
-          minutesBefore: minutesBefore ?? 30,
+          minutesBefore: todoData.notificationTime,
         );
       }
     } catch (e) {
@@ -82,19 +81,19 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
             ..urgency = updatedTodo.urgency
             ..importance = updatedTodo.importance
             ..isDone = updatedTodo.isDone
-            ..deadline = updatedTodo.deadline;
+            ..deadline = updatedTodo.deadline
+            ..notificationTime = updatedTodo.notificationTime;
           await _isar.todos.put(updatingTodo);
         }
       });
       state = state.map((todo) => todo.id == id ? updatedTodo : todo).toList();
       if (updatedTodo.deadline != null && !updatedTodo.isDone) {
         await sendNotification(
-          idx: updatedTodo.id,
-          date: updatedTodo.deadline!,
-          title: updatedTodo.title,
-          content: _deadlineFormatted(updatedTodo.deadline!),
-          minutesBefore: minutesBefore ?? 30,
-        );
+            idx: updatedTodo.id,
+            date: updatedTodo.deadline!,
+            title: updatedTodo.title,
+            content: _deadlineFormatted(updatedTodo.deadline!),
+            minutesBefore: updatedTodo.notificationTime);
       } else {
         await cancelNotification(updatedTodo.id);
       }
@@ -145,7 +144,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
               date: existingTodo.deadline!,
               title: existingTodo.title,
               content: _deadlineFormatted(existingTodo.deadline!),
-              minutesBefore: minutesBefore ?? 30,
+              minutesBefore: existingTodo.notificationTime,
             );
           }
         }
@@ -159,30 +158,6 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     } catch (e) {
       print('Failed to toggle todo: $e');
     }
-  }
-
-  Future<void> updateNotificationForAllTodos(int minute) async {
-    try {
-      final todos = await _isar.todos.filter().isDoneEqualTo(false).findAll();
-
-      for (final todo in todos) {
-        if (todo.deadline != null) {
-          await sendNotification(
-            idx: todo.id,
-            date: todo.deadline!,
-            title: todo.title,
-            content: _deadlineFormatted(todo.deadline!),
-            minutesBefore: minutesBefore ?? 30,
-          );
-        }
-      }
-    } catch (e) {
-      print('Failed to schedule notifications for all todos: $e');
-    }
-  }
-
-  void updateNotificationSettings(int newMinutesBefore) {
-    minutesBefore = newMinutesBefore;
   }
 
   Future<void> updateDailyNotificationSettings(int newHour, int newMinute) async {

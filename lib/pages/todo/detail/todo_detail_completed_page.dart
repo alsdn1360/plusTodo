@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/models/todo.dart';
-import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_date_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_time_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_notification_time_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
@@ -67,7 +69,15 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                   ),
                 ),
                 const Gap(defaultGapL),
-                TodoDetailDeadlineCard(todoData: todoData),
+                TodoDetailDeadlineDateCard(todoData: todoData),
+                const Gap(defaultGapL),
+                Row(
+                  children: [
+                    Expanded(child: TodoDetailDeadlineTimeCard(todoData: todoData)),
+                    const Gap(defaultGapL),
+                    Expanded(child: TodoDetailNotificationTimeCard(todoData: todoData)),
+                  ],
+                ),
                 const Gap(defaultGapL),
                 TodoDetailUrgencyImportanceCard(todoData: todoData),
               ],

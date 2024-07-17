@@ -8,6 +8,9 @@ import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_date_button.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_notification_time_butoon.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_time_button.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_urgency_importance_card.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -32,10 +35,11 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
   late final TextEditingController _contentController;
   final FocusNode _focusNode = FocusNode();
 
-  DateTime? _selectedDate;
-  TimeOfDay? _selectedTime;
+  DateTime? _newSelectedDate;
+  TimeOfDay? _newSelectedTime;
   double? _newUrgencyValue;
   double? _newImportanceValue;
+  int? _newNotificationTime;
 
   @override
   void initState() {
@@ -44,8 +48,9 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
     _contentController = TextEditingController(text: widget.todoData.content);
     _newUrgencyValue = widget.todoData.urgency;
     _newImportanceValue = widget.todoData.importance;
-    _selectedDate = widget.todoData.deadline;
-    _selectedTime = widget.todoData.deadline != null ? TimeOfDay.fromDateTime(widget.todoData.deadline!) : null;
+    _newSelectedDate = widget.todoData.deadline;
+    _newSelectedTime = widget.todoData.deadline != null ? TimeOfDay.fromDateTime(widget.todoData.deadline!) : null;
+    _newNotificationTime = widget.todoData.notificationTime;
     _focusNode.requestFocus();
   }
 
@@ -99,53 +104,122 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     ),
                   ),
                   const Gap(defaultGapL),
-                  InkWell(
-                    onTap: () => GeneralDatePicker.showDatePicker(
-                      context: context,
-                      initialDate: _selectedDate,
-                      onDateSelected: (DateTime? selectedDate) {
-                        setState(() {
-                          _selectedDate = selectedDate;
-                          widget.todoData.deadline = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
-                        });
-                      },
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: white,
                     ),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(defaultPaddingS),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: white,
-                      ),
-                      child: Text(
-                        '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_selectedDate!.weekday - 1])})',
-                        style: CustomTextStyle.body1,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => GeneralDatePicker.showDatePicker(
+                            context: context,
+                            initialDate: _newSelectedDate,
+                            onDateSelected: (DateTime? selectedDate) {
+                              setState(
+                                () {
+                                  _newSelectedDate = selectedDate;
+                                  widget.todoData.deadline = DateTime(
+                                      _newSelectedDate!.year, _newSelectedDate!.month, _newSelectedDate!.day, _newSelectedTime!.hour, _newSelectedTime!.minute);
+                                },
+                              );
+                            },
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              '${_newSelectedDate!.year}년 ${_newSelectedDate!.month}월 ${_newSelectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_newSelectedDate!.weekday - 1])})',
+                              style: CustomTextStyle.body1,
+                            ),
+                          ),
+                        ),
+                        const Gap(defaultGapM),
+                        TodoInteractionSimpleDateButton(
+                          onDateSelected: (selectedDate) {
+                            setState(() => _newSelectedDate = selectedDate);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   const Gap(defaultGapL),
-                  InkWell(
-                    onTap: () => GeneralTimePicker.showTimePicker(
-                        context: context,
-                        initialTime: _selectedTime,
-                        onTimeSelected: (TimeOfDay? selectedTime) {
-                          setState(() {
-                            _selectedTime = selectedTime;
-                            widget.todoData.deadline = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
-                          });
-                        }),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(defaultPaddingS),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                        color: white,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(defaultPaddingS),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                            color: white,
+                          ),
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () => GeneralTimePicker.showTimePicker(
+                                  context: context,
+                                  initialTime: _newSelectedTime,
+                                  onTimeSelected: (TimeOfDay? selectedTime) {
+                                    setState(
+                                      () {
+                                        _newSelectedTime = selectedTime;
+                                        widget.todoData.deadline = DateTime(_newSelectedDate!.year, _newSelectedDate!.month, _newSelectedDate!.day,
+                                            _newSelectedTime!.hour, _newSelectedTime!.minute);
+                                      },
+                                    );
+                                  },
+                                ),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    GeneralFormatTime.formatInteractionTime(_newSelectedTime!),
+                                    style: CustomTextStyle.body1,
+                                  ),
+                                ),
+                              ),
+                              const Gap(defaultGapM),
+                              TodoInteractionSimpleTimeButton(
+                                onTimeSelected: (selectedTime) {
+                                  setState(() => _newSelectedTime = selectedTime);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      child: Text(
-                        GeneralFormatTime.formatInteractionTime(_selectedTime!),
-                        style: CustomTextStyle.body1,
+                      const Gap(defaultGapL),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(defaultPaddingS),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  GeneralFormatTime.formatNotificationTime(_newNotificationTime!),
+                                  style: CustomTextStyle.body1,
+                                ),
+                              ),
+                              const Gap(defaultGapM),
+                              TodoInteractionSimpleNotificationButton(
+                                onNotificationTimeSelected: (selectedNotificationTime) {
+                                  setState(() => _newNotificationTime = selectedNotificationTime);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   const Gap(defaultGapL),
                   TodoInteractionUrgencyImportanceCard(
@@ -174,7 +248,9 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
       widget.todoData.content = _contentController.text;
       widget.todoData.urgency = _newUrgencyValue!;
       widget.todoData.importance = _newImportanceValue!;
-      widget.todoData.deadline = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
+      widget.todoData.deadline =
+          DateTime(_newSelectedDate!.year, _newSelectedDate!.month, _newSelectedDate!.day, _newSelectedTime!.hour, _newSelectedTime!.minute);
+      widget.todoData.notificationTime = _newNotificationTime!;
       ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
       GeneralSnackBar.showSnackBar(context, '수정을 완료했어요.');
       Navigator.pop(context, widget.todoData);

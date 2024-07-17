@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/models/todo.dart';
-import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_date_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_deadline_time_card.dart';
+import 'package:plus_todo/pages/todo/detail/components/todo_detail_notification_time_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/components/todo_detail_bottom_button.dart';
 import 'package:plus_todo/pages/todo/interaction/todo_interaction_edit_page.dart';
@@ -86,7 +88,25 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                 const Gap(defaultGapL),
                 InkWell(
                   onTap: () => _pushEditPage(context, _todoData),
-                  child: TodoDetailDeadlineCard(todoData: _todoData),
+                  child: TodoDetailDeadlineDateCard(todoData: _todoData),
+                ),
+                const Gap(defaultGapL),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => _pushEditPage(context, _todoData),
+                        child: TodoDetailDeadlineTimeCard(todoData: _todoData),
+                      ),
+                    ),
+                    const Gap(defaultGapL),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => _pushEditPage(context, _todoData),
+                        child: TodoDetailNotificationTimeCard(todoData: _todoData),
+                      ),
+                    ),
+                  ],
                 ),
                 const Gap(defaultGapL),
                 InkWell(
