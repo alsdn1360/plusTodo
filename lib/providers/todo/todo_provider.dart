@@ -36,7 +36,12 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   Future<void> _scheduleDailyTodoCountNotification() async {
-    final count = countTodosForToday();
+    final now = DateTime.now();
+    final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
+    final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+    final todosForToday = await _isar.todos.filter().deadlineBetween(startOfDay, endOfDay).and().isDoneEqualTo(false).findAll();
+    final count = todosForToday.length;
+
     await dailyNotification(
       idx: 0,
       title: '오늘 해야 할 일을 확인하세요!',
@@ -181,7 +186,12 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   Future<void> updateDailyNotificationSettings(int newHour, int newMinute) async {
-    final count = countTodosForToday();
+    final now = DateTime.now();
+    final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
+    final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+    final todosForToday = await _isar.todos.filter().deadlineBetween(startOfDay, endOfDay).and().isDoneEqualTo(false).findAll();
+    final count = todosForToday.length;
+
     await dailyNotification(
       idx: 0,
       title: '오늘 해야 할 일을 확인하세요!',
@@ -189,14 +199,6 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       notiHour: newHour,
       notiMinute: newMinute,
     );
-  }
-
-  Future<int> countTodosForToday() async {
-    final now = DateTime.now();
-    final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
-    final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
-    final todosForToday = await _isar.todos.filter().deadlineBetween(startOfDay, endOfDay).and().isDoneEqualTo(false).findAll();
-    return todosForToday.length;
   }
 
   String _deadlineFormatted(DateTime deadline) {
