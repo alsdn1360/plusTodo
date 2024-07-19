@@ -38,4 +38,9 @@ class GeneralFormatTime {
       return '$hours시간 전';
     }
   }
+
+  static String formatDeadline(DateTime deadline) {
+    return '${deadline.year}년 ${deadline.month}월 ${deadline.day}일(${dayOfWeekToKorean(DayOfWeek.values[deadline.weekday - 1])}) '
+        '${GeneralFormatTime.formatTime(deadline)}까지';
+  }
 }

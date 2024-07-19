@@ -8,22 +8,23 @@ final notificationDailyProvider = StateNotifierProvider<NotificationTimeNotifier
 });
 
 class NotificationTimeNotifier extends StateNotifier<Map> {
-  NotificationTimeNotifier() : super({"hour": 9, "minute": 0}) {
-    _loadNotificationTime();
+  NotificationTimeNotifier() : super({"isNotification": false, "hour": 9, "minute": 0}) {
+    _loadDailyNotificationTime();
   }
 
-  Future<void> _loadNotificationTime() async {
+  Future<void> _loadDailyNotificationTime() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+      final isNotification = prefs.getBool('isNotification') ?? false;
       final hour = prefs.getInt('notiHour') ?? 9;
       final minute = prefs.getInt('notiMinute') ?? 0;
-      state = {"hour": hour, "minute": minute};
+      state = {"isNotification": isNotification, "hour": hour, "minute": minute};
     } catch (e) {
       print('알림 시간 불러오기 실패: $e');
     }
   }
 
-  Future<void> _saveNotificationTime() async {
+  Future<void> _saveDailyNotificationTime() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('notiHour', state['hour']);
@@ -33,12 +34,22 @@ class NotificationTimeNotifier extends StateNotifier<Map> {
     }
   }
 
-  Future<void> setNotificationTime(int hour, int minute) async {
+  Future<void> setDailyNotificationTime(int hour, int minute) async {
     try {
-      state = {"hour": hour, "minute": minute};
-      await _saveNotificationTime();
+      state = {"isNotification": true, "hour": hour, "minute": minute};
+      await _saveDailyNotificationTime();
     } catch (e) {
       print('알림 시간 설정 실패: $e');
+    }
+  }
+
+  Future<void> toggleDailyNotification(bool isNotification) async {
+    try {
+      state = {"isNotification": isNotification, "hour": state['hour'], "minute": state['minute']};
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isNotification', isNotification);
+    } catch (e) {
+      print('알림 설정 실패: $e');
     }
   }
 }
