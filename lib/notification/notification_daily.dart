@@ -1,19 +1,20 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 Future<void> dailyNotification({
-  required int idx,
-  required String title,
   required String content,
-  required int notiHour,
-  required int notiMinute,
 }) async {
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final prefs = await SharedPreferences.getInstance();
+
+  final hour = prefs.getInt('notiHour') ?? 9;
+  final minute = prefs.getInt('notiMinute') ?? 0;
 
   var android = AndroidNotificationDetails(
     'daily_todo_id',
-    title,
+    '오늘 해야 할 일을 확인하세요!',
     channelDescription: content,
     importance: Importance.max,
     priority: Priority.max,
@@ -24,10 +25,10 @@ Future<void> dailyNotification({
   var detail = NotificationDetails(android: android, iOS: ios);
 
   await flutterLocalNotificationsPlugin.zonedSchedule(
-    idx,
-    title,
+    0,
+    '오늘 해야 할 일을 확인하세요!',
     content,
-    _dailyTime(notiHour, notiMinute),
+    _dailyTime(hour, minute),
     detail,
     uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     matchDateTimeComponents: DateTimeComponents.time,

@@ -56,7 +56,7 @@ class NotificationDailySettingCard extends ConsumerWidget {
                     cancelNotification(0);
                   } else {
                     ref.read(notificationDailyProvider.notifier).setDailyNotificationTime(dailyNotificationTime['hour'], dailyNotificationTime['minute']);
-                    ref.read(todoProvider.notifier).enabledDailyNotificationSettings(dailyNotificationTime['hour'], dailyNotificationTime['minute']);
+                    ref.read(todoProvider.notifier).enabledDailyNotificationSettings();
                   }
                 },
               ),
@@ -72,7 +72,7 @@ class NotificationDailySettingCard extends ConsumerWidget {
                   onTimeSelected: (TimeOfDay? newTime) {
                     if (newTime != null) {
                       ref.read(notificationDailyProvider.notifier).setDailyNotificationTime(newTime.hour, newTime.minute);
-                      ref.read(todoProvider.notifier).enabledDailyNotificationSettings(newTime.hour, newTime.minute);
+                      ref.read(todoProvider.notifier).enabledDailyNotificationSettings();
                       GeneralSnackBar.showSnackBar(
                         context,
                         '이제 ${GeneralFormatTime.formatTime(DateTime(2000, 2, 10, newTime.hour, newTime.minute))}에 오늘 해야 할 일 알림이 울려요.',

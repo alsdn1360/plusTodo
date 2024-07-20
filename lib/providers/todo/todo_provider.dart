@@ -3,7 +3,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
-import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/notification/notification.dart';
 import 'package:plus_todo/notification/notification_daily.dart';
@@ -14,8 +13,6 @@ final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
 
 class TodoNotifier extends StateNotifier<List<Todo>> {
   late final Isar _isar;
-  int? dailyNotiHour;
-  int? dailyNotiMinute;
 
   TodoNotifier() : super([]) {
     _initIsar();
@@ -145,19 +142,12 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     }
   }
 
-  Future<void> enabledDailyNotificationSettings(int hour, int minute) async {
+  Future<void> enabledDailyNotificationSettings() async {
     final now = DateTime.now();
     final startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
     final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
     final todosForToday = await _isar.todos.filter().deadlineBetween(startOfDay, endOfDay).and().isDoneEqualTo(false).findAll();
-    final count = todosForToday.length;
 
-    await dailyNotification(
-      idx: 0,
-      title: '오늘 해야 할 일을 확인하세요!',
-      content: '$count개의 항목이 있어요.',
-      notiHour: hour,
-      notiMinute: minute,
-    );
+    await dailyNotification(content: '${todosForToday.length}개의 항목이 있어요.');
   }
 }

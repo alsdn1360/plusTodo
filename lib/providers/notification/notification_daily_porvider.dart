@@ -27,6 +27,7 @@ class NotificationTimeNotifier extends StateNotifier<Map> {
   Future<void> _saveDailyNotificationTime() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isNotification', state['isNotification']);
       await prefs.setInt('notiHour', state['hour']);
       await prefs.setInt('notiMinute', state['minute']);
     } catch (e) {
@@ -46,8 +47,7 @@ class NotificationTimeNotifier extends StateNotifier<Map> {
   Future<void> toggleDailyNotification(bool isNotification) async {
     try {
       state = {"isNotification": isNotification, "hour": state['hour'], "minute": state['minute']};
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isNotification', isNotification);
+      await _saveDailyNotificationTime();
     } catch (e) {
       print('알림 설정 실패: $e');
     }
