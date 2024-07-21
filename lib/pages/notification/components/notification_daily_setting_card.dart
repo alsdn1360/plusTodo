@@ -18,6 +18,7 @@ class NotificationDailySettingCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dailyNotificationTime = ref.watch(notificationDailyProvider);
+    final todoNotifier = ref.read(todoProvider.notifier);
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
@@ -50,13 +51,12 @@ class NotificationDailySettingCard extends ConsumerWidget {
               const Gap(defaultGapXL),
               CupertinoSwitch(
                 value: dailyNotificationTime['isNotification'],
-                onChanged: (value) {
-                  ref.read(notificationDailyProvider.notifier).toggleDailyNotification(value);
-                  if (value == false) {
-                    cancelNotification(0);
+                onChanged: (value) async {
+                  await ref.read(notificationDailyProvider.notifier).toggleDailyNotification(value);
+                  if (value) {
+                    await todoNotifier.enabledDailyNotificationSettings();
                   } else {
-                    ref.read(notificationDailyProvider.notifier).setDailyNotificationTime(dailyNotificationTime['hour'], dailyNotificationTime['minute']);
-                    ref.read(todoProvider.notifier).enabledDailyNotificationSettings();
+                    await cancelNotification(0);
                   }
                 },
               ),

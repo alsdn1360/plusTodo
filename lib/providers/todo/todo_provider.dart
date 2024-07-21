@@ -6,6 +6,7 @@ import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/notification/notification.dart';
 import 'package:plus_todo/notification/notification_daily.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier();
@@ -46,6 +47,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
           content: GeneralFormatTime.formatDeadline(todoData.deadline!),
           minutesBefore: todoData.notificationTime,
         );
+        _updateDailyNotificationSetting();
       }
     } catch (e) {
       print('Failed to add todo: $e');
@@ -79,6 +81,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       } else {
         await cancelNotification(updatedTodo.id);
       }
+      _updateDailyNotificationSetting();
     } catch (e) {
       print('Failed to update todo: $e');
     }
@@ -91,6 +94,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       });
       await cancelNotification(id);
       state = state.where((todo) => todo.id != id).toList();
+      _updateDailyNotificationSetting();
     } catch (e) {
       print('Failed to delete todo: $e');
     }
@@ -137,6 +141,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         }
         return todo;
       }).toList();
+      _updateDailyNotificationSetting();
     } catch (e) {
       print('Failed to toggle todo: $e');
     }
@@ -149,5 +154,13 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     final todosForToday = await _isar.todos.filter().deadlineBetween(startOfDay, endOfDay).and().isDoneEqualTo(false).findAll();
 
     await dailyNotification(content: '${todosForToday.length}개의 항목이 있어요.');
+  }
+
+  Future<void> _updateDailyNotificationSetting() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isNotificationEnabled = prefs.getBool('isNotification') ?? false;
+    if (isNotificationEnabled) {
+      await enabledDailyNotificationSettings();
+    }
   }
 }
