@@ -33,7 +33,7 @@ class HomeSummary extends ConsumerWidget {
           Text('남은 할 일 수', style: CustomTextStyle.title2),
           const Gap(defaultGapS / 2),
           const CustomDivider(),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapL),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
