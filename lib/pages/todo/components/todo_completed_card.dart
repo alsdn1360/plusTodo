@@ -62,9 +62,9 @@ class TodoCompletedCard extends ConsumerWidget {
               ),
             ],
           ),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           const CustomDivider(),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -114,7 +114,7 @@ class TodoCompletedCard extends ConsumerWidget {
                                 content: '긴급도: ${completedTodoList.urgency.toInt()}',
                                 isCompleted: true,
                               ),
-                              const Gap(defaultGapS / 2),
+                              const Gap(defaultGapS),
                               TodoUrgencyImportanceCard(
                                 color: gray.withOpacity(0.6),
                                 content: '중요도: ${completedTodoList.importance.toInt()}',

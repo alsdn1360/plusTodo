@@ -57,7 +57,7 @@ class _TodoInteractionSimpleNotificationButtonState extends State<TodoInteractio
         ),
         decoration: BoxDecoration(
           color: isSelected ? black : black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
+          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
         ),
         child: Center(
           child: Text(content, style: isSelected ? CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600) : CustomTextStyle.body3),

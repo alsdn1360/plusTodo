@@ -71,9 +71,9 @@ class TodoUncompletedCard extends ConsumerWidget {
           Text(title, style: CustomTextStyle.title2.copyWith(color: color)),
           const Gap(defaultGapS / 4),
           Text(subtitle, style: CustomTextStyle.caption1),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           const CustomDivider(),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -139,7 +139,7 @@ class TodoUncompletedCard extends ConsumerWidget {
                                 color: color,
                                 content: '긴급도: ${uncompletedTodoList.urgency.toInt()}',
                               ),
-                              const Gap(defaultGapS / 2),
+                              const Gap(defaultGapS),
                               TodoUrgencyImportanceCard(
                                 color: color,
                                 content: '중요도: ${uncompletedTodoList.importance.toInt()}',

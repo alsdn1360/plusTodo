@@ -31,9 +31,9 @@ class HomeSummary extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('남은 할 일 수', style: CustomTextStyle.title2),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           const CustomDivider(),
-          const Gap(defaultGapL),
+          const Gap(defaultGapS),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

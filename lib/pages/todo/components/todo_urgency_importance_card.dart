@@ -19,8 +19,8 @@ class TodoUrgencyImportanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: defaultPaddingL / 2,
-        vertical: defaultPaddingS / 4,
+        horizontal: defaultPaddingM / 2,
+        vertical: defaultPaddingL / 6,
       ),
       decoration: BoxDecoration(
         color: color.withOpacity(0.6),
@@ -33,7 +33,7 @@ class TodoUrgencyImportanceCard extends StatelessWidget {
                 color: white,
                 decoration: TextDecoration.lineThrough,
               )
-            : CustomTextStyle.body3.copyWith(color: white),
+            : CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600),
       ),
     );
   }

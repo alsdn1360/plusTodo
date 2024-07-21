@@ -60,7 +60,7 @@ class _TodoInteractionSimpleTimeButtonState extends State<TodoInteractionSimpleT
         ),
         decoration: BoxDecoration(
           color: isSelected ? black : black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
+          borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
         ),
         child: Center(
           child: Text(

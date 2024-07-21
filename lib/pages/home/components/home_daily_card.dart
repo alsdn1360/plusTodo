@@ -36,9 +36,9 @@ class TodoDailyCard extends ConsumerWidget {
           Text('오늘 해야 할 일', style: CustomTextStyle.title2),
           const Gap(defaultGapS / 4),
           Text('시간순으로 정렬된 오늘 해야 할 일', style: CustomTextStyle.caption1),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           const CustomDivider(),
-          const Gap(defaultGapS / 2),
+          const Gap(defaultGapS),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -104,7 +104,7 @@ class TodoDailyCard extends ConsumerWidget {
                                 color: urgencyImportanceColor(dailyTodoList.urgency, dailyTodoList.importance),
                                 content: '긴급도: ${dailyTodoList.urgency.toInt()}',
                               ),
-                              const Gap(defaultGapS / 2),
+                              const Gap(defaultGapS),
                               TodoUrgencyImportanceCard(
                                 color: urgencyImportanceColor(dailyTodoList.urgency, dailyTodoList.importance),
                                 content: '중요도: ${dailyTodoList.importance.toInt()}',
