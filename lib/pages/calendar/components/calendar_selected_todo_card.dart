@@ -117,7 +117,9 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
                                 '${GeneralFormatTime.formatTime(selectedDateTodoList.deadline!)}',
                                 style: selectedDateTodoList.isDone
                                     ? CustomTextStyle.body3.copyWith(color: gray, letterSpacing: 0.2, decoration: TextDecoration.lineThrough)
-                                    : CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2),
+                                    : isDeadlineSoon
+                                        ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2)
+                                        : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
                               ),
                               const Gap(defaultGapS),
                               Visibility(

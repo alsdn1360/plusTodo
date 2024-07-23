@@ -102,7 +102,7 @@ class HomeMatrixPainter extends CustomPainter {
       if (pointCount[pointKey] != null && pointCount[pointKey]! > 1) {
         textDuplicationPointPainter.text = TextSpan(text: '${pointCount[pointKey]}', style: CustomTextStyle.caption1);
         textDuplicationPointPainter.layout(minWidth: 0, maxWidth: size.width);
-        textDuplicationPointPainter.paint(canvas, Offset(x - 3, y - 20));
+        textDuplicationPointPainter.paint(canvas, Offset(x - 3, y - 22));
         pointCount.remove(pointKey);
       }
     }

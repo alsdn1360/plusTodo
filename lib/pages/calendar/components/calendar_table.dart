@@ -63,28 +63,28 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
         headerStyle: HeaderStyle(
           titleCentered: true,
           formatButtonVisible: false,
-          titleTextStyle: CustomTextStyle.title2,
+          titleTextStyle: CustomTextStyle.title3,
           headerPadding: EdgeInsets.zero,
-          leftChevronIcon: const Icon(Icons.chevron_left, color: gray),
-          rightChevronIcon: const Icon(Icons.chevron_right, color: gray),
+          leftChevronIcon: const Icon(Icons.chevron_left, color: gray, size: 20),
+          rightChevronIcon: const Icon(Icons.chevron_right, color: gray, size: 20),
         ),
         calendarBuilders: CalendarBuilders(
           dowBuilder: (context, day) {
             switch (day.weekday) {
               case 1:
-                return Center(child: Text('월', style: CustomTextStyle.body2));
+                return Center(child: Text('월', style: CustomTextStyle.body3));
               case 2:
-                return Center(child: Text('화', style: CustomTextStyle.body2));
+                return Center(child: Text('화', style: CustomTextStyle.body3));
               case 3:
-                return Center(child: Text('수', style: CustomTextStyle.body2));
+                return Center(child: Text('수', style: CustomTextStyle.body3));
               case 4:
-                return Center(child: Text('목', style: CustomTextStyle.body2));
+                return Center(child: Text('목', style: CustomTextStyle.body3));
               case 5:
-                return Center(child: Text('금', style: CustomTextStyle.body2));
+                return Center(child: Text('금', style: CustomTextStyle.body3));
               case 6:
-                return Center(child: Text('토', style: CustomTextStyle.body2.copyWith(color: blue)));
+                return Center(child: Text('토', style: CustomTextStyle.body3.copyWith(color: blue)));
               case 7:
-                return Center(child: Text('일', style: CustomTextStyle.body2.copyWith(color: red)));
+                return Center(child: Text('일', style: CustomTextStyle.body3.copyWith(color: red)));
             }
             return null;
           },
@@ -95,7 +95,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   day.day.toString(),
-                  style: CustomTextStyle.body2.copyWith(
+                  style: CustomTextStyle.body3.copyWith(
                     color: day.weekday == 6
                         ? blue
                         : day.weekday == 7
@@ -113,7 +113,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   day.day.toString(),
-                  style: CustomTextStyle.body2.copyWith(color: gray),
+                  style: CustomTextStyle.body3.copyWith(color: gray),
                 ),
               ),
             );
@@ -128,7 +128,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                     borderRadius: BorderRadius.circular(defaultBorderRadiusM / 2),
                     border: Border.all(
                       color: gray,
-                      width: 2,
+                      width: 1,
                     ),
                   ),
                 ),
@@ -138,12 +138,13 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                     alignment: Alignment.topCenter,
                     child: Text(
                       day.day.toString(),
-                      style: CustomTextStyle.body1.copyWith(
+                      style: CustomTextStyle.body3.copyWith(
                         color: day.weekday == 6
                             ? blue
                             : day.weekday == 7
                                 ? red
                                 : black,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -160,7 +161,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                     borderRadius: BorderRadius.circular(defaultBorderRadiusM / 2),
                     border: Border.all(
                       color: gray,
-                      width: 2,
+                      width: 1,
                     ),
                   ),
                 ),
@@ -170,12 +171,13 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                     alignment: Alignment.topCenter,
                     child: Text(
                       day.day.toString(),
-                      style: CustomTextStyle.body1.copyWith(
+                      style: CustomTextStyle.body3.copyWith(
                         color: day.weekday == 6
                             ? blue
                             : day.weekday == 7
                                 ? red
                                 : black,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -183,20 +185,16 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
               ],
             );
           },
-          singleMarkerBuilder: (context, day, events) {
-            return Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: defaultPaddingL / 2),
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(color: black.withOpacity(0.5), shape: BoxShape.circle),
-              ),
-            );
-          },
         ),
         calendarStyle: CalendarStyle(
           markersMaxCount: 1,
+          markersAutoAligned: false,
+          markerSize: 6,
+          markerMargin: const EdgeInsets.only(bottom: defaultPaddingL / 2),
+          markerDecoration: BoxDecoration(
+            color: black,
+            shape: BoxShape.circle,
+          ),
           rowDecoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: black.withOpacity(0.1), width: 1),
