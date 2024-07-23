@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plus_todo/pages/calendar/calendar_page.dart';
 import 'package:plus_todo/pages/home/home_page.dart';
+import 'package:plus_todo/pages/setting/setting_page.dart';
 import 'package:plus_todo/pages/todo/interaction/todo_interaction_create_page.dart';
 import 'package:plus_todo/pages/todo/todo_page.dart';
-import 'package:plus_todo/providers/navigatation/navigation_provider.dart';
+import 'package:plus_todo/providers/navigation/navigation_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 
 class MainPage extends ConsumerWidget {
@@ -17,8 +19,10 @@ class MainPage extends ConsumerWidget {
         index: selectedIndex,
         children: [
           const HomePage(),
+          const CalendarPage(),
           Container(),
           const TodoPage(),
+          const SettingPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -31,7 +35,7 @@ class MainPage extends ConsumerWidget {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: (index) {
-          if (index == 1) {
+          if (index == 2) {
             Navigator.of(context).push(
               PageRouteBuilder(
                 pageBuilder: (
@@ -61,15 +65,23 @@ class MainPage extends ConsumerWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded),
-            label: 'Home',
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month_rounded),
+            label: '할 일 캘린더',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_box_rounded),
-            label: 'Add Todo',
+            label: '새로운 할 일',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.view_list_rounded),
-            label: 'Todo List',
+            label: '할 일 목록',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_rounded),
+            label: '설정',
           ),
         ],
       ),

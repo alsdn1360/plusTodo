@@ -12,8 +12,8 @@ import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
 
-class NotificationDailySettingCard extends ConsumerWidget {
-  const NotificationDailySettingCard({super.key});
+class SettingDailyNotificationCard extends ConsumerWidget {
+  const SettingDailyNotificationCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

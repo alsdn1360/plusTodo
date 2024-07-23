@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:plus_todo/pages/home/components/home_index_card.dart';
 import 'package:plus_todo/pages/home/components/home_matrix.dart';
 import 'package:plus_todo/pages/home/components/home_card_index_popup_menu_button.dart';
-import 'package:plus_todo/pages/home/components/home_notification_setting_icon_button.dart';
 import 'package:plus_todo/pages/home/components/home_summary.dart';
 import 'package:plus_todo/providers/filtered/filtered_home_card_provider.dart';
 import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
@@ -38,10 +37,7 @@ class HomePage extends ConsumerWidget {
             ],
           ),
         ),
-        actions: const [
-          HomeNotificationSettingIconButton(),
-          HomeCardIndexPopupMenuButton(),
-        ],
+        actions: const [HomeCardIndexPopupMenuButton()],
       ),
       body: SafeArea(
         child: Padding(

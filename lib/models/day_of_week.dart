@@ -26,3 +26,22 @@ String dayOfWeekToKorean(DayOfWeek dayOfWeek) {
       return '일';
   }
 }
+
+String dayOfWeekToKoreanForCalendar(DayOfWeek dayOfWeek) {
+  switch (dayOfWeek) {
+    case DayOfWeek.monday:
+      return '월요일';
+    case DayOfWeek.tuesday:
+      return '화요일';
+    case DayOfWeek.wednesday:
+      return '수요일';
+    case DayOfWeek.thursday:
+      return '목요일';
+    case DayOfWeek.friday:
+      return '금요일';
+    case DayOfWeek.saturday:
+      return '토요일';
+    case DayOfWeek.sunday:
+      return '일요일';
+  }
+}

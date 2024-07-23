@@ -31,6 +31,7 @@ class TodoUrgencyImportanceCard extends StatelessWidget {
         style: (isCompleted)
             ? CustomTextStyle.body3.copyWith(
                 color: white,
+                fontWeight: FontWeight.w600,
                 decoration: TextDecoration.lineThrough,
               )
             : CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600),

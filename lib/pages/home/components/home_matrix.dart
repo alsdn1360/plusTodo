@@ -91,7 +91,7 @@ class HomeMatrixPainter extends CustomPainter {
         todoPointColor = green;
       }
 
-      canvas.drawCircle(Offset(x, y), 5, Paint()..color = todoPointColor);
+      canvas.drawCircle(Offset(x, y), 6, Paint()..color = todoPointColor);
 
       final textDuplicationPointPainter = TextPainter(
         textAlign: TextAlign.center,

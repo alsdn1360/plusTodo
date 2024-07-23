@@ -98,25 +98,25 @@ class TodoCompletedCard extends ConsumerWidget {
                         children: [
                           Text(
                             completedTodoList.title,
-                            style: CustomTextStyle.body2.copyWith(decoration: TextDecoration.lineThrough),
+                            style: CustomTextStyle.body2.copyWith(color: gray, decoration: TextDecoration.lineThrough),
                             softWrap: true,
                           ),
                           Text(
                             '${GeneralFormatTime.formatDate(completedTodoList.deadline!)} '
                             '${GeneralFormatTime.formatTime(completedTodoList.deadline!)}',
-                            style: CustomTextStyle.body3.copyWith(decoration: TextDecoration.lineThrough, letterSpacing: 0.2),
+                            style: CustomTextStyle.body3.copyWith(color: gray, decoration: TextDecoration.lineThrough, letterSpacing: 0.2),
                           ),
                           const Gap(defaultGapS / 4),
                           Row(
                             children: [
                               TodoUrgencyImportanceCard(
-                                color: gray.withOpacity(0.6),
+                                color: gray,
                                 content: '긴급도: ${completedTodoList.urgency.toInt()}',
                                 isCompleted: true,
                               ),
                               const Gap(defaultGapS),
                               TodoUrgencyImportanceCard(
-                                color: gray.withOpacity(0.6),
+                                color: gray,
                                 content: '중요도: ${completedTodoList.importance.toInt()}',
                                 isCompleted: true,
                               ),

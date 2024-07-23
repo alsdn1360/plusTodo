@@ -24,6 +24,7 @@ class TodoDetailNotificationTimeCard extends StatelessWidget {
         color: white,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(

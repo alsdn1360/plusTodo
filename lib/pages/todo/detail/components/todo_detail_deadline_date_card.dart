@@ -24,9 +24,9 @@ class TodoDetailDeadlineDateCard extends StatelessWidget {
         color: white,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           Text(
             GeneralFormatTime.formatDetailDate(todoData.deadline!),
             style: CustomTextStyle.body1,
@@ -36,7 +36,6 @@ class TodoDetailDeadlineDateCard extends StatelessWidget {
             '날짜',
             style: CustomTextStyle.body1.copyWith(color: gray),
           ),
-
         ],
       ),
     );

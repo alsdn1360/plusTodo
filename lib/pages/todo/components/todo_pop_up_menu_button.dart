@@ -14,7 +14,7 @@ class TodoPopUpMenuButton extends ConsumerWidget {
       elevation: 1,
       color: white,
       surfaceTintColor: white,
-      icon: const Icon(Icons.more_vert_rounded, color: black),
+      icon: const Icon(Icons.dashboard_customize_outlined, color: black),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
       ),
