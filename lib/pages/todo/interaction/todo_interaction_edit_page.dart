@@ -142,80 +142,72 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     ),
                   ),
                   const Gap(defaultGapM),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(defaultPaddingS),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                            color: white,
-                          ),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () => GeneralTimePicker.showTimePicker(
-                                  context: context,
-                                  initialTime: _newSelectedTime,
-                                  onTimeSelected: (TimeOfDay? selectedTime) {
-                                    setState(
-                                      () {
-                                        _newSelectedTime = selectedTime;
-                                        widget.todoData.deadline = DateTime(_newSelectedDate!.year, _newSelectedDate!.month, _newSelectedDate!.day,
-                                            _newSelectedTime!.hour, _newSelectedTime!.minute);
-                                      },
-                                    );
-                                  },
-                                ),
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    GeneralFormatTime.formatInteractionTime(_newSelectedTime!),
-                                    style: CustomTextStyle.body1,
-                                  ),
-                                ),
-                              ),
-                              const Gap(defaultGapS),
-                              TodoInteractionSimpleTimeButton(
-                                onTimeSelected: (selectedTime) {
-                                  setState(() => _newSelectedTime = selectedTime);
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: white,
+                    ),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () => GeneralTimePicker.showTimePicker(
+                            context: context,
+                            initialTime: _newSelectedTime,
+                            onTimeSelected: (TimeOfDay? selectedTime) {
+                              setState(
+                                () {
+                                  _newSelectedTime = selectedTime;
+                                  widget.todoData.deadline = DateTime(_newSelectedDate!.year, _newSelectedDate!.month, _newSelectedDate!.day,
+                                      _newSelectedTime!.hour, _newSelectedTime!.minute);
                                 },
-                              ),
-                            ],
+                              );
+                            },
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              GeneralFormatTime.formatInteractionTime(_newSelectedTime!),
+                              style: CustomTextStyle.body1,
+                            ),
                           ),
                         ),
-                      ),
-                      const Gap(defaultGapM),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(defaultPaddingS),
+                        const Gap(defaultGapS),
+                        TodoInteractionSimpleTimeButton(
+                          onTimeSelected: (selectedTime) {
+                            setState(() => _newSelectedTime = selectedTime);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Gap(defaultGapM),
+                  Container(
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  GeneralFormatTime.formatNotificationTime(_newNotificationTime!),
-                                  style: CustomTextStyle.body1,
-                                ),
-                              ),
-                              const Gap(defaultGapS),
-                              TodoInteractionSimpleNotificationButton(
-                                onNotificationTimeSelected: (selectedNotificationTime) {
-                                  setState(() => _newNotificationTime = selectedNotificationTime);
-                                },
-                              ),
-                            ],
+                          child: Text(
+                            GeneralFormatTime.formatNotificationTime(_newNotificationTime!),
+                            style: CustomTextStyle.body1,
                           ),
                         ),
-                      ),
-                    ],
+                        const Gap(defaultGapS),
+                        TodoInteractionSimpleNotificationButton(
+                          onNotificationTimeSelected: (selectedNotificationTime) {
+                            setState(() => _newNotificationTime = selectedNotificationTime);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   const Gap(defaultGapM),
                   TodoInteractionUrgencyImportanceCard(

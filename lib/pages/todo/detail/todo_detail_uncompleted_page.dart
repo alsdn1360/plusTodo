@@ -72,7 +72,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                         if (_todoData.content.isNotEmpty)
                           Column(
                             children: [
-                              const Gap(defaultGapM),
+                              const Gap(defaultGapS),
                               Text(
                                 _todoData.content,
                                 style: CustomTextStyle.body2,
@@ -91,22 +91,14 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                   child: TodoDetailDeadlineDateCard(todoData: _todoData),
                 ),
                 const Gap(defaultGapM),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => _pushEditPage(context, _todoData),
-                        child: TodoDetailDeadlineTimeCard(todoData: _todoData),
-                      ),
-                    ),
-                    const Gap(defaultGapM),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => _pushEditPage(context, _todoData),
-                        child: TodoDetailNotificationTimeCard(todoData: _todoData),
-                      ),
-                    ),
-                  ],
+                InkWell(
+                  onTap: () => _pushEditPage(context, _todoData),
+                  child: TodoDetailDeadlineTimeCard(todoData: _todoData),
+                ),
+                const Gap(defaultGapM),
+                InkWell(
+                  onTap: () => _pushEditPage(context, _todoData),
+                  child: TodoDetailNotificationTimeCard(todoData: _todoData),
                 ),
                 const Gap(defaultGapM),
                 InkWell(
@@ -143,7 +135,7 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                       onTap: () => _deleteUncompletedTodo(context, widget.todoData.id),
                     ),
                   ),
-                  icon: Icons.delete_outlined,
+                  icon: Icons.delete_forever_outlined,
                   content: '삭제',
                 ),
               ],

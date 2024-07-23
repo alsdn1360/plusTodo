@@ -60,13 +60,13 @@ class _TodoInteractionSimpleDateButtonState extends State<TodoInteractionSimpleD
           vertical: defaultPaddingL / 6,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? black : black.withOpacity(0.1),
+          color: isSelected ? black : background,
           borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
         ),
         child: Center(
           child: Text(
             content,
-            style: isSelected ? CustomTextStyle.body3.copyWith(color: Colors.white, fontWeight: FontWeight.w600) : CustomTextStyle.body3,
+            style: isSelected ? CustomTextStyle.body3.copyWith(color: white, fontWeight: FontWeight.w600) : CustomTextStyle.body3.copyWith(color: gray),
           ),
         ),
       ),

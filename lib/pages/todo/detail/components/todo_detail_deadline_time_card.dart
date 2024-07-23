@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -22,9 +23,19 @@ class TodoDetailDeadlineTimeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
         color: white,
       ),
-      child: Text(
-        GeneralFormatTime.formatTime(todoData.deadline!),
-        style: CustomTextStyle.body1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            GeneralFormatTime.formatTime(todoData.deadline!),
+            style: CustomTextStyle.body1,
+          ),
+          const Gap(defaultGapS),
+          Text(
+            '시간',
+            style: CustomTextStyle.body1.copyWith(color: gray),
+          ),
+        ],
       ),
     );
   }

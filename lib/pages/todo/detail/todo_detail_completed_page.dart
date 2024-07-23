@@ -56,7 +56,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                       if (todoData.content.isNotEmpty)
                         Column(
                           children: [
-                            const Gap(defaultGapM),
+                            const Gap(defaultGapS),
                             Text(
                               todoData.content,
                               style: CustomTextStyle.body2,
@@ -71,13 +71,9 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                 const Gap(defaultGapM),
                 TodoDetailDeadlineDateCard(todoData: todoData),
                 const Gap(defaultGapM),
-                Row(
-                  children: [
-                    Expanded(child: TodoDetailDeadlineTimeCard(todoData: todoData)),
-                    const Gap(defaultGapM),
-                    Expanded(child: TodoDetailNotificationTimeCard(todoData: todoData)),
-                  ],
-                ),
+                TodoDetailDeadlineTimeCard(todoData: todoData),
+                const Gap(defaultGapM),
+                TodoDetailNotificationTimeCard(todoData: todoData),
                 const Gap(defaultGapM),
                 TodoDetailUrgencyImportanceCard(todoData: todoData),
               ],
@@ -105,7 +101,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                       onTap: () => _deleteCompletedTodo(context, ref, todoData.id),
                     ),
                   ),
-                  icon: Icons.delete_outlined,
+                  icon: Icons.delete_forever_outlined,
                   content: '삭제',
                 ),
               ],

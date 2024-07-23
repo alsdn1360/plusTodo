@@ -41,7 +41,7 @@ class CustomDialog extends StatelessWidget {
               title,
               style: CustomTextStyle.body2,
             ),
-            const Gap(defaultGapL),
+            const Gap(defaultGapXL),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

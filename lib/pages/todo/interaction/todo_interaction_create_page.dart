@@ -138,85 +138,77 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     ),
                   ),
                   const Gap(defaultGapM),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(defaultPaddingS),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                            color: white,
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      color: white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => GeneralTimePicker.showTimePicker(
+                            context: context,
+                            initialTime: GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
+                            onTimeSelected: (TimeOfDay? selectedTime) {
+                              if (selectedTime == null) {
+                                setState(
+                                  () => _selectedTime = GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
+                                );
+                              } else {
+                                setState(() => _selectedTime = selectedTime);
+                              }
+                            },
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                onTap: () => GeneralTimePicker.showTimePicker(
-                                  context: context,
-                                  initialTime: GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
-                                  onTimeSelected: (TimeOfDay? selectedTime) {
-                                    if (selectedTime == null) {
-                                      setState(
-                                        () => _selectedTime = GeneralAdjustedInitialTime.adjustedInitialTime(_selectedTime),
-                                      );
-                                    } else {
-                                      setState(() => _selectedTime = selectedTime);
-                                    }
-                                  },
-                                ),
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    GeneralFormatTime.formatInteractionTime(_selectedTime),
-                                    style: CustomTextStyle.body1.copyWith(
-                                      color: (_selectedTime == null) ? gray : black,
-                                    ),
-                                  ),
-                                ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              GeneralFormatTime.formatInteractionTime(_selectedTime),
+                              style: CustomTextStyle.body1.copyWith(
+                                color: (_selectedTime == null) ? gray : black,
                               ),
-                              const Gap(defaultGapS),
-                              TodoInteractionSimpleTimeButton(
-                                onTimeSelected: (selectedTime) {
-                                  setState(() => _selectedTime = selectedTime);
-                                },
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                      const Gap(defaultGapM),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(defaultPaddingS),
+                        const Gap(defaultGapS),
+                        TodoInteractionSimpleTimeButton(
+                          onTimeSelected: (selectedTime) {
+                            setState(() => _selectedTime = selectedTime);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Gap(defaultGapM),
+                  Container(
+                    padding: const EdgeInsets.all(defaultPaddingS),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  (_selectedNotificationTime == null) ? '알림 시간' : GeneralFormatTime.formatNotificationTime(_selectedNotificationTime!),
-                                  style: CustomTextStyle.body1.copyWith(
-                                    color: (_selectedNotificationTime == null) ? gray : black,
-                                  ),
-                                ),
-                              ),
-                              const Gap(defaultGapS),
-                              TodoInteractionSimpleNotificationButton(
-                                onNotificationTimeSelected: (selectedNotificationTime) {
-                                  setState(() => _selectedNotificationTime = selectedNotificationTime);
-                                },
-                              ),
-                            ],
+                          child: Text(
+                            (_selectedNotificationTime == null) ? '알림 시간' : GeneralFormatTime.formatNotificationTime(_selectedNotificationTime!),
+                            style: CustomTextStyle.body1.copyWith(
+                              color: (_selectedNotificationTime == null) ? gray : black,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        const Gap(defaultGapS),
+                        TodoInteractionSimpleNotificationButton(
+                          onNotificationTimeSelected: (selectedNotificationTime) {
+                            setState(() => _selectedNotificationTime = selectedNotificationTime);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   const Gap(defaultGapM),
                   TodoInteractionUrgencyImportanceCard(
