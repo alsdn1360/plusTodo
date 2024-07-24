@@ -54,12 +54,14 @@ class SettingDailyNotificationCard extends ConsumerWidget {
                 activeColor: black,
                 thumbColor: white,
                 trackColor: background,
-                onChanged: (value) async {
-                  await ref.read(notificationDailyProvider.notifier).toggleDailyNotification(value);
+                onChanged: (value) {
+                  ref.read(notificationDailyProvider.notifier).toggleDailyNotification(value);
                   if (value) {
-                    await todoNotifier.enabledDailyNotificationSettings();
+                    todoNotifier.enabledDailyNotificationSettings();
+                    GeneralSnackBar.showSnackBar(context, '이제 오늘 해야 할 일 알림이 울려요.');
                   } else {
-                    await cancelNotification(0);
+                    cancelNotification(0);
+                    GeneralSnackBar.showSnackBar(context, '이제 오늘 해야 할 일 알림이 안 울려요.');
                   }
                 },
               ),
@@ -76,10 +78,6 @@ class SettingDailyNotificationCard extends ConsumerWidget {
                     if (newTime != null) {
                       ref.read(notificationDailyProvider.notifier).setDailyNotificationTime(newTime.hour, newTime.minute);
                       ref.read(todoProvider.notifier).enabledDailyNotificationSettings();
-                      GeneralSnackBar.showSnackBar(
-                        context,
-                        '이제 ${GeneralFormatTime.formatTime(DateTime(2000, 2, 10, newTime.hour, newTime.minute))}에 오늘 해야 할 일 알림이 울려요.',
-                      );
                     }
                   },
                 );

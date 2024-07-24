@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
@@ -35,11 +36,12 @@ class TodoCompletedCard extends ConsumerWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                '완료된 할 일',
-                style: CustomTextStyle.title2,
+              Expanded(
+                child: Text(
+                  '완료된 할 일',
+                  style: CustomTextStyle.title2,
+                ),
               ),
-              const Spacer(),
               Text(
                 '${completedTodoData.length}개,',
                 style: (completedTodoData.isEmpty) ? CustomTextStyle.caption1.copyWith(color: gray) : CustomTextStyle.caption1,

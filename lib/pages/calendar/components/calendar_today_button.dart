@@ -26,7 +26,7 @@ class CalendarTodayButton extends ConsumerWidget {
         child: Center(
           child: Text(
             DateTime.now().day.toString(),
-            style: CustomTextStyle.body3.copyWith(
+            style: CustomTextStyle.caption1.copyWith(
               color: DateTime.now().weekday == DateTime.sunday
                   ? red
                   : DateTime.now().weekday == DateTime.saturday

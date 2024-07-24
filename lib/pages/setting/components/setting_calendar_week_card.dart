@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/providers/calendar/calendar_week_setting.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
@@ -46,9 +47,17 @@ class SettingCalendarWeekCard extends ConsumerWidget {
               ),
               const Gap(defaultGapXL),
               InkWell(
-                onTap: () => (startingWeekday == 1)
-                    ? ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(7)
-                    : ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(1),
+                onTap: () {
+                  (startingWeekday == 1)
+                      ? {
+                          ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(7),
+                          GeneralSnackBar.showSnackBar(context, '이제 캘린더가 일요일부터 시작돼요.'),
+                        }
+                      : {
+                          ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(1),
+                          GeneralSnackBar.showSnackBar(context, '이제 캘린더가 월요일부터 시작돼요.'),
+                        };
+                },
                 child: Text(
                   (startingWeekday == 1) ? '월요일' : '일요일',
                   style: CustomTextStyle.title3,
@@ -80,7 +89,17 @@ class SettingCalendarWeekCard extends ConsumerWidget {
               ),
               const Gap(defaultGapXL),
               InkWell(
-                onTap: () => ref.read(calendarWeekSettingProvider.notifier).toggleSaturdayHighlight(!saturdayHighlight),
+                onTap: () {
+                  (saturdayHighlight)
+                      ? {
+                          ref.read(calendarWeekSettingProvider.notifier).toggleSaturdayHighlight(false),
+                          GeneralSnackBar.showSnackBar(context, '이제 토요일이 강조되지 않아요.'),
+                        }
+                      : {
+                          ref.read(calendarWeekSettingProvider.notifier).toggleSaturdayHighlight(true),
+                          GeneralSnackBar.showSnackBar(context, '이제 토요일이 강조되어 보여요.'),
+                        };
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM / 2, vertical: defaultPaddingL / 4),
                   decoration: BoxDecoration(
@@ -97,7 +116,17 @@ class SettingCalendarWeekCard extends ConsumerWidget {
               ),
               const Gap(defaultGapS),
               InkWell(
-                onTap: () => ref.read(calendarWeekSettingProvider.notifier).toggleSundayHighlight(!sundayHighlight),
+                onTap: () {
+                  (sundayHighlight)
+                      ? {
+                          ref.read(calendarWeekSettingProvider.notifier).toggleSundayHighlight(false),
+                          GeneralSnackBar.showSnackBar(context, '이제 일요일이 강조되지 않아요.'),
+                        }
+                      : {
+                          ref.read(calendarWeekSettingProvider.notifier).toggleSundayHighlight(true),
+                          GeneralSnackBar.showSnackBar(context, '이제 일요일이 강조되어 보여요.'),
+                        };
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM / 2, vertical: defaultPaddingL / 4),
                   decoration: BoxDecoration(

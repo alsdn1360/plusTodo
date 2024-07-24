@@ -9,8 +9,8 @@ class CalendarWeekSettingNotifier extends StateNotifier<Map> {
   CalendarWeekSettingNotifier()
       : super({
           "startingWeekday": 7,
-          "saturdayHighlight": false,
-          "sundayHighlight": false,
+          "saturdayHighlight": true,
+          "sundayHighlight": true,
         }) {
     _loadWeekSetting();
   }
@@ -19,8 +19,8 @@ class CalendarWeekSettingNotifier extends StateNotifier<Map> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final startingWeekday = prefs.getInt('startingWeekday') ?? 7;
-      final saturdayHighlight = prefs.getBool('saturdayHighlight') ?? false;
-      final sundayHighlight = prefs.getBool('sundayHighlight') ?? false;
+      final saturdayHighlight = prefs.getBool('saturdayHighlight') ?? true;
+      final sundayHighlight = prefs.getBool('sundayHighlight') ?? true;
       state = {
         "startingWeekday": startingWeekday,
         "saturdayHighlight": saturdayHighlight,

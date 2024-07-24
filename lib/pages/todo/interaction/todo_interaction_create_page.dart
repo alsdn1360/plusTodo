@@ -20,7 +20,12 @@ import 'package:plus_todo/themes/custom_font.dart';
 import 'package:plus_todo/widgets/custom_text_field.dart';
 
 class TodoInteractionCreatePage extends ConsumerStatefulWidget {
-  const TodoInteractionCreatePage({super.key});
+  final DateTime? initialSelectedDate;
+
+  const TodoInteractionCreatePage({
+    super.key,
+    this.initialSelectedDate,
+  });
 
   @override
   ConsumerState<TodoInteractionCreatePage> createState() => _TodoInteractionCreatePageState();
@@ -41,6 +46,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
   void initState() {
     super.initState();
     _focusNode.requestFocus();
+    _selectedDate = widget.initialSelectedDate ?? _selectedDate;
   }
 
   @override

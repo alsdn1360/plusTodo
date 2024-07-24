@@ -9,6 +9,7 @@ import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
+import 'package:plus_todo/pages/todo/interaction/todo_interaction_create_page.dart';
 import 'package:plus_todo/providers/calendar/calendar_week_setting.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/providers/calendar/calendar_date_provider.dart';
@@ -58,12 +59,25 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
               const Gap(defaultGapM / 2),
               Text(
                 dayOfWeekToKoreanForCalendar(DayOfWeek.values[selectedDate.weekday - 1]),
-                style: CustomTextStyle.title2.copyWith(
+                style: CustomTextStyle.title3.copyWith(
                   color: selectedDate.weekday == DateTime.saturday && saturdayHighlight
                       ? blue
                       : selectedDate.weekday == DateTime.sunday && sundayHighlight
                           ? red
                           : black,
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => TodoInteractionCreatePage(initialSelectedDate: selectedDate),
+                  ),
+                ),
+                child: Text(
+                  '새로운 할 일',
+                  style: CustomTextStyle.caption1,
                 ),
               ),
             ],

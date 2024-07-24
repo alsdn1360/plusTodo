@@ -7,6 +7,7 @@ import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
+import 'package:plus_todo/pages/todo/interaction/todo_interaction_create_page.dart';
 import 'package:plus_todo/providers/todo/todo_daily_provider.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -32,9 +33,25 @@ class TodoDailyCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('오늘 해야 할 일', style: CustomTextStyle.title2),
-          const Gap(defaultGapS / 4),
-          Text('시간순으로 정렬된 오늘 해야 할 일', style: CustomTextStyle.caption1),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('오늘 해야 할 일', style: CustomTextStyle.title2),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => TodoInteractionCreatePage(initialSelectedDate: DateTime.now()),
+                  ),
+                ),
+                child: Text(
+                  '새로운 오늘 할 일',
+                  style: CustomTextStyle.caption1,
+                ),
+              ),
+            ],
+          ),
           const Gap(defaultGapS),
           const CustomDivider(),
           const Gap(defaultGapS),
