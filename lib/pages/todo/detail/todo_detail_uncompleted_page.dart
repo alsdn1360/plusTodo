@@ -53,6 +53,11 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
               children: [
                 InkWell(
                   onTap: () => _pushEditPage(context, _todoData),
+                  child: TodoDetailUrgencyImportanceCard(todoData: _todoData),
+                ),
+                const Gap(defaultGapM),
+                InkWell(
+                  onTap: () => _pushEditPage(context, _todoData),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPaddingS),
@@ -99,11 +104,6 @@ class _TodoDetailUncompletedPageState extends ConsumerState<TodoDetailUncomplete
                 InkWell(
                   onTap: () => _pushEditPage(context, _todoData),
                   child: TodoDetailNotificationTimeCard(todoData: _todoData),
-                ),
-                const Gap(defaultGapM),
-                InkWell(
-                  onTap: () => _pushEditPage(context, _todoData),
-                  child: TodoDetailUrgencyImportanceCard(todoData: _todoData),
                 ),
               ],
             ),

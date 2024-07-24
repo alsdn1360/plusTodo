@@ -191,7 +191,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
           markersAutoAligned: false,
           markerSize: 6,
           markerMargin: const EdgeInsets.only(bottom: defaultPaddingL / 2),
-          markerDecoration: BoxDecoration(
+          markerDecoration: const BoxDecoration(
             color: black,
             shape: BoxShape.circle,
           ),

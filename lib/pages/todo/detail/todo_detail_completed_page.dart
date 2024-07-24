@@ -37,6 +37,8 @@ class TodoDetailCompletedPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                TodoDetailUrgencyImportanceCard(todoData: todoData),
+                const Gap(defaultGapM),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(defaultPaddingS),
@@ -74,8 +76,7 @@ class TodoDetailCompletedPage extends ConsumerWidget {
                 TodoDetailDeadlineTimeCard(todoData: todoData),
                 const Gap(defaultGapM),
                 TodoDetailNotificationTimeCard(todoData: todoData),
-                const Gap(defaultGapM),
-                TodoDetailUrgencyImportanceCard(todoData: todoData),
+
               ],
             ),
           ),

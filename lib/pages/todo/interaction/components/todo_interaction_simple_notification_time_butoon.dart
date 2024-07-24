@@ -6,10 +6,12 @@ import 'package:plus_todo/themes/custom_font.dart';
 
 class TodoInteractionSimpleNotificationButton extends StatefulWidget {
   final Function(int) onNotificationTimeSelected;
+  final int? initialNotificationTime;
 
   const TodoInteractionSimpleNotificationButton({
     super.key,
     required this.onNotificationTimeSelected,
+    this.initialNotificationTime,
   });
 
   @override
@@ -18,6 +20,12 @@ class TodoInteractionSimpleNotificationButton extends StatefulWidget {
 
 class _TodoInteractionSimpleNotificationButtonState extends State<TodoInteractionSimpleNotificationButton> {
   int? selectedNotificationTime;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedNotificationTime = widget.initialNotificationTime;
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -26,13 +26,7 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-        color: (todoData.urgency >= 5 && todoData.importance >= 5)
-            ? red.withOpacity(0.1)
-            : (todoData.urgency >= 5 && todoData.importance < 5)
-                ? blue.withOpacity(0.1)
-                : (todoData.urgency < 5 && todoData.importance >= 5)
-                    ? orange.withOpacity(0.1)
-                    : green.withOpacity(0.1),
+        color: cardColor(todoData.urgency, todoData.importance, 0.1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,22 +76,42 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
             ),
           ),
           const Gap(defaultGapS),
-          Text(
-            '긴급도: ${todoData.urgency.toInt()}',
-            style: CustomTextStyle.body1,
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: defaultPaddingM / 2,
+              vertical: defaultPaddingL / 6,
+            ),
+            decoration: BoxDecoration(
+              color: cardColor(todoData.urgency, todoData.importance, 0.6),
+              borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
+            ),
+            child: Text(
+              '긴급도: ${todoData.urgency.toInt()}',
+              style: CustomTextStyle.body1.copyWith(color: white),
+            ),
           ),
           CustomSlider(
             value: todoData.urgency,
-            color: sliderColor(todoData.urgency, todoData.importance),
+            color: cardColor(todoData.urgency, todoData.importance, 1),
             isEnabled: false,
           ),
-          Text(
-            '중요도: ${todoData.importance.toInt()}',
-            style: CustomTextStyle.body1,
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: defaultPaddingM / 2,
+              vertical: defaultPaddingL / 6,
+            ),
+            decoration: BoxDecoration(
+              color: cardColor(todoData.urgency, todoData.importance, 0.6),
+              borderRadius: BorderRadius.circular(defaultBorderRadiusL / 3),
+            ),
+            child: Text(
+              '중요도: ${todoData.importance.toInt()}',
+              style: CustomTextStyle.body1.copyWith(color: white),
+            ),
           ),
           CustomSlider(
             value: todoData.importance,
-            color: sliderColor(todoData.urgency, todoData.importance),
+            color: cardColor(todoData.urgency, todoData.importance, 1),
             isEnabled: false,
           ),
         ],
@@ -105,15 +119,15 @@ class TodoDetailUrgencyImportanceCard extends StatelessWidget {
     );
   }
 
-  Color sliderColor(double todoDataUrgency, double todoDataImportance) {
-    if (todoDataUrgency >= 5 && todoDataImportance >= 5) {
-      return red;
-    } else if (todoDataUrgency >= 5 && todoDataImportance < 5) {
-      return blue;
-    } else if (todoDataUrgency < 5 && todoDataImportance >= 5) {
-      return orange;
+  Color cardColor(double urgency, double importance, double opacity) {
+    if (urgency >= 5 && importance >= 5) {
+      return red.withOpacity(opacity);
+    } else if (urgency >= 5 && importance < 5) {
+      return blue.withOpacity(opacity);
+    } else if (urgency < 5 && importance >= 5) {
+      return orange.withOpacity(opacity);
     } else {
-      return green;
+      return green.withOpacity(opacity);
     }
   }
 }

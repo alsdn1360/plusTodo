@@ -68,6 +68,13 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  TodoInteractionUrgencyImportanceCard(
+                    urgency: _urgency,
+                    importance: _importance,
+                    onUrgencyChanged: (newValue) => setState(() => _urgency = newValue),
+                    onImportanceChanged: (newValue) => setState(() => _importance = newValue),
+                  ),
+                  const Gap(defaultGapM),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(defaultPaddingS),
@@ -210,13 +217,6 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                       ],
                     ),
                   ),
-                  const Gap(defaultGapM),
-                  TodoInteractionUrgencyImportanceCard(
-                    urgency: _urgency,
-                    importance: _importance,
-                    onUrgencyChanged: (newValue) => setState(() => _urgency = newValue),
-                    onImportanceChanged: (newValue) => setState(() => _importance = newValue),
-                  ),
                 ],
               ),
             ),
@@ -248,7 +248,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
       );
       ref.read(todoProvider.notifier).createTodo(addTodo);
       Navigator.pop(context);
-      GeneralSnackBar.showSnackBar(context, '할 일이 추가되었습니다.');
+      GeneralSnackBar.showSnackBar(context, '할 일이 추가되었어요.');
     }
   }
 }

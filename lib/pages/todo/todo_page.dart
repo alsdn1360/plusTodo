@@ -3,13 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_completed_card.dart';
-import 'package:plus_todo/pages/todo/components/todo_pop_up_menu_button.dart';
+import 'package:plus_todo/pages/todo/components/todo_filter_text_button.dart';
 import 'package:plus_todo/pages/todo/components/todo_uncompleted_card.dart';
 import 'package:plus_todo/providers/filtered/filtered_show_completed_provider.dart';
 import 'package:plus_todo/providers/filtered/filtered_sorting_index_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
-import 'package:plus_todo/themes/custom_font.dart';
 
 class TodoPage extends ConsumerWidget {
   const TodoPage({super.key});
@@ -20,10 +19,7 @@ class TodoPage extends ConsumerWidget {
     final sortingIndex = ref.watch(filteredSortingIndexProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('할 일 목록'),
-        actions: const [TodoPopUpMenuButton()],
-      ),
+      appBar: AppBar(title: const Text('할 일 목록')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM),
@@ -31,22 +27,7 @@ class TodoPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () => (sortingIndex == 1)
-                      ? ref.read(filteredSortingIndexProvider.notifier).toggleFilteredIndex(2)
-                      : ref.read(filteredSortingIndexProvider.notifier).toggleFilteredIndex(1),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        (sortingIndex == 1) ? '긴급도 우선 정렬' : '중요도 우선 정렬',
-                        style: CustomTextStyle.caption1,
-                      ),
-                      const Gap(defaultGapS),
-                      const Icon(Icons.swap_vert_rounded, color: black, size: 16),
-                    ],
-                  ),
-                ),
+                const TodoFilterTextButton(),
                 const Gap(defaultGapM),
                 TodoUncompletedCard(
                   title: 'Do',
