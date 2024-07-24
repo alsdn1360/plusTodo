@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/models/todo.dart';
-import 'package:plus_todo/providers/todo/todo_calendar_date_provider.dart';
+import 'package:plus_todo/providers/calendar/calendar_week_setting.dart';
+import 'package:plus_todo/providers/calendar/calendar_date_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -22,7 +23,10 @@ class CalendarTable extends ConsumerStatefulWidget {
 class _CalendarTableState extends ConsumerState<CalendarTable> {
   @override
   Widget build(BuildContext context) {
-    final DateTime todoFocusedDate = ref.watch(todoFocusedDateProvider);
+    final DateTime todoFocusedDate = ref.watch(calendarFocusedDateProvider);
+    final startingWeekday = ref.watch(calendarWeekSettingProvider.select((value) => value['startingWeekday']));
+    final saturdayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['saturdayHighlight']));
+    final sundayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['sundayHighlight']));
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
@@ -35,6 +39,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
         focusedDay: todoFocusedDate,
         firstDay: DateTime.utc(2000, 2, 10),
         lastDay: DateTime.utc(2099, 12, 31),
+        startingDayOfWeek: startingWeekday == 1 ? StartingDayOfWeek.monday : StartingDayOfWeek.sunday,
         daysOfWeekHeight: MediaQuery.of(context).size.height / 28,
         rowHeight: MediaQuery.of(context).size.height / 14,
         availableGestures: AvailableGestures.horizontalSwipe,
@@ -49,12 +54,12 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
         },
         onDaySelected: (selectedDay, focusedDay) {
           setState(() {
-            ref.read(todoFocusedDateProvider.notifier).state = focusedDay;
-            ref.read(todoSelectedDateProvider.notifier).state = selectedDay;
+            ref.read(calendarFocusedDateProvider.notifier).state = focusedDay;
+            ref.read(calendarSelectedDateProvider.notifier).state = selectedDay;
           });
         },
         selectedDayPredicate: (DateTime day) {
-          DateTime selectedDay = ref.watch(todoSelectedDateProvider);
+          DateTime selectedDay = ref.watch(calendarSelectedDateProvider);
           DateTime now = DateTime.now();
           DateTime today = DateTime(now.year, now.month, now.day);
 
@@ -82,9 +87,9 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
               case 5:
                 return Center(child: Text('금', style: CustomTextStyle.body3));
               case 6:
-                return Center(child: Text('토', style: CustomTextStyle.body3.copyWith(color: blue)));
+                return Center(child: Text('토', style: CustomTextStyle.body3.copyWith(color: saturdayHighlight ? blue : gray)));
               case 7:
-                return Center(child: Text('일', style: CustomTextStyle.body3.copyWith(color: red)));
+                return Center(child: Text('일', style: CustomTextStyle.body3.copyWith(color: sundayHighlight ? red : gray)));
             }
             return null;
           },
@@ -96,11 +101,13 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                 child: Text(
                   day.day.toString(),
                   style: CustomTextStyle.body3.copyWith(
-                    color: day.weekday == 6
+                    color: day.weekday == 6 && saturdayHighlight
                         ? blue
-                        : day.weekday == 7
+                        : day.weekday == 7 && sundayHighlight
                             ? red
-                            : black,
+                            : day.weekday == 6 || day.weekday == 7
+                                ? gray
+                                : black,
                   ),
                 ),
               ),
@@ -139,12 +146,13 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                     child: Text(
                       day.day.toString(),
                       style: CustomTextStyle.body3.copyWith(
-                        color: day.weekday == 6
+                        color: day.weekday == 6 && saturdayHighlight
                             ? blue
-                            : day.weekday == 7
+                            : day.weekday == 7 && sundayHighlight
                                 ? red
-                                : black,
-                        fontWeight: FontWeight.w600,
+                                : day.weekday == 6 || day.weekday == 7
+                                    ? gray
+                                    : black,
                       ),
                     ),
                   ),
@@ -172,12 +180,13 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
                     child: Text(
                       day.day.toString(),
                       style: CustomTextStyle.body3.copyWith(
-                        color: day.weekday == 6
+                        color: day.weekday == 6 && saturdayHighlight
                             ? blue
-                            : day.weekday == 7
+                            : day.weekday == 7 && sundayHighlight
                                 ? red
-                                : black,
-                        fontWeight: FontWeight.w600,
+                                : day.weekday == 6 || day.weekday == 7
+                                    ? gray
+                                    : black,
                       ),
                     ),
                   ),

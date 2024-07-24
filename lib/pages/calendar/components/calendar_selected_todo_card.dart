@@ -9,8 +9,9 @@ import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/components/todo_urgency_importance_card.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_completed_page.dart';
 import 'package:plus_todo/pages/todo/detail/todo_detail_uncompleted_page.dart';
+import 'package:plus_todo/providers/calendar/calendar_week_setting.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
-import 'package:plus_todo/providers/todo/todo_calendar_date_provider.dart';
+import 'package:plus_todo/providers/calendar/calendar_date_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -21,8 +22,10 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedDate = ref.watch(todoSelectedDateProvider);
+    final selectedDate = ref.watch(calendarSelectedDateProvider);
     final todoData = ref.watch(todoProvider);
+    final saturdayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['saturdayHighlight']));
+    final sundayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['sundayHighlight']));
 
     final selectedDateTodoData = todoData
         .where((todo) => todo.deadline?.year == selectedDate.year && todo.deadline?.month == selectedDate.month && todo.deadline?.day == selectedDate.day)
@@ -45,21 +48,21 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
               Text(
                 '${selectedDate.day}일',
                 style: CustomTextStyle.title2.copyWith(
-                  color: selectedDate.weekday == DateTime.sunday
-                      ? red
-                      : selectedDate.weekday == DateTime.saturday
-                          ? blue
-                          : black, // 기본 색상은 검정색
+                  color: selectedDate.weekday == DateTime.saturday && saturdayHighlight
+                      ? blue
+                      : selectedDate.weekday == DateTime.sunday && sundayHighlight
+                          ? red
+                          : black,
                 ),
               ),
               const Gap(defaultGapM / 2),
               Text(
                 dayOfWeekToKoreanForCalendar(DayOfWeek.values[selectedDate.weekday - 1]),
-                style: CustomTextStyle.body1.copyWith(
-                  color: selectedDate.weekday == DateTime.sunday
-                      ? red
-                      : selectedDate.weekday == DateTime.saturday
-                          ? blue
+                style: CustomTextStyle.title2.copyWith(
+                  color: selectedDate.weekday == DateTime.saturday && saturdayHighlight
+                      ? blue
+                      : selectedDate.weekday == DateTime.sunday && sundayHighlight
+                          ? red
                           : black,
                 ),
               ),

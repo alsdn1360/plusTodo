@@ -51,6 +51,9 @@ class SettingDailyNotificationCard extends ConsumerWidget {
               const Gap(defaultGapXL),
               CupertinoSwitch(
                 value: dailyNotificationTime['isNotification'],
+                activeColor: black,
+                thumbColor: white,
+                trackColor: background,
                 onChanged: (value) async {
                   await ref.read(notificationDailyProvider.notifier).toggleDailyNotification(value);
                   if (value) {

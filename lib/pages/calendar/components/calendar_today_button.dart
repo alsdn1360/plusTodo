@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plus_todo/providers/todo/todo_calendar_date_provider.dart';
+import 'package:plus_todo/providers/calendar/calendar_date_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -12,8 +12,8 @@ class CalendarTodayButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
-        ref.read(todoFocusedDateProvider.notifier).state = DateTime.now();
-        ref.read(todoSelectedDateProvider.notifier).state = DateTime.now();
+        ref.read(calendarFocusedDateProvider.notifier).state = DateTime.now();
+        ref.read(calendarSelectedDateProvider.notifier).state = DateTime.now();
       },
       child: Container(
         width: 24,

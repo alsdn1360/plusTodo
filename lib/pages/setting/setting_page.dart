@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
+import 'package:plus_todo/pages/setting/components/setting_calendar_week_card.dart';
 import 'package:plus_todo/pages/setting/components/setting_daily_notification_card.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 
@@ -19,6 +21,8 @@ class SettingPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SettingDailyNotificationCard(),
+              Gap(defaultGapM),
+              SettingCalendarWeekCard(),
             ],
           ),
         ),

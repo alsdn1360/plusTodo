@@ -3,12 +3,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final notificationDailyProvider = StateNotifierProvider<NotificationTimeNotifier, Map>((ref) {
-  return NotificationTimeNotifier();
+final notificationDailyProvider = StateNotifierProvider<NotificationDailyNotifier, Map>((ref) {
+  return NotificationDailyNotifier();
 });
 
-class NotificationTimeNotifier extends StateNotifier<Map> {
-  NotificationTimeNotifier() : super({"isNotification": false, "hour": 9, "minute": 0}) {
+class NotificationDailyNotifier extends StateNotifier<Map> {
+  NotificationDailyNotifier()
+      : super({
+          "isNotification": false,
+          "hour": 9,
+          "minute": 0,
+        }) {
     _loadDailyNotificationTime();
   }
 
