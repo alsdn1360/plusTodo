@@ -116,18 +116,17 @@ class TodoUncompletedCard extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${GeneralFormatTime.formatDate(uncompletedTodoList.deadline!)} '
-                                '${GeneralFormatTime.formatTime(uncompletedTodoList.deadline!)}',
+                                GeneralFormatTime.formatDate(uncompletedTodoList.deadline!),
                                 style: isDeadlineSoon
-                                    ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2)
-                                    : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
+                                    ? CustomTextStyle.body3.copyWith(color: red)
+                                    : CustomTextStyle.body3
                               ),
                               const Gap(defaultGapS),
                               Visibility(
                                 visible: isDeadlineSoon,
                                 child: Text(
                                   '미뤄진 일',
-                                  style: CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2),
+                                  style: CustomTextStyle.body3.copyWith(color: red),
                                 ),
                               ),
                             ],

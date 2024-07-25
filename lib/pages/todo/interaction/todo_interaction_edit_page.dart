@@ -125,7 +125,9 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '${_newSelectedDate!.year}년 ${_newSelectedDate!.month}월 ${_newSelectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_newSelectedDate!.weekday - 1])})',
+                            (_newSelectedDate!.year == DateTime.now().year)
+                                ? '${_newSelectedDate!.month}월 ${_newSelectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_newSelectedDate!.weekday - 1])})'
+                                : '${_newSelectedDate!.year}년 ${_newSelectedDate!.month}월 ${_newSelectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_newSelectedDate!.weekday - 1])})',
                             style: CustomTextStyle.body1,
                           ),
                           Text(

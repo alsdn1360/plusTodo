@@ -134,7 +134,9 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                             child: Text(
                               (_selectedDate == null)
                                   ? '날짜'
-                                  : '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_selectedDate!.weekday - 1])})',
+                                  : (_selectedDate!.year == DateTime.now().year)
+                                      ? '${_selectedDate!.month}월 ${_selectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_selectedDate!.weekday - 1])})'
+                                      : '${_selectedDate!.year}년 ${_selectedDate!.month}월 ${_selectedDate!.day}일(${dayOfWeekToKorean(DayOfWeek.values[_selectedDate!.weekday - 1])})',
                               style: CustomTextStyle.body1.copyWith(
                                 color: (_selectedDate == null) ? gray : black,
                               ),

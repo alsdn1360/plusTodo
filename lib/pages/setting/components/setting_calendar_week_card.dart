@@ -39,7 +39,7 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                       style: CustomTextStyle.title3,
                     ),
                     Text(
-                      '캘린더의 시작 요일을 설정합니다.',
+                      '일주일의 시작 요일을 설정해요.',
                       style: CustomTextStyle.caption1,
                     ),
                   ],
@@ -81,7 +81,7 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                       style: CustomTextStyle.title3,
                     ),
                     Text(
-                      '주말을 강조하여 표시합니다.',
+                      '주말을 강조하여 표시해요.',
                       style: CustomTextStyle.caption1,
                     ),
                   ],

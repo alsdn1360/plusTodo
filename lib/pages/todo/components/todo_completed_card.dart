@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
@@ -57,9 +56,16 @@ class TodoCompletedCard extends ConsumerWidget {
                           onTap: () => _clearCompletedTodo(ref, context),
                         ),
                       ),
-                child: Text(
-                  '모두 삭제',
-                  style: (completedTodoData.isEmpty) ? CustomTextStyle.caption1.copyWith(color: gray) : CustomTextStyle.caption1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(Icons.delete_forever_outlined, color: (completedTodoData.isEmpty) ? gray : black, size: 14),
+                    const Gap(defaultGapS / 4),
+                    Text(
+                      '모두 삭제',
+                      style: (completedTodoData.isEmpty) ? CustomTextStyle.caption1.copyWith(color: gray) : CustomTextStyle.caption1,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -104,9 +110,8 @@ class TodoCompletedCard extends ConsumerWidget {
                             softWrap: true,
                           ),
                           Text(
-                            '${GeneralFormatTime.formatDate(completedTodoList.deadline!)} '
-                            '${GeneralFormatTime.formatTime(completedTodoList.deadline!)}',
-                            style: CustomTextStyle.body3.copyWith(color: gray, decoration: TextDecoration.lineThrough, letterSpacing: 0.2),
+                            GeneralFormatTime.formatDate(completedTodoList.deadline!),
+                            style: CustomTextStyle.body3.copyWith(color: gray, decoration: TextDecoration.lineThrough),
                           ),
                           const Gap(defaultGapS / 4),
                           Row(

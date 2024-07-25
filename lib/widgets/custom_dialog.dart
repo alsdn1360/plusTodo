@@ -52,7 +52,7 @@ class CustomDialog extends StatelessWidget {
                     style: CustomTextStyle.title3,
                   ),
                 ),
-                Container(width: 0.5, height: 15, color: gray),
+                Container(width: 1, height: 20, color: black.withOpacity(0.1)),
                 InkWell(
                   onTap: () {
                     onTap();

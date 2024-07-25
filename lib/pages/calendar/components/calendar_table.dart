@@ -70,8 +70,8 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
           formatButtonVisible: false,
           titleTextStyle: CustomTextStyle.title3,
           headerPadding: EdgeInsets.zero,
-          leftChevronIcon: const Icon(Icons.chevron_left, color: gray, size: 20),
-          rightChevronIcon: const Icon(Icons.chevron_right, color: gray, size: 20),
+          leftChevronIcon: const Icon(Icons.chevron_left_rounded, color: gray, size: 24),
+          rightChevronIcon: const Icon(Icons.chevron_right_rounded, color: gray, size: 24),
         ),
         calendarBuilders: CalendarBuilders(
           dowBuilder: (context, day) {
@@ -194,16 +194,44 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
               ],
             );
           },
+          markerBuilder: (context, day, events) {
+            if (events.length >= 4) {
+              return Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 22,
+                  height: 6,
+                  margin: const EdgeInsets.only(bottom: defaultPaddingL / 2),
+                  decoration: BoxDecoration(
+                    color: black,
+                    borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                  ),
+                ),
+              );
+            } else {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(
+                  events.length,
+                  (index) => Container(
+                    width: 6,
+                    height: 6,
+                    margin: const EdgeInsets.only(
+                      left: defaultPaddingS / 16,
+                      right: defaultPaddingS / 16,
+                      bottom: defaultPaddingL / 2,
+                    ),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: black,
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
         ),
         calendarStyle: CalendarStyle(
-          markersMaxCount: 1,
-          markersAutoAligned: false,
-          markerSize: 6,
-          markerMargin: const EdgeInsets.only(bottom: defaultPaddingL / 2),
-          markerDecoration: const BoxDecoration(
-            color: black,
-            shape: BoxShape.circle,
-          ),
           rowDecoration: BoxDecoration(
             border: Border(
               top: BorderSide(color: black.withOpacity(0.1), width: 1),

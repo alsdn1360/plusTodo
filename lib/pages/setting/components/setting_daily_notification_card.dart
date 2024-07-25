@@ -42,7 +42,7 @@ class SettingDailyNotificationCard extends ConsumerWidget {
                       style: CustomTextStyle.title3,
                     ),
                     Text(
-                      '매일 오늘 해야 할 일의 개수를 알려줍니다.',
+                      '매일 오늘 해야 할 일의 개수를 알려줘요.',
                       style: CustomTextStyle.caption1,
                     ),
                   ],

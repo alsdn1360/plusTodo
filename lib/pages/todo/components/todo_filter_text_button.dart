@@ -42,7 +42,7 @@ class TodoFilterTextButton extends ConsumerWidget {
           ),
         ),
         const Gap(defaultGapS / 2),
-        Container(width: 0.5, height: 15, color: gray),
+        Container(width: 1, height: 14, color: black.withOpacity(0.1)),
         const Gap(defaultGapS / 2),
         InkWell(
           onTap: () => (sortingIndex == 1)

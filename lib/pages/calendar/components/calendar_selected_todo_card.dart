@@ -75,9 +75,16 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
                     builder: (context) => TodoInteractionCreatePage(initialSelectedDate: selectedDate),
                   ),
                 ),
-                child: Text(
-                  '새로운 할 일',
-                  style: CustomTextStyle.caption1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Icon(Icons.add_circle_outline_rounded, color: black, size: 14),
+                    const Gap(defaultGapS / 4),
+                    Text(
+                      '새로운 할 일',
+                      style: CustomTextStyle.caption1,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -130,20 +137,19 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${GeneralFormatTime.formatDate(selectedDateTodoList.deadline!)} '
-                                '${GeneralFormatTime.formatTime(selectedDateTodoList.deadline!)}',
+                                GeneralFormatTime.formatDate(selectedDateTodoList.deadline!),
                                 style: selectedDateTodoList.isDone
-                                    ? CustomTextStyle.body3.copyWith(color: gray, letterSpacing: 0.2, decoration: TextDecoration.lineThrough)
+                                    ? CustomTextStyle.body3.copyWith(color: gray, decoration: TextDecoration.lineThrough)
                                     : isDeadlineSoon
-                                        ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2)
-                                        : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
+                                        ? CustomTextStyle.body3.copyWith(color: red)
+                                        : CustomTextStyle.body3,
                               ),
                               const Gap(defaultGapS),
                               Visibility(
                                 visible: isDeadlineSoon && !selectedDateTodoList.isDone,
                                 child: Text(
                                   '미뤄진 일',
-                                  style: CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2),
+                                  style: CustomTextStyle.body3.copyWith(color: red),
                                 ),
                               ),
                             ],

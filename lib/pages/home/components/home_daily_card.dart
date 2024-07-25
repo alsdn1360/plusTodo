@@ -45,9 +45,16 @@ class TodoDailyCard extends ConsumerWidget {
                     builder: (context) => TodoInteractionCreatePage(initialSelectedDate: DateTime.now()),
                   ),
                 ),
-                child: Text(
-                  '새로운 오늘 할 일',
-                  style: CustomTextStyle.caption1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Icon(Icons.add_circle_outline_rounded, color: black, size: 14),
+                    const Gap(defaultGapS / 4),
+                    Text(
+                      '새로운 오늘 할 일',
+                      style: CustomTextStyle.caption1,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -97,8 +104,7 @@ class TodoDailyCard extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${GeneralFormatTime.formatDate(dailyTodoList.deadline!)} '
-                                '${GeneralFormatTime.formatTime(dailyTodoList.deadline!)}',
+                                GeneralFormatTime.formatDate(dailyTodoList.deadline!),
                                 style: isDeadlineSoon
                                     ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2)
                                     : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
