@@ -69,10 +69,26 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => TodoInteractionCreatePage(initialSelectedDate: selectedDate),
+                onTap: () => Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (
+                        BuildContext context,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation,
+                        ) {
+                      var curve = CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutQuad,
+                        reverseCurve: Curves.easeOutQuad,
+                      );
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 1),
+                          end: Offset.zero,
+                        ).animate(curve),
+                        child: TodoInteractionCreatePage(initialSelectedDate: DateTime.now()),
+                      );
+                    },
                   ),
                 ),
                 child: Row(
