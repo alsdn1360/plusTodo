@@ -24,14 +24,14 @@ class TodoListOrCardPopupMenuButton extends ConsumerWidget {
         PopupMenuItem(
           value: 0,
           child: Text(
-            '할 일 카드 보기',
+            '모아서 보기',
             style: CustomTextStyle.body3,
           ),
         ),
         PopupMenuItem(
           value: 1,
           child: Text(
-            '할 일 목록 보기',
+            '하나씩 보기',
             style: CustomTextStyle.body3,
           ),
         ),
