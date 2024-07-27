@@ -122,15 +122,15 @@ class TodoDailyCard extends ConsumerWidget {
                               Text(
                                 GeneralFormatTime.formatDate(dailyTodoList.deadline!),
                                 style: isDeadlineSoon
-                                    ? CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2)
-                                    : CustomTextStyle.body3.copyWith(letterSpacing: 0.2),
+                                    ? CustomTextStyle.body3.copyWith(color: red)
+                                    : CustomTextStyle.body3,
                               ),
                               const Gap(defaultGapS),
                               Visibility(
                                 visible: isDeadlineSoon,
                                 child: Text(
                                   '미뤄진 일',
-                                  style: CustomTextStyle.body3.copyWith(color: red, letterSpacing: 0.2),
+                                  style: CustomTextStyle.body3.copyWith(color: red),
                                 ),
                               ),
                             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/todo/interaction/todo_interaction_create_page.dart';
 import 'package:plus_todo/providers/calendar/calendar_week_setting.dart';
 import 'package:plus_todo/providers/calendar/calendar_date_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -21,6 +22,8 @@ class CalendarTable extends ConsumerStatefulWidget {
 }
 
 class _CalendarTableState extends ConsumerState<CalendarTable> {
+  DateTime? _lastSelectedDay;
+
   @override
   Widget build(BuildContext context) {
     final DateTime todoFocusedDate = ref.watch(calendarFocusedDateProvider);
@@ -53,10 +56,36 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
               .toList();
         },
         onDaySelected: (selectedDay, focusedDay) {
-          setState(() {
-            ref.read(calendarFocusedDateProvider.notifier).state = focusedDay;
-            ref.read(calendarSelectedDateProvider.notifier).state = selectedDay;
-          });
+          if (_lastSelectedDay != null && isSameDay(selectedDay, _lastSelectedDay)) {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                ) {
+                  var curve = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutQuad,
+                    reverseCurve: Curves.easeOutQuad,
+                  );
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: Offset.zero,
+                    ).animate(curve),
+                    child: TodoInteractionCreatePage(initialSelectedDate: selectedDay),
+                  );
+                },
+              ),
+            );
+          } else {
+            setState(() {
+              ref.read(calendarFocusedDateProvider.notifier).state = focusedDay;
+              ref.read(calendarSelectedDateProvider.notifier).state = selectedDay;
+              _lastSelectedDay = selectedDay;
+            });
+          }
         },
         selectedDayPredicate: (DateTime day) {
           DateTime selectedDay = ref.watch(calendarSelectedDateProvider);
