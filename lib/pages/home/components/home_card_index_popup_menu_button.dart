@@ -24,42 +24,42 @@ class HomeCardIndexPopupMenuButton extends ConsumerWidget {
         PopupMenuItem(
           value: 0,
           child: Text(
-            '오늘 해야 할 일 목록 보기',
+            '오늘 해야 할 일 카드 보기',
             style: CustomTextStyle.body3,
           ),
         ),
         PopupMenuItem(
           value: 1,
           child: Text(
-            'Do 목록 보기',
+            'Do 카드 보기',
             style: CustomTextStyle.body3,
           ),
         ),
         PopupMenuItem(
           value: 2,
           child: Text(
-            'Delegate 목록 보기',
+            'Delegate 카드 보기',
             style: CustomTextStyle.body3,
           ),
         ),
         PopupMenuItem(
           value: 3,
           child: Text(
-            'Schedule 목록 보기',
+            'Schedule 카드 보기',
             style: CustomTextStyle.body3,
           ),
         ),
         PopupMenuItem(
           value: 4,
           child: Text(
-            'Eliminate 목록 보기',
+            'Eliminate 카드 보기',
             style: CustomTextStyle.body3,
           ),
         ),
         PopupMenuItem(
           value: 5,
           child: Text(
-            '목록 숨기기',
+            '카드 숨기기',
             style: CustomTextStyle.body3,
           ),
         ),
