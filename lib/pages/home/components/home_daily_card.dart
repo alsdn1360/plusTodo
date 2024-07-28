@@ -166,7 +166,7 @@ class TodoDailyCard extends ConsumerWidget {
           ),
           if (sortedTodoData.isEmpty)
             Text(
-              '할 일이 없어요.',
+              '오늘 해야 할 일이 없어요.',
               style: CustomTextStyle.body3,
             ),
         ],

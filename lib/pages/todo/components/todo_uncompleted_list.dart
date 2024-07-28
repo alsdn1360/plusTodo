@@ -48,6 +48,7 @@ class TodoUncompletedList extends ConsumerWidget {
     }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListView.separated(
           shrinkWrap: true,

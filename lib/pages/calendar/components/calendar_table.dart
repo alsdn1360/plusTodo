@@ -22,11 +22,10 @@ class CalendarTable extends ConsumerStatefulWidget {
 }
 
 class _CalendarTableState extends ConsumerState<CalendarTable> {
-  DateTime? _lastSelectedDay;
-
   @override
   Widget build(BuildContext context) {
     final DateTime todoFocusedDate = ref.watch(calendarFocusedDateProvider);
+    final lastSelectedDate = ref.watch(calendarLastedSelectedDateProvider);
     final startingWeekday = ref.watch(calendarWeekSettingProvider.select((value) => value['startingWeekday']));
     final saturdayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['saturdayHighlight']));
     final sundayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['sundayHighlight']));
@@ -56,7 +55,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
               .toList();
         },
         onDaySelected: (selectedDay, focusedDay) {
-          if (_lastSelectedDay != null && isSameDay(selectedDay, _lastSelectedDay)) {
+          if (isSameDay(selectedDay, lastSelectedDate)) {
             Navigator.of(context).push(
               PageRouteBuilder(
                 pageBuilder: (
@@ -83,7 +82,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
             setState(() {
               ref.read(calendarFocusedDateProvider.notifier).state = focusedDay;
               ref.read(calendarSelectedDateProvider.notifier).state = selectedDay;
-              _lastSelectedDay = selectedDay;
+              ref.read(calendarLastedSelectedDateProvider.notifier).state = selectedDay;
             });
           }
         },

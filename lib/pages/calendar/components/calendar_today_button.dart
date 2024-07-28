@@ -18,6 +18,7 @@ class CalendarTodayButton extends ConsumerWidget {
       onTap: () {
         ref.read(calendarFocusedDateProvider.notifier).state = DateTime.now();
         ref.read(calendarSelectedDateProvider.notifier).state = DateTime.now();
+        ref.read(calendarLastedSelectedDateProvider.notifier).state = DateTime.now();
       },
       child: Container(
         width: 24,
@@ -26,11 +27,7 @@ class CalendarTodayButton extends ConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(defaultBorderRadiusL / 4),
           border: Border.all(
-            color: DateTime.now().weekday == DateTime.sunday && sundayHighlight
-                ? red
-                : DateTime.now().weekday == DateTime.saturday && saturdayHighlight
-                    ? blue
-                    : black,
+            color: black,
             width: 1.5,
           ),
         ),
