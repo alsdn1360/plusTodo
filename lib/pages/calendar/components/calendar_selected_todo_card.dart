@@ -86,7 +86,7 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
                           begin: const Offset(0, 1),
                           end: Offset.zero,
                         ).animate(curve),
-                        child: TodoInteractionCreatePage(initialSelectedDate: DateTime.now()),
+                        child: TodoInteractionCreatePage(initialSelectedDate: selectedDate),
                       );
                     },
                   ),
