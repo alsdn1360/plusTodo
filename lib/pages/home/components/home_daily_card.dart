@@ -38,7 +38,7 @@ class TodoDailyCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('오늘 해야 할 일', style: CustomTextStyle.title2),
+              Text('오늘 해야 할 일', style: CustomTextStyle.title3),
               InkWell(
                 onTap: () => Navigator.of(context).push(
                   PageRouteBuilder(

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -29,7 +31,7 @@ class SettingCalendarWeekCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-        border: Border.all(color: gray.withOpacity(0.2), width: 0.3),
+        border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
       ),
       child: Column(
         children: [
@@ -108,8 +110,8 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                         };
                 },
                 child: Container(
-                  height: 20.h,
-                  width: 20.w,
+                  height: 20.r,
+                  width: 20.r,
                   decoration: BoxDecoration(
                     color: saturdayHighlight ? blue : lightGray,
                     borderRadius: BorderRadius.circular(defaultBorderRadiusM / 3),
@@ -136,8 +138,8 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                         };
                 },
                 child: Container(
-                  height: 20.h,
-                  width: 20.w,
+                  height: 20.r,
+                  width: 20.r,
                   decoration: BoxDecoration(
                     color: sundayHighlight ? red : lightGray,
                     borderRadius: BorderRadius.circular(defaultBorderRadiusM / 3),

@@ -37,7 +37,7 @@ class _SettingInformationState extends State<SettingInformation> {
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
-        border: Border.all(color: gray.withOpacity(0.2), width: 0.3),
+        border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
       ),
       child: Column(
         children: [

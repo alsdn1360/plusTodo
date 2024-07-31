@@ -50,6 +50,11 @@ class TodoUncompletedList extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          '해야 할 일',
+          style: CustomTextStyle.title2,
+        ),
+        const Gap(defaultGapM),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

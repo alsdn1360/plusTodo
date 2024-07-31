@@ -69,7 +69,7 @@ class TodoUncompletedCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: CustomTextStyle.title2.copyWith(color: color)),
+          Text(title, style: CustomTextStyle.title3.copyWith(color: color)),
           const Gap(defaultGapS / 4),
           Text(subtitle, style: CustomTextStyle.caption1),
           const Gap(defaultGapS),

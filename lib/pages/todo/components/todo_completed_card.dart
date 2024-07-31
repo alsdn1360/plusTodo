@@ -37,10 +37,7 @@ class TodoCompletedCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: Text(
-                  '완료된 할 일',
-                  style: CustomTextStyle.title2,
-                ),
+                child: Text('완료된 할 일', style: CustomTextStyle.title3),
               ),
               Text(
                 '${completedTodoData.length}개,',

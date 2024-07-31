@@ -49,7 +49,7 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
             children: [
               Text(
                 '${selectedDate.day}일',
-                style: CustomTextStyle.title2.copyWith(
+                style: CustomTextStyle.title3.copyWith(
                   color: selectedDate.weekday == DateTime.saturday && saturdayHighlight
                       ? blue
                       : selectedDate.weekday == DateTime.sunday && sundayHighlight
@@ -60,7 +60,7 @@ class CalendarSelectedTodoCard extends ConsumerWidget {
               const Gap(defaultGapM / 2),
               Text(
                 dayOfWeekToKoreanForCalendar(DayOfWeek.values[selectedDate.weekday - 1]),
-                style: CustomTextStyle.title3.copyWith(
+                style: CustomTextStyle.body1.copyWith(
                   color: selectedDate.weekday == DateTime.saturday && saturdayHighlight
                       ? blue
                       : selectedDate.weekday == DateTime.sunday && sundayHighlight
