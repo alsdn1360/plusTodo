@@ -31,7 +31,7 @@ class MainPage extends ConsumerWidget {
         type: BottomNavigationBarType.fixed,
         backgroundColor: background,
         selectedItemColor: black,
-        unselectedItemColor: gray,
+        unselectedItemColor: black.withOpacity(0.3),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: (index) {

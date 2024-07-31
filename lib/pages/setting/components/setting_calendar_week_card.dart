@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:plus_todo/functions/general_snack_bar.dart';
 import 'package:plus_todo/providers/calendar/calendar_week_setting.dart';
@@ -17,6 +18,11 @@ class SettingCalendarWeekCard extends ConsumerWidget {
     final saturdayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['saturdayHighlight']));
     final sundayHighlight = ref.watch(calendarWeekSettingProvider.select((value) => value['sundayHighlight']));
 
+    final List<Map<String, dynamic>> dropdownItems = [
+      {'label': '월요일', 'value': 1},
+      {'label': '일요일', 'value': 7},
+    ];
+
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
       width: double.infinity,
@@ -31,36 +37,45 @@ class SettingCalendarWeekCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '캘린더 시작 요일',
-                      style: CustomTextStyle.title3,
-                    ),
-                    Text(
-                      '일주일의 시작 요일을 설정해요.',
-                      style: CustomTextStyle.caption1,
-                    ),
-                  ],
+                child: Text(
+                  '시작 요일',
+                  style: CustomTextStyle.title3,
                 ),
               ),
               const Gap(defaultGapXL),
-              InkWell(
-                onTap: () {
-                  (startingWeekday == 1)
-                      ? {
-                          ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(7),
-                          GeneralSnackBar.showSnackBar(context, '이제 캘린더가 일요일부터 시작돼요.'),
-                        }
-                      : {
-                          ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(1),
-                          GeneralSnackBar.showSnackBar(context, '이제 캘린더가 월요일부터 시작돼요.'),
-                        };
-                },
-                child: Text(
-                  (startingWeekday == 1) ? '월요일' : '일요일',
-                  style: CustomTextStyle.title3,
+              SizedBox(
+                height: 20.h,
+                child: DropdownButton<int>(
+                  isExpanded: false,
+                  value: startingWeekday,
+                  elevation: 1,
+                  style: CustomTextStyle.body1.copyWith(color: gray),
+                  underline: Container(),
+                  icon: const Icon(Icons.unfold_more_rounded, color: gray),
+                  iconSize: 16,
+                  dropdownColor: white,
+                  borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                  padding: EdgeInsets.zero,
+                  alignment: AlignmentDirectional.centerEnd,
+                  items: dropdownItems.map((item) {
+                    return DropdownMenuItem<int>(
+                      value: item['value'],
+                      child: Text(item['label']),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    if (newValue != null) {
+                      (startingWeekday == 1)
+                          ? {
+                              ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(7),
+                              GeneralSnackBar.showSnackBar(context, '이제 캘린더가 일요일부터 시작돼요.'),
+                            }
+                          : {
+                              ref.read(calendarWeekSettingProvider.notifier).changeStartingWeekday(1),
+                              GeneralSnackBar.showSnackBar(context, '이제 캘린더가 월요일부터 시작돼요.'),
+                            };
+                    }
+                  },
                 ),
               ),
             ],
@@ -73,18 +88,9 @@ class SettingCalendarWeekCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '캘린더 강조 표시',
-                      style: CustomTextStyle.title3,
-                    ),
-                    Text(
-                      '주말을 강조하여 표시해요.',
-                      style: CustomTextStyle.caption1,
-                    ),
-                  ],
+                child: Text(
+                  '주말 강조 표시',
+                  style: CustomTextStyle.title3,
                 ),
               ),
               const Gap(defaultGapXL),
@@ -101,15 +107,16 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                         };
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM / 2, vertical: defaultPaddingL / 4),
+                  height: 20.h,
+                  width: 20.w,
                   decoration: BoxDecoration(
-                    color: saturdayHighlight ? blue : background,
-                    borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
+                    color: saturdayHighlight ? blue : lightGray,
+                    borderRadius: BorderRadius.circular(defaultBorderRadiusM / 3),
                   ),
                   child: Center(
                     child: Text(
                       '토',
-                      style: CustomTextStyle.title3.copyWith(color: saturdayHighlight ? white : gray),
+                      style: CustomTextStyle.body1.copyWith(color: saturdayHighlight ? white : gray),
                     ),
                   ),
                 ),
@@ -128,15 +135,16 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                         };
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: defaultPaddingM / 2, vertical: defaultPaddingL / 4),
+                  height: 20.h,
+                  width: 20.w,
                   decoration: BoxDecoration(
-                    color: sundayHighlight ? red : background,
-                    borderRadius: BorderRadius.circular(defaultBorderRadiusL / 2),
+                    color: sundayHighlight ? red : lightGray,
+                    borderRadius: BorderRadius.circular(defaultBorderRadiusM / 3),
                   ),
                   child: Center(
                     child: Text(
                       '일',
-                      style: CustomTextStyle.title3.copyWith(color: sundayHighlight ? white : gray),
+                      style: CustomTextStyle.body1.copyWith(color: sundayHighlight ? white : gray),
                     ),
                   ),
                 ),

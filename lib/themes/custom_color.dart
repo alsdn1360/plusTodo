@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Gray scale
 const Color transparent = Colors.transparent;
-const Color black = Color(0xFF222222);
-const Color darkGray = Color(0xFF69696C);
-const Color gray = Color(0xFFA8A8AB);
-const Color lightGray = Color(0xFFD2D3D7);
+const Color black = Color(0xFF202020);
+const Color darkGray = Color(0xFF646464);
+const Color gray = Color(0xFF8B8B8B);
+const Color lightGray = Color(0xFFE0E0E0);
 const Color white = Color(0xFFFCFCFC);
 
 /// Etc

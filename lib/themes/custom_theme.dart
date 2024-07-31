@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plus_todo/themes/custom_appbar.dart';
 import 'package:plus_todo/themes/custom_color.dart';
+import 'package:plus_todo/themes/custom_cupertino_theme.dart';
 import 'package:plus_todo/themes/custom_text_selection.dart';
 
 class CustomTheme {
@@ -13,6 +14,9 @@ class CustomTheme {
 
       /// 텍스트 선택 테마 설정
       textSelectionTheme: CustomTextSelectionTheme.customTextSelectionThemeData(),
+
+      /// 쿠퍼티노 테마 설정
+      cupertinoOverrideTheme: CustomCupertinoTheme.customCupertinoThemeData(),
 
       /// 컬러 설정
       scaffoldBackgroundColor: background,

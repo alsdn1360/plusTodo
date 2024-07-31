@@ -26,7 +26,7 @@ class CustomTextStyle {
     fontSize: 22,
     height: 1.27,
     letterSpacing: 0,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
   );
 
   // Titles

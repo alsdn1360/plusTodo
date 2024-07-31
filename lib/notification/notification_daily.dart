@@ -13,7 +13,7 @@ Future<void> dailyNotification({
   final minute = prefs.getInt('notiMinute') ?? 0;
 
   var android = AndroidNotificationDetails(
-    'daily_todo_id',
+    'id',
     '오늘 해야 할 일을 확인하세요!',
     channelDescription: content,
     importance: Importance.max,
