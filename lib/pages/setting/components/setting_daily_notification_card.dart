@@ -37,6 +37,7 @@ class SettingDailyNotificationCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+        border: Border.all(color: gray.withOpacity(0.2), width: 0.3),
       ),
       child: Column(
         children: [

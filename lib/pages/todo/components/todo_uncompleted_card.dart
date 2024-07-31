@@ -64,6 +64,7 @@ class TodoUncompletedCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+        border: Border.all(color: color.withOpacity(0.2), width: 0.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -65,6 +65,7 @@ class TodoUncompletedList extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: urgencyImportanceColor(uncompletedTodoList.urgency, uncompletedTodoList.importance, 0.1),
                 borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                border: Border.all(color: urgencyImportanceColor(uncompletedTodoList.urgency, uncompletedTodoList.importance, 0.2), width: 0.2),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

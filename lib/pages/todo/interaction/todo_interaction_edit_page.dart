@@ -8,7 +8,7 @@ import 'package:plus_todo/models/day_of_week.dart';
 import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
-import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_notification_time_butoon.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_notification_time_button.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_urgency_importance_card.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
@@ -87,6 +87,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
                       color: white,
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +112,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
                       color: white,
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: InkWell(
                       onTap: () => GeneralDatePicker.showDatePicker(
@@ -145,6 +147,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
                       color: white,
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: InkWell(
                       onTap: () => GeneralTimePicker.showTimePicker(
@@ -177,6 +180,7 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
                     decoration: BoxDecoration(
                       color: white,
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

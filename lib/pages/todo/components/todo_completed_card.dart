@@ -28,6 +28,7 @@ class TodoCompletedCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: gray.withOpacity(0.1),
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+        border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

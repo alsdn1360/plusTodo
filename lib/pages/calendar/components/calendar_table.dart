@@ -35,6 +35,7 @@ class _CalendarTableState extends ConsumerState<CalendarTable> {
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+        border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
       ),
       child: TableCalendar(
         locale: 'ko_KR',

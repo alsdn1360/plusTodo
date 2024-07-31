@@ -21,6 +21,7 @@ class TodoDetailDeadlineDateCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
         color: white,
+        border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

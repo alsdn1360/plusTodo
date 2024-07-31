@@ -30,7 +30,7 @@ class SettingPage extends ConsumerWidget {
               const Gap(defaultGapM),
               const SettingCalendarWeekCard(),
               const Gap(defaultGapM),
-              Text('상세 정보', style: CustomTextStyle.title2),
+              Text('앱 정보', style: CustomTextStyle.title2),
               const Gap(defaultGapM),
               const SettingInformation(),
             ],

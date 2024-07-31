@@ -10,7 +10,7 @@ import 'package:plus_todo/models/todo.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_bottom_button.dart';
 import 'package:plus_todo/functions/general_format_time.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_date_button.dart';
-import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_notification_time_butoon.dart';
+import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_notification_time_button.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_simple_time_button.dart';
 import 'package:plus_todo/pages/todo/interaction/components/todo_interaction_urgency_importance_card.dart';
 import 'package:plus_todo/providers/todo/todo_provider.dart';
@@ -86,6 +86,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     padding: const EdgeInsets.all(defaultPaddingS),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                       color: white,
                     ),
                     child: Column(
@@ -113,6 +114,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
                       color: white,
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,6 +161,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
                       color: white,
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,6 +206,7 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                     decoration: BoxDecoration(
                       color: white,
                       borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+                      border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

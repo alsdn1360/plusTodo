@@ -21,6 +21,7 @@ class HomeMatrix extends StatelessWidget {
         decoration: BoxDecoration(
           color: white,
           borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+          border: Border.all(color: gray.withOpacity(0.2), width: 0.2),
         ),
         child: CustomPaint(
           size: const Size(

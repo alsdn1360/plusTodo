@@ -32,6 +32,7 @@ class TodoInteractionUrgencyImportanceCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
         color: cardColor(urgency, importance, 0.1),
+        border: Border.all(color: cardColor(urgency, importance, 0.2), width: 0.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

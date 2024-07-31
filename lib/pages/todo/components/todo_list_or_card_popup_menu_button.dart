@@ -17,6 +17,7 @@ class TodoListOrCardPopupMenuButton extends ConsumerWidget {
       icon: const Icon(Icons.more_vert_rounded, color: black),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
+        side: BorderSide(color: gray.withOpacity(0.2), width: 0.2),
       ),
       padding: const EdgeInsets.all(defaultPaddingS),
       onSelected: (value) => ref.read(filteredShowListOrCardProvider.notifier).toggleFilteredShowListOrCard(value),
