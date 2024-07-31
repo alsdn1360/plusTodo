@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -47,7 +45,7 @@ class SettingCalendarWeekCard extends ConsumerWidget {
               ),
               const Gap(defaultGapXL),
               SizedBox(
-                height: 20.h,
+                height: 24.h,
                 child: DropdownButton<int>(
                   isExpanded: false,
                   value: startingWeekday,
@@ -110,8 +108,8 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                         };
                 },
                 child: Container(
-                  height: 20.r,
-                  width: 20.r,
+                  height: 24.r,
+                  width: 24.r,
                   decoration: BoxDecoration(
                     color: saturdayHighlight ? blue : lightGray,
                     borderRadius: BorderRadius.circular(defaultBorderRadiusM / 3),
@@ -119,7 +117,7 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       '토',
-                      style: CustomTextStyle.body1.copyWith(color: saturdayHighlight ? white : gray, fontSize: 12.sp),
+                      style: CustomTextStyle.body1.copyWith(color: saturdayHighlight ? white : gray, fontSize: 14.sp),
                     ),
                   ),
                 ),
@@ -138,8 +136,8 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                         };
                 },
                 child: Container(
-                  height: 20.r,
-                  width: 20.r,
+                  height: 24.r,
+                  width: 24.r,
                   decoration: BoxDecoration(
                     color: sundayHighlight ? red : lightGray,
                     borderRadius: BorderRadius.circular(defaultBorderRadiusM / 3),
@@ -147,7 +145,7 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       '일',
-                      style: CustomTextStyle.body1.copyWith(color: sundayHighlight ? white : gray, fontSize: 12.sp),
+                      style: CustomTextStyle.body1.copyWith(color: sundayHighlight ? white : gray, fontSize: 14.sp),
                     ),
                   ),
                 ),

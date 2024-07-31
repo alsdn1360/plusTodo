@@ -75,7 +75,7 @@ class SettingDailyNotificationCard extends ConsumerWidget {
               ),
               const Gap(defaultGapXL),
               SizedBox(
-                height: 20.h,
+                height: 24.h,
                 child: DropdownButton<int>(
                   isExpanded: false,
                   value: selectedValue,
