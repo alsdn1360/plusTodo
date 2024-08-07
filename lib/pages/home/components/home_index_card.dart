@@ -33,7 +33,7 @@ class HomeIndexCard extends ConsumerWidget {
         children: [
           Visibility(
             visible: filteredHomeCardIndex == 0,
-            child: const TodoDailyCard(),
+            child: const HomeDailyCard(),
           ),
           Visibility(
             visible: filteredHomeCardIndex == 1,

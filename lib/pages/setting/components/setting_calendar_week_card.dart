@@ -117,7 +117,10 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       '토',
-                      style: CustomTextStyle.body1.copyWith(color: saturdayHighlight ? white : gray, fontSize: 14.sp),
+                      style: CustomTextStyle.body1.copyWith(
+                        color: saturdayHighlight ? white : gray,
+                        fontSize: 14.sp,
+                      ),
                     ),
                   ),
                 ),
@@ -145,7 +148,10 @@ class SettingCalendarWeekCard extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       '일',
-                      style: CustomTextStyle.body1.copyWith(color: sundayHighlight ? white : gray, fontSize: 14.sp),
+                      style: CustomTextStyle.body1.copyWith(
+                        color: sundayHighlight ? white : gray,
+                        fontSize: 14.sp,
+                      ),
                     ),
                   ),
                 ),
