@@ -10,7 +10,7 @@ const Color white = Color(0xFFFCFCFC);
 
 /// Etc
 const Color background = Color(0xFFF2F3F7);
-const Color red = Color(0xFFF90416);
+const Color red = Color(0xFFE90416);
 const Color blue = Color(0xFF1976D2);
 const Color orange = Color(0xFFFF8C00);
 const Color green = Color(0xFF388E3C);
