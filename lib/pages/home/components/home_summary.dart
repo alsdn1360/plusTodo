@@ -1,9 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:plus_todo/models/todo.dart';
+import 'package:plus_todo/pages/home/components/home_summary_count.dart';
 import 'package:plus_todo/providers/filtered/filtered_sorting_index_provider.dart';
-import 'package:plus_todo/providers/todo/todo_uncompleted_provider.dart';
 import 'package:plus_todo/themes/custom_color.dart';
 import 'package:plus_todo/themes/custom_decoration.dart';
 import 'package:plus_todo/themes/custom_font.dart';
@@ -14,11 +14,7 @@ class HomeSummary extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoData = ref.watch(todoUncompletedProvider);
-    final doData = todoData.where((doData) => doData.urgency >= 5 && doData.importance >= 5).toList();
-    final delegateData = todoData.where((delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5).toList();
-    final scheduleData = todoData.where((scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5).toList();
-    final eliminateData = todoData.where((eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5).toList();
+    int filteredSortingIndex = ref.watch(filteredSortingIndexProvider);
 
     return Container(
       padding: const EdgeInsets.all(defaultPaddingS),
@@ -38,51 +34,34 @@ class HomeSummary extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Flexible(
-                flex: 1,
-                child: _buildSummaryColumn('Do', '${doData.length}', red),
+              HomeSummaryCount(
+                title: 'Do',
+                color: red,
+                filteredTodoData: (Todo doData) => doData.urgency >= 5 && doData.importance >= 5,
               ),
-              Flexible(
-                flex: 1,
-                child: _buildSummaryColumn(
-                  (ref.watch(filteredSortingIndexProvider) == 1) ? 'Delegate' : 'Schedule',
-                  (ref.watch(filteredSortingIndexProvider) == 1) ? '${delegateData.length}' : '${scheduleData.length}',
-                  (ref.watch(filteredSortingIndexProvider) == 1) ? blue : orange,
-                ),
+              HomeSummaryCount(
+                title: (filteredSortingIndex == 1) ? 'Delegate' : 'Schedule',
+                color: (filteredSortingIndex == 1) ? blue : orange,
+                filteredTodoData: (filteredSortingIndex == 1)
+                    ? (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5
+                    : (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
               ),
-              Flexible(
-                flex: 1,
-                child: _buildSummaryColumn(
-                  (ref.watch(filteredSortingIndexProvider) == 2) ? 'Delegate' : 'Schedule',
-                  (ref.watch(filteredSortingIndexProvider) == 2) ? '${delegateData.length}' : '${scheduleData.length}',
-                  (ref.watch(filteredSortingIndexProvider) == 2) ? blue : orange,
-                ),
+              HomeSummaryCount(
+                title: (filteredSortingIndex == 2) ? 'Delegate' : 'Schedule',
+                color: (filteredSortingIndex == 2) ? blue : orange,
+                filteredTodoData: (filteredSortingIndex == 2)
+                    ? (Todo delegateData) => delegateData.urgency >= 5 && delegateData.importance < 5
+                    : (Todo scheduleData) => scheduleData.urgency < 5 && scheduleData.importance >= 5,
               ),
-              Flexible(
-                flex: 1,
-                child: _buildSummaryColumn('Eliminate', '${eliminateData.length}', green),
+              HomeSummaryCount(
+                title: 'Eliminate',
+                color: green,
+                filteredTodoData: (Todo eliminateData) => eliminateData.urgency < 5 && eliminateData.importance < 5,
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSummaryColumn(String title, String count, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        AutoSizeText(
-          title,
-          style: CustomTextStyle.body1.copyWith(color: color),
-          maxLines: 1,
-          maxFontSize: 40,
-          softWrap: true,
-        ),
-        const Gap(defaultGapS / 2),
-        Text(count, style: CustomTextStyle.body2),
-      ],
     );
   }
 }

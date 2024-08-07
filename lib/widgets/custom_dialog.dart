@@ -23,11 +23,7 @@ class CustomDialog extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       insetAnimationCurve: Curves.easeOutQuad,
       insetAnimationDuration: const Duration(milliseconds: 200),
-      insetPadding: const EdgeInsets.only(
-        left: defaultPaddingM,
-        right: defaultPaddingM,
-        bottom: defaultPaddingM,
-      ),
+      insetPadding: const EdgeInsets.symmetric(horizontal: defaultPaddingM * 2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(defaultBorderRadiusM),
       ),
@@ -60,7 +56,7 @@ class CustomDialog extends StatelessWidget {
                   },
                   child: Text(
                     '삭제',
-                    style: CustomTextStyle.title3,
+                    style: CustomTextStyle.title3.copyWith(color: red),
                   ),
                 ),
               ],
