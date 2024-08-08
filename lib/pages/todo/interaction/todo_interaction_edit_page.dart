@@ -229,8 +229,13 @@ class _TodoInteractionEditPageState extends ConsumerState<TodoInteractionEditPag
       widget.todoData.content = _newContentController.text;
       widget.todoData.urgency = _newUrgencyValue!;
       widget.todoData.importance = _newImportanceValue!;
-      widget.todoData.deadline =
-          DateTime(_newSelectedDate!.year, _newSelectedDate!.month, _newSelectedDate!.day, _newSelectedTime!.hour, _newSelectedTime!.minute);
+      widget.todoData.deadline = DateTime(
+        _newSelectedDate!.year,
+        _newSelectedDate!.month,
+        _newSelectedDate!.day,
+        _newSelectedTime!.hour,
+        _newSelectedTime!.minute,
+      );
       widget.todoData.notificationTime = _newNotificationTime!;
       ref.read(todoProvider.notifier).updateTodo(id, widget.todoData);
       GeneralSnackBar.showSnackBar(context, '할 일을 수정했어요.');

@@ -214,7 +214,9 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            (_selectedNotificationTime == null) ? '알림 시간' : GeneralFormatTime.formatNotificationTime(_selectedNotificationTime!),
+                            (_selectedNotificationTime == null)
+                                ? '알림 시간'
+                                : GeneralFormatTime.formatNotificationTime(_selectedNotificationTime!),
                             style: CustomTextStyle.body1.copyWith(
                               color: (_selectedNotificationTime == null) ? gray : black,
                             ),
@@ -255,7 +257,13 @@ class _TodoInteractionCreatePageState extends ConsumerState<TodoInteractionCreat
         urgency: _urgency,
         importance: _importance,
         isDone: false,
-        deadline: DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute),
+        deadline: DateTime(
+          _selectedDate!.year,
+          _selectedDate!.month,
+          _selectedDate!.day,
+          _selectedTime!.hour,
+          _selectedTime!.minute,
+        ),
         notificationTime: _selectedNotificationTime!,
       );
       ref.read(todoProvider.notifier).createTodo(addTodo);
